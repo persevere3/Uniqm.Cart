@@ -1,0 +1,111 @@
+@import '_all.scss';
+
+// ============================================================
+
+.contact{
+  @include others;
+
+  // ============================================================
+  .main{
+    .opening, .info, .location{
+      width: 1170px;
+      padding: 15px 30px;
+      margin: 0 auto;
+      margin-top: 35px;
+      margin-bottom: 2%;
+      .title{
+        padding: 10px 0px 53px 0px;
+        position: relative;
+  
+        p{
+          font-size: 20px;
+          font-weight: bold;
+          line-height: 24px;
+  
+          display: flex;
+          align-items: center;
+        }
+  
+        &:before{
+          content: '';
+          width: 25px;
+          height: 3px;
+          position: absolute;
+          left: 0px;
+          bottom: 30px;
+          background-color: $primary_color;
+        }
+      }
+      .text{
+        padding-left: 21px;
+        padding-right: 21px;
+        font-size: 14px;
+        line-height: 20px;
+        ul{
+          li{
+            white-space: pre-wrap;
+            list-style-position: inside; 
+            display: flex;
+  
+            word-break: break-all;
+            .item_name{
+              flex-shrink: 0;
+            }
+            .a{
+              display: inline-block; 
+              color: $primary_color;
+              cursor: pointer;
+            }
+            .a:hover{
+              color: darken($primary_color, 20%);
+            }
+          }
+        }
+      }
+    }
+    @include xl{
+      .opening, .info, .location{
+        width: 970px;
+      }
+    }
+    @include l{
+      .opening, .info, .location{
+        width: 750px;
+      }
+    }
+    @include m{
+      .opening, .info, .location{
+        width: 100%;
+        padding: 0px 15px;
+      }
+    }
+  
+    .location{
+      display: flex;
+      flex-wrap: wrap;
+      .left{
+        width: 50%;
+        padding: 15px 0px;
+      }
+      .right{
+        width: 50%;
+        min-height: 400px;
+        padding: 15px 0px;
+  
+        iframe{
+          width:100%;
+        }
+      }
+    }
+    @include l{
+      .location{
+        .left{
+          width: 100%;
+        }
+        .right{
+          width: 100%;
+        }
+      }
+    }
+  }
+}

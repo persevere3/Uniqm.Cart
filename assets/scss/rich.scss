@@ -1,0 +1,55 @@
+@import '_all.scss';
+@import '_quill.scss';
+
+// ============================================================
+
+.rich{
+  @include others;
+
+  // ============================================================
+  
+  .main{
+    width: 1170px;
+    margin: 0 auto;
+    padding: 10px 20px;
+
+    .title{
+      padding: 10px 0 25px;
+      margin-bottom: 28px;
+
+      font-size: 22px;
+      letter-spacing: 3px;
+      text-align: center;
+      color: #666;
+
+      position: relative;
+    }
+    .title:before{
+      content: '';
+      width: 25px;
+      height: 3px;
+      position: absolute;
+      left: 50%;
+      bottom: -3px;
+      margin-left: -12.5px;
+
+      background-color: $primary_color;
+    }
+    
+  }
+  @include xl{
+    .main{
+      width: 970px;
+    }
+  }
+  @include l{
+    .main{
+      width: 750px;
+    }
+  }
+  @include m{
+    .main{
+      width: 100%;
+    }
+  }
+}
