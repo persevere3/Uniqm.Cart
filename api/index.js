@@ -15,13 +15,14 @@ const cartRequestFormData = axios.create({
 })
 
 export const loginApi = data => cartRequest.post('/interface/web/UserLogin', data);
+
 export const getSiteApi = () => cartRequest.get('/interface/web/GetSite');
 
 export const getFavoriteApi = data => cartRequestFormData.post('/interface/WebMember/FavoriteInfo', data);
 export const deleteFavoriteApi = data => cartRequestFormData.post('/interface/WebMember/DeleteFavorite', data);
 export const addFavoriteApi = data => cartRequestFormData.post('/interface/WebMember/AddFavorite', data);
 
-export const getAllApi = data => cartRequestFormData.post('/interface/web/WebLogin', data);
+export const getAllApi = data => cartRequest.post('/interface/web/WebLogin', data);
 
 export const getStoreApi = data => cartRequestFormData.post('/interface/web/getStore', data);
 export const getCopyRightApi = data => cartRequestFormData.post('/interface/web/GetCopyRight', data);

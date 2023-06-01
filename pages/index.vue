@@ -4,37 +4,34 @@
 
 <template>
   <div>
-    {{ site }}
+    {{ testData }}
   </div>
 </template>
 
 <script setup>
-  import { loginApi, getSiteApi } from '@/api/index';
-  const state = reactive({
-    site: null
-  })
-  let { site } = toRefs(state)
+  import { storeToRefs } from 'pinia'
+
+  // store
+  import { useCommon }  from '@/stores/common/common'
+  import { useHandlerCommon }  from '@/stores/handlerCommon'
+
+  let { site, user_account, testData } = storeToRefs(useCommon())
+  let { login } = useCommon()
+  let {  } = storeToRefs(useHandlerCommon())
+  let { getSiteHandler } = useHandlerCommon()
 
   onMounted(async() => {
-    let site = JSON.parse(localStorage.getItem('site')) || [] ;
-    let params = `site=${site.Site}&store=${site.Name}&Preview=${site.Preview}&WebPreview=${site.WebPreview}`;
+    site.value = JSON.parse(localStorage.getItem('site')) || {} ;
+    user_account.value = localStorage.getItem('user_account')
 
-    try {
-      await loginApi(params)
-    }
-    catch (error) {
-      throw new Error(error)
-    }
-
-    try {
-      let { data } = await getSiteApi()
-      console.log(data.data[0])
-      state.site = data.data[0]
-    }
-    catch (error) {
-      throw new Error(error)
-    }
+    await login()
+    getSiteHandler()
   })
+  
+  const state = reactive({
+
+  })
+  let {  } = toRefs(state)
 
   // computed ==================================================
 
@@ -43,3 +40,7 @@
   // methods ==================================================
 
 </script>
+
+<style lang="scss">
+  @import "../assets/scss/index.scss";
+</style>

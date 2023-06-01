@@ -35,9 +35,9 @@ body ::-webkit-scrollbar-track {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
-  /* autoprefixer: off */
-  -webkit-box-orient: vertical;
-  /* autoprefixer: on */ 
+  // /* autoprefixer: off */
+  // -webkit-box-orient: vertical;
+  // /* autoprefixer: on */ 
 }
 
 // chat
@@ -961,9 +961,9 @@ $primary_color: #4db38e;
                   text-overflow: ellipsis;
                   display: -webkit-box;
                   -webkit-line-clamp: 3;
-                  /* autoprefixer: off */
-                  -webkit-box-orient: vertical;
-                  /* autoprefixer: on */
+                  // /* autoprefixer: off */
+                  // -webkit-box-orient: vertical;
+                  // /* autoprefixer: on */
                 }
               }
               >li:hover{
@@ -1292,9 +1292,9 @@ $primary_color: #4db38e;
                   text-overflow: ellipsis;
                   display: -webkit-box;
                   -webkit-line-clamp: 3;
-                  /* autoprefixer: off */
-                  -webkit-box-orient: vertical;
-                  /* autoprefixer: on */
+                  // /* autoprefixer: off */
+                  // -webkit-box-orient: vertical;
+                  // /* autoprefixer: on */
                 }
               }
               >li:hover{
