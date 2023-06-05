@@ -15,10 +15,10 @@
         <div class="img_container pc" v-if="homePage.TopImg" :style="{backgroundImage: `url(${homePage.TopImg})`}"></div>
         <div class="img_container mobile" v-if="homePage.PhoneImg" :style="{backgroundImage: `url(${homePage.PhoneImg})`}"></div>
 
-        <div class="banner" v-if="homePage.Ad && homePage.Ad.length">
+        <div class="banner" v-if="homePage.Ads && homePage.Ads.length">
           <div class="swiper-container">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="item in homePage.Ad" 
+              <div class="swiper-slide" v-for="item in homePage.Ads" 
                    :key="item.ID" :style="{backgroundImage: `url(${item.URL})`}"
               >
               </div>

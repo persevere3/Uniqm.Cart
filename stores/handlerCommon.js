@@ -5,15 +5,15 @@ import {  } from '@/api/index';
 
 export const useHandlerCommon = defineStore('handlerCommon', () => {
   // store ==================================================
-  let { site, user_account, all, totalpage_num, perpage_num, footer_community, bank } = storeToRefs(useCommon())
-  let { getSite, getAll, getStore, appendScript, urlPush } = useCommon()
+  let { site, store, user_account, all, totalpage_num, perpage_num, footer_community } = storeToRefs(useCommon())
+  let { getSite, getAll, getStore, getCopyRight, getCustomerService, getCart, getFavorite, appendScript, urlPush } = useCommon()
 
   // state ==================================================
   const state = reactive({
     
   })
 
-  // methods ==================================================
+  // methods =========================================6=========
   const methods = {
     async getSiteHandler() {
       await getSite()
@@ -22,19 +22,13 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
         urlPush('/error.html');
       }
 
-      // methods.getAllHandler();
-      // methods.getStoreHandler();
-
-      // vm.getCopyRight();
-      // vm.getCustomerService();
-      // vm.getCarts();
+      methods.getAllHandler();
+      methods.getStoreHandler();
+      getCopyRight();
+      getCustomerService();
+      getCart();
 
       let pathname = '';
-
-      // homePage
-      if( pathname === '/' || pathname === '/index.html'){
-        vm.getHomePage();
-      }
       
       // allProducts, category
       if( pathname == '/allProducts.html' ||
@@ -219,11 +213,8 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
       totalpage_num.value = Math.ceil(all.value.data.length / perpage_num.value);
           
       // webcategory, websubcategory => navbar
-      let webcategory = all.value.webcategory;
-      let websubcategory = all.value.websubcategory;
       let navbar = [];
-
-      webcategory.forEach(category => {
+      all.value.webcategory.forEach(category => {
         let link;
         // category.Class 0: all category rich, 1: contact, 2: 外部連結, 3: 自訂義
         if(category.Class === '1') link = '/contact.html'
@@ -234,8 +225,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
         category.isDropDown = false;
         navbar.push(category);
       })
-
-      websubcategory.forEach(category => {
+      all.value.websubcategory.forEach(category => {
         let link;
         //category.Class 0: all, 1: category, 2: rich, 3: rich(footer)
         if(category.Class === '3') link = `/rich.html?id=${category.CategoryID}&cid=1`
@@ -250,24 +240,20 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
           nav.subNavbar.push(category);
         }
       })
-
-      vm.all.Navbar = navbar;
+      all.value.Navbar = navbar;
 
       // footer => about, client
-      let footer = all.value.footer;
       all.value.about = [];
       all.value.client = [];
-      let about = all.value.about;
-      let client = all.value.client;
 
-      footer.forEach(item => {
+      all.value.footer.forEach(item => {
         if(item.CID == 1) {
           item.Link = `/rich.html?id=${item.ID}&cid=1`;
-          about.push(item);
+          all.value.about.push(item);
         }
         else if(item.CID == 2) {
           item.Link = `/rich.html?id=${item.ID}&cid=2`;
-          client.push(item);
+          all.value.client.push(item);
         }
       })
 
@@ -277,15 +263,12 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
     async getStoreHandler() {
       await getStore()
 
-      bank.value = require('./assets/bank.json');
-
       // title
       document.title = store.value.Name
       if(site.value.WebPreview == 2)  document.title += ' (預覽模式)'
 
       // GA
       let GAText = store.value.GA;
-
       if(GAText.indexOf('GTM-') > -1) {
         let GTMID = GAText.split('GTM-')[1].split('\')')[0]
 
@@ -297,7 +280,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
 
         document.querySelector('body').insertBefore(noscript, document.querySelector('body div'));
       }
-
       appendScript(GAText, 'head');
     },
   }

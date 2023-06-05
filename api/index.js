@@ -24,11 +24,11 @@ export const addFavoriteApi = data => cartRequestFormData.post('/interface/WebMe
 
 export const getAllApi = data => cartRequest.post('/interface/web/WebLogin', data);
 
-export const getStoreApi = data => cartRequestFormData.post('/interface/web/getStore', data);
-export const getCopyRightApi = data => cartRequestFormData.post('/interface/web/GetCopyRight', data);
-export const getCustomerServiceApi = data => cartRequestFormData.post('/interface/web/GetCustomerService', data);
+export const getStoreApi = data => cartRequest.post('/interface/web/getStore', data);
+export const getCopyRightApi = data => cartRequest.post('/interface/web/GetCopyRight', data);
+export const getCustomerServiceApi = data => cartRequest.post('/interface/web/GetCustomerService', data);
  
-export const getHomePageApi = data => cartRequestFormData.post('/interface/web/GetHomePage', data);
+export const getHomePageApi = data => cartRequest.post('/interface/web/GetHomePage', data);
 export const getCategoryApi = data => cartRequest.post('/interface/web/GetWebSubCategory', data);
 export const getContactApi = data => cartRequest.post('/interface/web/GetWebContact', data);
 export const getSearchApi = data => cartRequest.post('/interface/web/GetProductSearch', data);

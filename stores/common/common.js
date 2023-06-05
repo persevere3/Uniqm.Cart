@@ -1,5 +1,8 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { loginApi, getSiteApi, getAllApi, getStoreApi } from '@/api/index';
+import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi,
+  getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/api/index';
+
+import bank_json from '@/json/bank'
 
 export const useCommon = defineStore('common', () => {
   // state ==================================================
@@ -9,8 +12,13 @@ export const useCommon = defineStore('common', () => {
     all: {},
     store: {},
     footer_community: {},
+    copyRight: {},
+    customerService: {},
 
-    bank: '',
+    carts: [],
+    favorite: {},
+
+    bank: bank_json,
 
     // homePage, search_page
     perpage_num: 8,
@@ -91,7 +99,137 @@ export const useCommon = defineStore('common', () => {
         throw new Error(error)
       }
     },
+    async getCopyRight() {
+      let params = `WebPreview=${state.site.WebPreview}`;
 
+      try {
+        let res = await getCopyRightApi(params)
+        if(res.data.errormessage) {
+          await methods.login();
+          methods.getCopyRightApi(params);
+          return
+        }
+
+        state.copyRight = res.data.data[0] || {};
+      } catch (error) {
+        throw new Error(error)
+      }
+    },
+    async getCustomerService() {
+      let params = `WebPreview=${state.site.WebPreview}`;
+
+      try {
+        let res = await getCustomerServiceApi(params)
+        if(res.data.errormessage) {
+          await methods.login();
+          methods.getCustomerServiceApi(params);
+          return
+        }
+
+        state.customerService = res.data.data[0] || {};
+        state.customerService.Type == 1 ? methods.appendScript(state.customerService.Text, 'head') : methods.appendScript(state.customerService.Text, 'body');
+        // if(state.customerService.FBText ) methods.appendScript(state.customerService.FBText, 'body');
+      } catch (error) {
+        throw new Error(error)
+      }
+    },
+
+    // 
+    getCart() {
+      let vm = this;
+      
+      if(state.user_account) {
+        state.cart = JSON.parse(localStorage.getItem(`${state.site.Name}@${state.user_account}@cart`)) || [];
+      }
+      else {
+        state.cart = JSON.parse(localStorage.getItem(`${state.site.Name}@cart`)) || [];
+      }
+    },
+    //
+    async getFavorite() {
+      if(state.user_account) {
+        let formData = new FormData();
+        formData.append("storeid", state.site.Name);
+        formData.append("phone", state.user_account);
+
+        try {
+          let res = await getFavoriteApi(formData)
+          if(res.data.errormessage) {
+            await methods.login();
+            methods.getFavoriteApi(formData);
+            return
+          }
+  
+          if(!res.data.status) {
+            if(res.data.msg.indexOf('登入') > -1) {
+              state.user_account = ''
+              localStorage.removeItem('user_account')
+              methods.getFavorite()
+            }
+            else state.favorite = {};
+            return
+          }
+
+          state.favorite = {};
+          let favorite_list = res.data.datas[0];
+          for(let favorite of favorite_list) {
+            let id = favorite.Product;
+            let index = state.all.data.map((item) => item.ID).indexOf('' + id);
+            if(index > -1) state.favorite[id] = state.all.data[index]
+          }
+        } catch (error) {
+          throw new Error(error)
+        }
+      }
+      else {
+        state.favorite = JSON.parse(localStorage.getItem(`${state.site.Name}@favorite`)) || {};
+        for(let key in state.favorite) {
+          let favorite = state.favorite[key];
+          let index = state.all.data.map((item) => item.ID).indexOf(favorite.ID)
+          favorite = state.all.data[index];
+        }
+      }
+    },
+    async toggleFavorite(id) {
+      if(state.user_account) {
+        let formData = new FormData();
+        formData.append("storeid", state.site.Name);
+        formData.append("phone", state.user_account);
+        formData.append("productid[]", id);
+
+        try {
+          let res
+          if(state.favorite[id]) res = await deleteFavoriteApi(formData)
+          else res = await addFavoriteApi(formData)
+          if(res.data.errormessage) {
+            await methods.login();
+            if(state.favorite[id]) methods.deleteFavoriteApi(formData);
+            else methods.addFavoriteApi(formData);
+            return
+          }
+
+          if(!res.data.status) {
+            if(res.data.msg.indexOf('登入') > -1) {
+              state.user_account = ''
+              localStorage.removeItem('user_account');
+            }
+          }
+
+          methods.getFavorite();
+        } catch (error) {
+          throw new Error(error)
+        }
+      }
+      else {
+        if(state.favorite[id]) delete state.favorite[id]
+        else {
+          state.all.data.forEach((item) => {
+            if(item.ID === id) state.favorite[id] = item
+          })
+        }
+        localStorage.setItem(`${state.site.Name}@favorite`, JSON.stringify(state.favorite))
+      }
+    },
 
     appendScript(text, tag) {
       if(!text) return
@@ -102,28 +240,30 @@ export const useCommon = defineStore('common', () => {
       let scriptItems = text.split('&lt;script');
       scriptItems.splice(0, 1);
 
-      scriptItems.forEach(scriptItem => {
-        scriptItem = '&lt;script '+ scriptItem.trim();
-        let attr = scriptItem.split('&gt;')[0];
+      for(let i = 0; i < scriptItems.length; i++) {
+        scriptItems[i] = '&lt;script '+ scriptItems[i].trim();
+        let attr = scriptItems[i].split('&gt;')[0];
 
-        let content = scriptItem.split('&gt;')[1].split("&lt;/script")[0];
+        let content = scriptItems[i].split('&gt;')[1].split("&lt;/script")[0];
         let arr = attr.split(" ");
         let obj = {};
-        arr.forEach(item => {
-          if(item.indexOf('="') != -1) {
-            obj[item.split('="')[0]] = item.split('="')[1].split('"')[0];
-          }
-        })
+        for(let i = 0; i < arr.length; i++){
+          if(arr[i].indexOf('="') != -1){
+            obj[arr[i].split('="')[0]] = arr[i].split('="')[1].split('"')[0];
+          } 
+        }
 
         let script = document.createElement('script');
-        for(let item in obj) script.setAttribute(item, obj[item])
+        for(let item in obj){
+          script.setAttribute(item, obj[item]);
+        }
         script.textContent = content;
 
         script_arr.push(script);
-      })
+      }
 
       // 
-      for(let i = 0; i < script_arr.length; i++){
+      for(let i = 0; i < script_arr.length; i++) {
         document.querySelector(tag).appendChild(script_arr[i])
       }
     },
