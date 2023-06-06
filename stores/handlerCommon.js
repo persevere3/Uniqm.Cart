@@ -59,18 +59,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
         }
       }
 
-      // contact
-      if( pathname === '/contact.html'){
-        vm.getContact();
-      }
-
-      // search
-      if( pathname === '/search.html'){
-        if(location.href.indexOf('?query=') != -1){
-          vm.getSearch();
-        }
-      }
-
       // order
       if (pathname === '/order.html' || pathname === '/shoppingOrder.html') {
 

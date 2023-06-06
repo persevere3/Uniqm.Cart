@@ -54,6 +54,9 @@
   
   const state = reactive({
     homePage: {},
+    
+    swiper: '',
+    totalpage_num: 0,
   })
   let { homePage } = toRefs(state)
 

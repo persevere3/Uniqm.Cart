@@ -49,8 +49,8 @@
                 <ul>
                   <li v-for="(item, index) in perpage_num_arr" :key="index" 
                       @click="perpage_num = item; 
-                      search_totalpage_num = Math.ceil(search.length / perpage_num); 
-                      product_page_active = 1;
+                      totalpage_num = Math.ceil(search.length / perpage_num); 
+                      page_active = 1;
                   ">
                     每頁顯示 {{item}} 個
                   </li>
@@ -59,7 +59,7 @@
             </div>
             <ul>
               <li v-for="(item, index) in search" :key="item.ID"
-                  v-show="product_page_active * perpage_num - (perpage_num + 1)  < index && index < product_page_active * perpage_num"
+                  v-show="page_active * perpage_num - (perpage_num + 1)  < index && index < page_active * perpage_num"
                   @click="pushTo_cart(item.ID)"
               >
                 <div class="pic" :style="{backgroundImage: `url(${item.Img || item.Img1})`}">
@@ -83,12 +83,12 @@
           </div>
           <div class="product_page">
             <ul>
-              <li @click="pagePush(product_page_active - 1)" :class="{opacity0: product_page_active < 2}"> <i class="fa fa-angle-double-left" aria-hidden="true"></i> </li>
-              <li v-for="item in search_totalpage_num" :class="{li_active: product_page_active === item}" 
+              <li @click="pagePush(page_active - 1)" :class="{opacity0: page_active < 2}"> <i class="fa fa-angle-double-left" aria-hidden="true"></i> </li>
+              <li v-for="item in totalpage_num" :class="{li_active: page_active === item}" 
                   @click="pagePush(item)">
                 {{item}}
               </li>
-              <li @click="pagePush(product_page_active + 1)" :class="{opacity0: product_page_active > search_totalpage_num - 1}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> </li>
+              <li @click="pagePush(page_active + 1)" :class="{opacity0: page_active > totalpage_num - 1}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> </li>
             </ul>
           </div>
         </template>

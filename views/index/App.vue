@@ -47,7 +47,7 @@
             <ul>
               <li v-for="(item, index) in all.data" :key="index"
                   @click="pushTo_cart(item.ID)"
-                  v-show="product_page_active * perpage_num - (perpage_num + 1)  < index && index < product_page_active * perpage_num"
+                  v-show="page_active * perpage_num - (perpage_num + 1)  < index && index < page_active * perpage_num"
               >
                 <div class="pic" :style="{backgroundImage: `url(${item.Img1})`}">
                   <div class="addTo_favorite_btn" @click.stop="toggleFavorite(item.ID)">
@@ -73,12 +73,12 @@
           </div>
           <div class="product_page">
             <ul>
-              <li @click="pagePush(product_page_active - 1)" :class="{opacity0: product_page_active < 2}"> <i class="fa fa-angle-double-left" aria-hidden="true"></i> </li>
-              <li v-for="item in totalpage_num" :class="{li_active: product_page_active === item}" 
+              <li @click="pagePush(page_active - 1)" :class="{opacity0: page_active < 2}"> <i class="fa fa-angle-double-left" aria-hidden="true"></i> </li>
+              <li v-for="item in totalpage_num" :class="{li_active: page_active === item}" 
                   @click="pagePush(item)">
                 {{item}}
               </li>
-              <li @click="pagePush(product_page_active + 1)" :class="{opacity0: product_page_active > totalpage_num - 1}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> </li>
+              <li @click="pagePush(page_active + 1)" :class="{opacity0: page_active > totalpage_num - 1}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> </li>
             </ul>
           </div>
         </div>

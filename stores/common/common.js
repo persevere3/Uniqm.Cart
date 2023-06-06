@@ -3,6 +3,7 @@ import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCusto
   getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/api/index';
 
 import bank_json from '@/json/bank'
+import city_district_json from '@/json/city_district.json'
 
 export const useCommon = defineStore('common', () => {
   // state ==================================================
@@ -18,12 +19,14 @@ export const useCommon = defineStore('common', () => {
     carts: [],
     favorite: {},
 
+    // 
     bank: bank_json,
+    city_district: city_district_json,
 
-    // homePage, search_page
+    // index, search page
     perpage_num: 8,
     totalpage_num: 0,
-    product_page_active: 1,
+    page_active: 1,
 
     //
     messageArr: [],
@@ -231,6 +234,14 @@ export const useCommon = defineStore('common', () => {
       }
     },
 
+    getFormData(obj) {
+      let formData = new FormData();
+      for(key in obj) {
+        formData.append(key, obj[key]);
+      }
+      return formData
+    },
+
     appendScript(text, tag) {
       if(!text) return
 
@@ -266,6 +277,42 @@ export const useCommon = defineStore('common', () => {
       for(let i = 0; i < script_arr.length; i++) {
         document.querySelector(tag).appendChild(script_arr[i])
       }
+    },
+
+    pagePush(page) {
+      if(page > state.totalpage_num || page < 1) return
+      state.page_active = page;
+    },
+
+    getPathname(page) {
+      let pageObj = {
+        index: {
+          'common': '/',
+          'demo': '/',
+          'uniqm.com': '/',
+          'uniqm.net': '/',
+        },
+        order: {
+          'common': '/order.html',
+          'demo': '/order.html',
+          'uniqm.com': '/shoppingOrder.html',
+          'uniqm.net': '',
+        },
+        user: {
+          'common': '/user.html',
+          'demo': '/user.html',
+          'uniqm.com': '/shoppingUser.html',
+          'uniqm.net': '',
+        },
+        info: {
+          'common': '/user_info.html',
+          'demo': '/user_info.html',
+          'uniqm.com': '/shoppingInfo.html',
+          'uniqm.net': '',
+        },
+      }
+
+      return pageObj[page][state.webVersion];
     },
 
     urlPush(url, isOpen) {

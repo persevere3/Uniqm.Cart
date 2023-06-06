@@ -231,7 +231,7 @@
                   <div class="value"> {{ item.city }} </div>
                   <div class="dropdown"> <i class="fas fa-caret-down"></i> </div>
                   <ul :class="{ active: address_select_active == `${item.id}_city` }">
-                    <li v-for="(city, key) in city_district" :key="key" @click="item.city = key; item.district = ''"> {{ key }} </li>
+                    <li v-for="(value, city) in city_district" :key="city" @click="item.city = city; item.district = ''"> {{ city }} </li>
                   </ul>
                 </div>
                 <div class="select"
@@ -239,7 +239,7 @@
                   <div class="value"> {{ item.district }} </div>
                   <div class="dropdown"> <i class="fas fa-caret-down"></i> </div>
                   <ul :class="{ active: address_select_active == `${item.id}_district` }">
-                    <li v-for="district in city_district[item.city]" :key="district" @click="item.district = district;"> {{ district }}
+                    <li v-for="(value, district) in city_district[item.city]" :key="district" @click="item.district = district;"> {{ district }}
                     </li>
                   </ul>
                 </div>

@@ -15,7 +15,6 @@ const cartRequestFormData = axios.create({
 })
 
 export const loginApi = data => cartRequest.post('/interface/web/UserLogin', data);
-
 export const getSiteApi = () => cartRequest.get('/interface/web/GetSite');
 
 export const getFavoriteApi = data => cartRequestFormData.post('/interface/WebMember/FavoriteInfo', data);
@@ -23,17 +22,17 @@ export const deleteFavoriteApi = data => cartRequestFormData.post('/interface/We
 export const addFavoriteApi = data => cartRequestFormData.post('/interface/WebMember/AddFavorite', data);
 
 export const getAllApi = data => cartRequest.post('/interface/web/WebLogin', data);
-
 export const getStoreApi = data => cartRequest.post('/interface/web/getStore', data);
 export const getCopyRightApi = data => cartRequest.post('/interface/web/GetCopyRight', data);
 export const getCustomerServiceApi = data => cartRequest.post('/interface/web/GetCustomerService', data);
  
 export const getHomePageApi = data => cartRequest.post('/interface/web/GetHomePage', data);
-export const getCategoryApi = data => cartRequest.post('/interface/web/GetWebSubCategory', data);
+export const getCategoryApi = data => cartRequestFormData.post('/interface/web/GetWebSubCategory', data);
 export const getContactApi = data => cartRequest.post('/interface/web/GetWebContact', data);
-export const getSearchApi = data => cartRequest.post('/interface/web/GetProductSearch', data);
-export const getOrderApi = data => cartRequest.post('/interface/web/GetOrderContactAjax', data);
-export const getMemberOrderApi = data => cartRequest.post('/interface/Webmember/GetMemberOrders', data);
+export const getSearchApi = data => cartRequestFormData.post('/interface/web/GetProductSearch', data);
+export const getOrderApi = data => cartRequestFormData.post('/interface/web/GetOrderContactAjax', data);
+export const getMemberOrderApi = data => cartRequestFormData.post('/interface/Webmember/GetMemberOrders', data);
+
 export const getBonusApi = data => cartRequest.post('/interface/Webmember/GetMemberBonusOrders', data);
 export const checkPaytApi = data => cartRequest.post('/interface/web/ATMComfirmBack', data);
 export const rePayApi = data => cartRequest.post('/LineMK/Line/RePayConfirm', data);
