@@ -33,22 +33,32 @@ export const getSearchApi = data => cartRequestFormData.post('/interface/web/Get
 export const getOrderApi = data => cartRequestFormData.post('/interface/web/GetOrderContactAjax', data);
 export const getMemberOrderApi = data => cartRequestFormData.post('/interface/Webmember/GetMemberOrders', data);
 
+//
 export const getBonusApi = data => cartRequest.post('/interface/Webmember/GetMemberBonusOrders', data);
 export const checkPaytApi = data => cartRequest.post('/interface/web/ATMComfirmBack', data);
 export const rePayApi = data => cartRequest.post('/LineMK/Line/RePayConfirm', data);
 export const send_verify_codeApi = data => cartRequest.post('/interface/WebMember/SendValidateMessage', data);
-export const registerApi = data => cartRequest.post('/interface/WebMember/MemberRegister', data);
-export const user_loginApi = data => cartRequest.post('/interface/WebMember/MemberLogin', data);
+
+// ok
+export const registerApi = data => cartRequestFormData.post('/interface/WebMember/MemberRegister', data);
+export const user_loginApi = data => cartRequestFormData.post('/interface/WebMember/MemberLogin', data);
+export const send_forget_verify_codeApi = data => cartRequestFormData.post('/interface/WebMember/ForgetPasswordValidateMessage', data);
+export const check_forget_verify_codeApi = data => cartRequestFormData.post('/interface/WebMember/CheckForgetPasswordValidate', data);
+export const edit_forget_passApi = data => cartRequestFormData.post('/interface/WebMember/changeforgetpasswordvalidate', data);
+export const validateRecommenderCodeApi = data => cartRequestFormData.post('/interface/WebMember/CheckRecommanderCode', data);
+export const getLineProfileApi = LineToken => axios.create({
+  headers: { 'Authorization': `Bearer ${LineToken}` },
+  withCredentials: true
+}).get('https://api.line.me/oauth2/v2.1/userinfo');
+
 export const post_logoutApi = data => cartRequest.post('/interface/WebMember/MemberLogout', data);
-export const send_forget_verify_codeApi = data => cartRequest.post('/interface/WebMember/ForgetPasswordValidateMessage', data);
-export const check_forget_verify_codeApi = data => cartRequest.post('/interface/WebMember/CheckForgetPasswordValidate', data);
-export const edit_forget_passApi = data => cartRequest.post('/interface/WebMember/changeforgetpasswordvalidate', data);
 export const getUser_infoApi = data => cartRequest.post('/interface/WebMember/GetMemberInfo', data);
 export const edit_infoApi = data => cartRequest.post('/interface/WebMember/EditMemberInfo', data);
-export const validateRecommenderCodeApi = data => cartRequest.post('/interface/WebMember/CheckRecommanderCode', data);
-export const getLineProfileApi = data => cartRequest.post('https://api.line.me/oauth2/v2.1/userinfo', data);
+
+// ok
 export const getCategoriesApi = data => cartRequest.post('/interface/store/GetCategory', data);
 export const getProductsApi = data => cartRequest.post('/interface/store/storeLogin', data);
+
 export const unbindLine_testApi = data => cartRequest.post('/interface/WebMember/OldMemberDeleteLineIDAccount', data);
 export const deleteAccount_testApi = data => cartRequest.post('/interface/WebMember/DeleteLineIDAccount', data);
 export const connectHandlerApi = data => cartRequest.post('/interface/web/PostFeedback', data);

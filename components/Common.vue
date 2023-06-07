@@ -36,7 +36,7 @@
             <li v-for="(item, index) in all.Navbar" :key="item.ID" @click="item.Class == 2 ? urlPush(item.Link, true) : urlPush(item.Link)">
               <div class="text">
                 {{ item.Name }}
-                <div class="angle" @click.stop=" changeDropDown(index) ">
+                <div class="angle" @click.stop="item.isDropDown = !item.isDropDown">
                   <i  class="fa fa-angle-down" :class="{i_active: item.isDropDown}" 
                     aria-hidden="true"
                     v-if="item.subNavbar"
@@ -715,9 +715,6 @@ export default {
           vm.is_sidebar = 0;
         }, 350)
       }
-    },
-    changeDropDown(index){
-      this.$bus.$emit('changeDropDown', index);
     },
 
     // 

@@ -165,11 +165,11 @@ export const useOrder = defineStore('order', () => {
           if(res.data.status) {
             let data = res.data.datas[0]
 
-            order_page_number.value = Math.ceil(data.Count / order_page_size.value);
-            if(vm.order_page_number == 0){
-              vm.payModal_message = '沒有您查詢的訂單資料';
-              vm.is_payModal = true;
-              vm.order = null;
+            state.order_page_number = Math.ceil(data.Count / order_page_size.value);
+            if(state.order_page_number == 0){
+              payModal_message.value = '沒有您查詢的訂單資料';
+              is_payModal.value = true;
+              state.order = null;
               return;
             }
 
