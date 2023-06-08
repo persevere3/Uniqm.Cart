@@ -12,7 +12,254 @@ export const useUser = defineStore('user', () => {
 
   // state ==================================================
   const state = reactive({
-    
+    r_recommender:{
+      value: '',
+      rules: {
+      },
+    },
+    r_name: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+      },
+      is_error: false,
+      message: '',
+    },
+    r_mail: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        mail: {
+          message: 'email格式不符',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    r_verify_code2: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        length: {
+          min: 6,
+          max: 6,
+          message: '驗證碼為6位',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    r_birthday: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+      },
+      is_error: false,
+      message: '',
+    },
+    sex: 'male',
+    r_account: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        cellphone: {
+          message: '手機格式錯誤'
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    r_phone2: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        cellphone: {
+          message: '手機格式錯誤'
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    r_verify_code: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        length: {
+          min: 6,
+          max: 6,
+          message: '驗證碼為6位',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    second: 0,
+    o_password: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        length: {
+          min: 8,
+          message: '不得少於8位',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    o_password_type: 'password',
+    r_password: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        length: {
+          min: 8,
+          message: '不得少於8位',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    r_confirm_password: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        confirm: {
+          password: 'r_password',
+          message: '密碼不正確',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    r_password_type: 'password',
+    r_confirm_password_type: 'password',
+    r_is_agree: false,
+
+    l_account: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+      },
+      is_error: false,
+      message: '',
+    },
+    l_password: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        length: {
+          min: 8,
+          message: '不得少於8位',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    l_password_type: 'password',
+
+    forget_step: 1,
+    mailOrAccount: 0,
+    f_account: {
+      value: '',
+      rules: {
+        cellphone: {
+          message: '手機格式錯誤'
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    f_mail: {
+      value: '',
+      rules: {
+        mail: {
+          message: 'email格式不符',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    f_verify_code: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        length: {
+          min: 6,
+          max: 6,
+          message: '驗證碼為6位',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    f_second: 0,
+    f_password: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        length: {
+          min: 8,
+          message: '不得少於8位',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    f_confirm_password: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        confirm: {
+          password: 'f_password',
+          message: '密碼不正確',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    f_password_type: 'password',
+    f_confirm_password_type: 'password',
+
+    user_nav_active: 'login',
+
+    LineToken: '',
+
+    is_LineRegister: false,
+
+    is_userModal: false,
+
+    is_userMessage: false,
+    user_message: '',
   })
 
   // methods ==================================================

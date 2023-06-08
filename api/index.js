@@ -16,16 +16,16 @@ const cartRequestFormData = axios.create({
 
 export const loginApi = data => cartRequest.post('/interface/web/UserLogin', data);
 export const getSiteApi = () => cartRequest.get('/interface/web/GetSite');
-
+// favorite
 export const getFavoriteApi = data => cartRequestFormData.post('/interface/WebMember/FavoriteInfo', data);
 export const deleteFavoriteApi = data => cartRequestFormData.post('/interface/WebMember/DeleteFavorite', data);
 export const addFavoriteApi = data => cartRequestFormData.post('/interface/WebMember/AddFavorite', data);
-
+// 
 export const getAllApi = data => cartRequest.post('/interface/web/WebLogin', data);
 export const getStoreApi = data => cartRequest.post('/interface/web/getStore', data);
 export const getCopyRightApi = data => cartRequest.post('/interface/web/GetCopyRight', data);
 export const getCustomerServiceApi = data => cartRequest.post('/interface/web/GetCustomerService', data);
- 
+// 
 export const getHomePageApi = data => cartRequest.post('/interface/web/GetHomePage', data);
 export const getCategoryApi = data => cartRequestFormData.post('/interface/web/GetWebSubCategory', data);
 export const getContactApi = data => cartRequest.post('/interface/web/GetWebContact', data);
@@ -33,13 +33,13 @@ export const getSearchApi = data => cartRequestFormData.post('/interface/web/Get
 export const getOrderApi = data => cartRequestFormData.post('/interface/web/GetOrderContactAjax', data);
 export const getMemberOrderApi = data => cartRequestFormData.post('/interface/Webmember/GetMemberOrders', data);
 
-//
-export const getBonusApi = data => cartRequest.post('/interface/Webmember/GetMemberBonusOrders', data);
+
 export const checkPaytApi = data => cartRequest.post('/interface/web/ATMComfirmBack', data);
 export const rePayApi = data => cartRequest.post('/LineMK/Line/RePayConfirm', data);
 export const send_verify_codeApi = data => cartRequest.post('/interface/WebMember/SendValidateMessage', data);
+export const connectHandlerApi = data => cartRequest.post('/interface/web/PostFeedback', data);
 
-// ok
+// user
 export const registerApi = data => cartRequestFormData.post('/interface/WebMember/MemberRegister', data);
 export const user_loginApi = data => cartRequestFormData.post('/interface/WebMember/MemberLogin', data);
 export const send_forget_verify_codeApi = data => cartRequestFormData.post('/interface/WebMember/ForgetPasswordValidateMessage', data);
@@ -51,14 +51,15 @@ export const getLineProfileApi = LineToken => axios.create({
   withCredentials: true
 }).get('https://api.line.me/oauth2/v2.1/userinfo');
 
+// info
+export const getUser_infoApi = data => cartRequestFormData.post('/interface/WebMember/GetMemberInfo', data);
+export const edit_infoApi = data => cartRequestFormData.post('/interface/WebMember/EditMemberInfo', data);
+export const edit_passApi = data => cartRequestFormData.post('/interface/WebMember/EditMemberPassWord', data);
+export const getBonusApi = data => cartRequestFormData.post('/interface/Webmember/GetMemberBonusOrders', data);
 export const post_logoutApi = data => cartRequest.post('/interface/WebMember/MemberLogout', data);
-export const getUser_infoApi = data => cartRequest.post('/interface/WebMember/GetMemberInfo', data);
-export const edit_infoApi = data => cartRequest.post('/interface/WebMember/EditMemberInfo', data);
+export const unbindLine_testApi = data => cartRequestFormData.post('/interface/WebMember/OldMemberDeleteLineIDAccount', data);
+export const deleteAccount_testApi = data => cartRequestFormData.post('/interface/WebMember/DeleteLineIDAccount', data);
 
-// ok
+// shopping
 export const getCategoriesApi = data => cartRequest.post('/interface/store/GetCategory', data);
 export const getProductsApi = data => cartRequest.post('/interface/store/storeLogin', data);
-
-export const unbindLine_testApi = data => cartRequest.post('/interface/WebMember/OldMemberDeleteLineIDAccount', data);
-export const deleteAccount_testApi = data => cartRequest.post('/interface/WebMember/DeleteLineIDAccount', data);
-export const connectHandlerApi = data => cartRequest.post('/interface/web/PostFeedback', data);

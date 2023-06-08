@@ -126,7 +126,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
 
         vm.LineToken = location.href.split('code=')[1] && 
                       location.href.split('code=')[1].split('&')[0];       
-        if(vm.LineToken){
+        if(vm.LineToken) {
           window.history.replaceState({}, document.title, vm.getPathname('user'));
           vm.getLineProfile();
         }

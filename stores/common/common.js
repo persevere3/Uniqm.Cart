@@ -20,6 +20,8 @@ export const useCommon = defineStore('common', () => {
 
     carts: [],
     favorite: {},
+    is_carts_hover: false,
+    is_favorite_hover: false,
 
     // 
     bank: bank_json,
@@ -49,6 +51,14 @@ export const useCommon = defineStore('common', () => {
 
     //
     testData: '',
+  })
+
+  onMounted(() => {
+    if(document.querySelector('.header')) {
+      document.querySelector('body').style['padding-top'] = document.querySelector('.header').getBoundingClientRect().height + 'px';
+    }
+
+    
   })
 
   // methods ==================================================
@@ -392,7 +402,133 @@ export const useCommon = defineStore('common', () => {
         throw new Error(error)
       }
     },
+    birthday(birthday) {
+      let b = new Date(birthday);
+      return `${b.getFullYear()}/${b.getMonth() + 1 < 10  ? '0' : '' }${b.getMonth() + 1}/${b.getDate() < 10  ? '0' : '' }${b.getDate()}`
+    },
     // ==================================================
+
+    // allProducts, category, rich, contact(map) ==============================
+    imgHandler() {
+      let editorWidth = 0;
+      let editor_input =  document.querySelector('#EditerWidth');
+      if(editor_input){
+        editorWidth = editor_input.value  * 1
+      }
+
+      let ql_editor = document.querySelector('.ql-editor');
+
+      let rich_container = document.querySelector('.rich_container');
+
+      if(!ql_editor || !rich_container){
+        return
+      }
+
+      let rich_container_width = parseFloat(window.getComputedStyle(rich_container).width);
+      let rich_container_padding = parseFloat(window.getComputedStyle(rich_container).padding);
+      if(rich_container_padding){
+        rich_container_width -= rich_container_padding*2;
+      }
+
+      if( editorWidth < rich_container_width ){
+        ql_editor.style.width = editorWidth + 'px';
+      } 
+      else{
+        ql_editor.style.width = rich_container_width + 'px';
+      }
+
+      let imgs = document.querySelectorAll('.ql-editor img');
+      for(let i = 0; i < imgs.length; i++){
+        let imgWidth = window.getComputedStyle(imgs[i]).width.split('px')[0] * 1;
+
+        if(imgWidth > editorWidth){
+          imgs[i].style.width = editorWidth + 'px';
+        }
+      }
+
+      let videos = document.querySelectorAll('.ql-editor .ql-video');
+      for(let i = 0; i < videos.length; i++){
+        let videosWidth = window.getComputedStyle(videos[i]).width.split('px')[0] * 1;
+        if(videosWidth > editorWidth){
+          videos[i].style.width = editorWidth + 'px';
+        }
+      }
+    },
+    // allProducts, category ==============================
+    videoHandler(url){
+      let code = '';
+      if(url.indexOf('youtu.be') != -1){
+        code = url.split('https://youtu.be/')[1];
+      }
+      else if(url.indexOf('www.youtube.com') != -1){
+        if(url.split('?v=').length > 1){
+          code = url.split('?v=')[1].split('&')[0];
+        }
+      }
+      let iframe = '';
+      if(code){
+        iframe = `
+          <iframe src="https://www.youtube.com/embed/${code}" 
+            frameborder="0" 
+            allow="accelerometer; 
+              autoplay; clipboard-write; 
+              encrypted-media; 
+              gyroscope; 
+              picture-in-picture" 
+            allowfullscreen
+          >
+          </iframe>
+        `
+      }
+      return iframe;
+    },
+    // ==============================
+
+    // common component ============================================================
+    delete_carts_item(id, specID) {
+      carts.value.forEach((item, index)=> {
+        if(item.ID === id) {
+          if(item.specArr) {
+            item.specArr.forEach((item2, index2) => {
+              if(item2.ID === specID) {
+                item.specArr[index2].buyQty = 0;
+              }
+            })
+
+            if(methods.productTotalQty(item) < 1) {
+              carts.value.splice(index, 1);
+            }
+          }
+          else {
+            carts.value.splice(index, 1);
+          }
+        }
+      })
+      methods.setCarts();
+    },
+    productTotalQty(product) {
+      let totalQty = 0;
+      if(product.specArr){
+        for(let i = 0; i < product.specArr.length; i++){
+          totalQty += product.specArr[i].buyQty * 1;
+        }
+      }
+      else {
+        totalQty = product.buyQty;
+      }
+      return totalQty;
+    },
+    setCarts() {
+      if(user_account.value) {
+        console.log('登入')
+        localStorage.setItem(`${site.value.Name}@${user_account.value}@carts`, JSON.stringify(carts.value));
+      }
+      else {
+        console.log('登出')
+        localStorage.setItem(`${site.value.Name}@carts`, JSON.stringify(carts.value));
+      }
+    },
+    // ============================================================
 
     check_logout() {
       if(state.payModal_message == '請先登入會員' ||

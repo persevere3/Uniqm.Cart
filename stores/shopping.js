@@ -10,8 +10,26 @@ export const useShopping = defineStore('shopping', () => {
 
   // state ==================================================
   const state = reactive({
-    categories: {},
-    products: {},
+    categories: [],
+    products: [],
+
+    active_category_id: 0,
+    
+    search_text: '',
+  })
+
+  let filter_products = computed(() => {
+    if(state.active_category_id == 0) {
+      if(state.search_text) {
+        return products.value.filter(item => item.Name.indexOf(this.search_text) > -1)
+      } else {
+        return products.value
+      }
+    }
+    return products.value.filter(item => {
+      let category_arr = [item.Category1, item.Category2, item.Category3, item.Category4, item.Category5]
+      return category_arr.indexOf(state.active_category_id) > -1 && (state.search_text ? item.Name.indexOf(state.search_text) > -1 : true) 
+    })
   })
 
   // methods ==================================================
