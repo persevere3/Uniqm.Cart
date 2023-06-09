@@ -12,6 +12,7 @@ export const useUser = defineStore('user', () => {
 
   // state ==================================================
   const state = reactive({
+    // user info
     r_recommender:{
       value: '',
       rules: {
@@ -66,6 +67,7 @@ export const useUser = defineStore('user', () => {
       message: '',
     },
     sex: 'male',
+    // user
     r_account: {
       value: '',
       rules: {
@@ -79,6 +81,9 @@ export const useUser = defineStore('user', () => {
       is_error: false,
       message: '',
     },
+    second: 0,
+
+    // info
     r_phone2: {
       value: '',
       rules: {
@@ -107,7 +112,8 @@ export const useUser = defineStore('user', () => {
       is_error: false,
       message: '',
     },
-    second: 0,
+
+    // info
     o_password: {
       value: '',
       rules: {
@@ -123,6 +129,8 @@ export const useUser = defineStore('user', () => {
       message: '',
     },
     o_password_type: 'password',
+
+    //
     r_password: {
       value: '',
       rules: {
@@ -153,6 +161,8 @@ export const useUser = defineStore('user', () => {
     },
     r_password_type: 'password',
     r_confirm_password_type: 'password',
+
+    // user
     r_is_agree: false,
 
     l_account: {

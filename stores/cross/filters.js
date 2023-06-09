@@ -1,3 +1,5 @@
+import { defineStore, storeToRefs } from 'pinia'
+
 export const useFilters = defineStore('filters', () => {
   // methods ==================================================
   const methods = {

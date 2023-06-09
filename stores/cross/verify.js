@@ -1,3 +1,5 @@
+import { defineStore, storeToRefs } from 'pinia'
+
 export const useVerify = defineStore('verify', () => {
   // methods ==================================================
   const methods = {

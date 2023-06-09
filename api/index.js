@@ -63,3 +63,5 @@ export const deleteAccount_testApi = data => cartRequestFormData.post('/interfac
 // shopping
 export const getCategoriesApi = data => cartRequest.post('/interface/store/GetCategory', data);
 export const getProductsApi = data => cartRequest.post('/interface/store/storeLogin', data);
+
+export const checkPayApi = data => cartRequestFormData.post('/interface/web/ATMComfirmBack', data);
