@@ -1,6 +1,6 @@
 <template>
   <div >
-    <div class="carts_container" :class="{'hover' : is_carts_hover}" v-if="carts.length">
+    <div class="carts_container" :class="{'hover' : is_carts_active}" v-if="carts.length">
       <ul class="carts_items">
         <template v-for="item in carts" :key="item.ID">
           <!-- 有規格 -->
@@ -72,7 +72,7 @@
       </div>
     </div>
 
-    <div class="favorite_container" :class="{'hover' : is_favorite_hover}" v-if="Object.keys(favorite).length">
+    <div class="favorite_container" :class="{'hover' : is_favorite_active}" v-if="Object.keys(favorite).length">
       <ul class="favorite_items">
         <template v-for="item in favorite" :key="item.ID">
           <li @click.stop="pushTo_cart(item.ID)">
@@ -100,11 +100,11 @@
       <div class="menu">
         <ul>
           <li @click="urlPush(getPathname('index'))"><i class="fa-solid fa-house"></i> <span class="none650"> 首頁 </span> </li>
-          <li @click.stop="is_favorite_hover = !is_favorite_hover; is_carts_hover = false"> 
+          <li @click.stop="is_favorite_active = !is_favorite_active; is_carts_active = false"> 
             <i class="fa-solid fa-heart"></i> 
             <span class="none650"> 收藏 </span> 
           </li>
-          <li @click.stop="carts.length ? is_carts_hover = !is_carts_hover : pushTo_cart(); is_favorite_hover = false"> 
+          <li @click.stop="carts.length ? is_carts_active = !is_carts_active : pushTo_cart(); is_favorite_active = false"> 
             <i class="fa-solid fa-cart-shopping"></i> 
             <span class="none650"> 購物車 </span> 
           </li>

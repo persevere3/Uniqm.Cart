@@ -20,8 +20,8 @@ export const useCommon = defineStore('common', () => {
 
     carts: [],
     favorite: {},
-    is_carts_hover: false,
-    is_favorite_hover: false,
+    is_carts_active: false,
+    is_favorite_active: false,
 
     // 
     bank: bank_json,
@@ -47,7 +47,7 @@ export const useCommon = defineStore('common', () => {
     messageArr: [],
 
     //
-    webVersion: 'common',
+    webVersion: 'demo',
 
     //
     testData: '',
@@ -118,7 +118,7 @@ export const useCommon = defineStore('common', () => {
         }
 
         state.store = res.data.data[0] || {};
-
+        if(state.webVersion === 'demo') state.store.Logo = 'https://demo.uniqcarttest.com' + state.store.Logo
         // 新增 store.footer 放聯絡我們 icon 
         // 有 link 才顯示
         state.footer_community = res.data.footer[0] || {};
@@ -155,7 +155,7 @@ export const useCommon = defineStore('common', () => {
         }
 
         state.customerService = res.data.data[0] || {};
-        state.customerService.Type == 1 ? methods.appendScript(state.customerService.Text, 'head') : methods.appendScript(state.customerService.Text, 'body');
+        // state.customerService.Type == 1 ? methods.appendScript(state.customerService.Text, 'head') : methods.appendScript(state.customerService.Text, 'body');
         // if(state.customerService.FBText ) methods.appendScript(state.customerService.FBText, 'body');
       } catch (error) {
         throw new Error(error)
@@ -539,7 +539,7 @@ export const useCommon = defineStore('common', () => {
 
     getFormData(obj) {
       let formData = new FormData();
-      for(key in obj) {
+      for(let key in obj) {
         formData.append(key, obj[key]);
       }
       return formData

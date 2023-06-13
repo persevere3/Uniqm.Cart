@@ -160,7 +160,7 @@ $primary_color: #202d40;
   transition: .5s;
   z-index: 150;
 
-  &.hover {
+  &.active {
     transform: translateX(0%);
   }
   

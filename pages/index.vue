@@ -138,8 +138,8 @@
     try {
       let res = await getHomePageApi(params)
       if(res.data.errormessage) {
-        await methods.login();
-        methods.getHomePageApi(params);
+        await login();
+        getHomePage();
         return
       }
 

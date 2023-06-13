@@ -268,7 +268,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
 
         document.querySelector('body').insertBefore(noscript, document.querySelector('body div'));
       }
-      appendScript(GAText, 'head');
+      // appendScript(GAText, 'head');
     },
   }
 

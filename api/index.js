@@ -37,7 +37,7 @@ export const getMemberOrderApi = data => cartRequestFormData.post('/interface/We
 export const checkPaytApi = data => cartRequest.post('/interface/web/ATMComfirmBack', data);
 export const rePayApi = data => cartRequest.post('/LineMK/Line/RePayConfirm', data);
 export const send_verify_codeApi = data => cartRequest.post('/interface/WebMember/SendValidateMessage', data);
-export const connectHandlerApi = data => cartRequest.post('/interface/web/PostFeedback', data);
+export const connectHandlerApi = data => cartRequestFormData.post('/interface/web/PostFeedback', data);
 
 // user
 export const registerApi = data => cartRequestFormData.post('/interface/WebMember/MemberRegister', data);

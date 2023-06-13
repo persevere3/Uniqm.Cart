@@ -205,6 +205,10 @@ $primary_color: #4db38e;
 
 .carts_container, .favorite_container {
   width: 300px;
+  
+  // test
+  height: 500px;
+
   padding: 15px;
 
   position: fixed;
@@ -217,7 +221,7 @@ $primary_color: #4db38e;
   transition: .5s;
   z-index: 150;
 
-  &.hover {
+  &.active {
     transform: translateX(0%);
   }
 
@@ -325,7 +329,7 @@ $primary_color: #4db38e;
     z-index: 150;
     display: none;
     @include xl{
-      &.search_active{
+      &.active{
         display: block;
       }
     }
@@ -366,7 +370,7 @@ $primary_color: #4db38e;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 150;
     display: none;
-    &.connect_active{
+    &.active{
       display: block;
     }
 
@@ -463,7 +467,7 @@ $primary_color: #4db38e;
     overflow: hidden;
 
     display: none;
-    &.sidebar_active{
+    &.active{
       display: block;
     }
 
