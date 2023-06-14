@@ -4,26 +4,90 @@
 
 <template>
   <div class="main">
-    {{ testData }}
+    <div class="img_container pc" v-if="homePage.TopImg" :style="{backgroundImage: `url(${homePage.TopImg})`}"></div>
+    <div class="img_container mobile" v-if="homePage.PhoneImg" :style="{backgroundImage: `url(${homePage.PhoneImg})`}"></div>
 
-    <!-- v-if="homePage.Ads && homePage.Ads.length" -->
-    <div class="banner" v-if="false">
+    <!-- <div class="banner" v-if="homePage.Ads && homePage.Ads.length">
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <!-- <div class="swiper-slide" v-for="item in homePage.Ads" :key="item.ID" 
-            :style="{backgroundImage: `url(${item.URL})`}"
+          <div class="swiper-slide" v-for="item in homePage.Ads" 
+                :key="item.ID" :style="{backgroundImage: `url(${item.URL})`}"
           >
-          </div> -->
-
-          <div class="swiper-slide"> 1 </div>
-          <div class="swiper-slide"> 2 </div>
-          <div class="swiper-slide"> 3 </div>
-
+          </div>
         </div>
       </div>
       <div class="swiper-pagination"></div>
+    </div> -->
+
+    <div class="category_container" v-if="homePage.Ex && all.websubcategory">
+      <ul>
+        <li v-for="(item, index) in filter_ex" :key="index" :style="{backgroundImage: `url(${item.Img})`}" @click="item.direct_link ? ( item.type == 0 ? urlPush(item.direct_link, true) : urlPush(item.direct_link)) : '' "></li>
+      </ul>
     </div>
 
+    <div class="sub_category_container" v-if="homePage.Category && all.websubcategory">
+      <ul>
+        <li v-for="(item, index) in filter_category" :key="index" :style="{backgroundImage: `url(${item.Img})`}" @click="item.direct_link ? urlPush(item.direct_link) : '' "></li>
+      </ul>
+    </div>
+
+    <div class="products">
+      <div class="title">
+        {{ store.Name }}
+      </div>
+      <div class="product_list">
+        <ul>
+          <li v-for="(item, index) in all.data" :key="index"
+              @click="pushTo_cart(item.ID)"
+              v-show="page_active * perpage_num - (perpage_num + 1)  < index && index < page_active * perpage_num"
+          >
+            <div class="pic" :style="{backgroundImage: `url(${item.Img1})`}">
+              <div class="addTo_favorite_btn" @click.stop="toggleFavorite(item.ID)">
+                加入我的最愛 <i class="fas fa-heart" :class="{is_favorite : favorite[item.ID]}"></i>
+              </div>
+              <div class="addTo_cart_btn">
+                加入購物車
+              </div>
+            </div>
+            <div class="info">
+              <div class="name"> {{item.Name}} </div>
+              <div class="discount_price"> NT$ {{ numberThousands(item.NowPrice) }} </div>
+              <div class="origin_price"> NT$ {{ numberThousands(item.Price) }} </div>
+            </div>
+            <div class="l_addTo_favorite_btn" @click.stop="toggleFavorite(item.ID)">
+              <i class="fas fa-heart" :class="{is_favorite : favorite[item.ID]}"></i>
+            </div>
+            <div class="l_addTo_cart_btn">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="product_page">
+        <ul>
+          <li @click="pagePush(page_active - 1)" :class="{opacity0: page_active < 2}"> <i class="fa fa-angle-double-left" aria-hidden="true"></i> </li>
+          <li v-for="item in totalpage_num" :class="{li_active: page_active === item}" 
+              @click="pagePush(item)">
+            {{item}}
+          </li>
+          <li @click="pagePush(page_active + 1)" :class="{opacity0: page_active > totalpage_num - 1}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="community_category_container" v-if="homePage.Community">
+      <ul>
+        <li @click="urlPush(homePage.Community.FB.Link, 1)" v-if="homePage.Community.FB.Img">
+          <div class="pic" :style="{backgroundImage: `url(${homePage.Community.FB.Img})`}"></div>
+        </li>
+        <li @click="urlPush(homePage.Community.Line.Link, 1)" v-if="homePage.Community.Line.Img">
+          <div class="pic" :style="{backgroundImage: `url(${homePage.Community.Line.Img})`}"></div>
+        </li>
+        <li @click="urlPush(homePage.Community.IG.Link, 1)" v-if="homePage.Community.IG.Img">
+          <div class="pic" :style="{backgroundImage: `url(${homePage.Community.IG.Img})`}"></div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -33,30 +97,15 @@
 
   // store
   import { useCommon }  from '@/stores/common/common'
-  import { useHandlerCommon }  from '@/stores/handlerCommon'
 
-  let { site, all, user_account, testData } = storeToRefs(useCommon())
-  let { login } = useCommon()
-  let {  } = storeToRefs(useHandlerCommon())
-  let { getSiteHandler } = useHandlerCommon()
+  let { site, is_getSite, all, store, user_account, favorite, perpage_num, totalpage_num, page_active, 
+    webVersion } = storeToRefs(useCommon())
+  let { toggleFavorite, pagePush, pushTo_cart, urlPush, numberThousands } = useCommon()
 
-  onMounted(async() => {
-    site.value = JSON.parse(localStorage.getItem('site')) || {} ;
-    user_account.value = localStorage.getItem('user_account')
-
-    await login()
-    getSiteHandler()
-
-    await getHomePage()
-
-    // Swiper ???
-  })
-  
   const state = reactive({
     homePage: {},
     
     swiper: '',
-    totalpage_num: 0,
   })
   let { homePage } = toRefs(state)
 
@@ -130,6 +179,10 @@
   })
 
   // watch ==================================================
+  watch(is_getSite, async() => {
+    await getHomePage()
+    // Swiper ???
+  },)
 
   // methods ==================================================
   async function getHomePage() {
@@ -172,9 +225,33 @@
       dataSort.Ex = dataSort.Ex.filter(item => item.Img)
       dataSort.Category = dataSort.Category.filter(item => item.Img)
 
-      dataSort.Ads.forEach(item => {
-        item.URL = 'https://demo.uniqcarttest.com/' + item.URL
-      })
+      if(webVersion.value === 'demo') {
+        dataSort.TopImg = 'https://demo.uniqcarttest.com' + dataSort.TopImg
+        dataSort.PhoneImg = 'https://demo.uniqcarttest.com' + dataSort.PhoneImg
+
+        dataSort.Ads.forEach(item => {
+          item.URL = 'https://demo.uniqcarttest.com' + item.URL
+        })
+
+        dataSort.Ex.forEach(item => {
+          item.Img = 'https://demo.uniqcarttest.com' + item.Img
+        })
+
+        dataSort.Category.forEach(item => {
+          item.Img = 'https://demo.uniqcarttest.com' + item.Img
+        })
+        if(dataSort.Community.FB.Img) {
+          dataSort.Community.FB.Img = 'https://demo.uniqcarttest.com' + dataSort.Community.FB.Img
+        }
+        if(dataSort.Community.Line.Img) {
+          dataSort.Community.Line.Img = 'https://demo.uniqcarttest.com' + dataSort.Community.Line.Img
+        }
+        if(dataSort.Community.IG.Img) {
+          dataSort.Community.IG.Img = 'https://demo.uniqcarttest.com' + dataSort.Community.IG.Img
+        }
+      }
+
+      console.log(dataSort)
 
       state.homePage = dataSort;
     } catch (error) {

@@ -25,6 +25,6 @@ export const useFilters = defineStore('filters', () => {
   }
 
   return {
-    methods
+    ...methods
   }
 })

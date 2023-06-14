@@ -1,7 +1,12 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { getCategoryApi } from '@/api/index';
 
+import { useCommon }  from '@/stores/common/common'
+
 export const useCategory = defineStore('category', () => {
+  let { site, webVersion } = storeToRefs(useCommon())
+  let { login } = useCommon()
+
   // state ==================================================
   const state = reactive({
     category_product: {}
@@ -18,7 +23,7 @@ export const useCategory = defineStore('category', () => {
         let res = await getCategoryApi(formData)
         if(res.data.errormessage) {
           await login();
-          methods.getCategoryApi(formData);
+          methods.getCategory(id)
           return
         }
 
@@ -39,6 +44,9 @@ export const useCategory = defineStore('category', () => {
 
         // product => sort[i].Products[j]
         for(let i = 0; i < product.length; i++) {
+          if(webVersion.value === 'demo') {
+            product[i].Img1 = 'https://demo.uniqcarttest.com' + product[i].Img1
+          }
           // Category1~5
           for(let j = 1; j < 6; j++) {
             let category_item = product[i][`Category${j}`];
@@ -52,7 +60,10 @@ export const useCategory = defineStore('category', () => {
 
         data.Img = [];
         for(let i = 1; i < 6; i++) {
-          if(data[`Img${i}`]){
+          if(data[`Img${i}`]) {
+            if(webVersion.value === 'demo') {
+              data[`Img${i}`] = 'https://demo.uniqcarttest.com' + data[`Img${i}`]
+            }
             data.Img.push(data[`Img${i}`]);
           }
         }

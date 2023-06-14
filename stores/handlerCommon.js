@@ -5,7 +5,7 @@ import {  } from '@/api/index';
 
 export const useHandlerCommon = defineStore('handlerCommon', () => {
   // store ==================================================
-  let { site, store, user_account, all, totalpage_num, perpage_num, footer_community } = storeToRefs(useCommon())
+  let { site, is_getSite, store, user_account, all, totalpage_num, perpage_num, footer_community, webVersion } = storeToRefs(useCommon())
   let { getSite, getAll, getStore, getCopyRight, getCustomerService, getCart, getFavorite, appendScript, urlPush } = useCommon()
 
   // state ==================================================
@@ -18,6 +18,8 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
     async getSiteHandler() {
       await getSite()
 
+      is_getSite.value = true
+
       if(site.value.WebEnable == 0) {
         urlPush('/error.html');
       }
@@ -29,20 +31,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
       getCart();
 
       let pathname = '';
-      
-      // allProducts, category
-      if( pathname == '/allProducts.html' ||
-          pathname === '/category.html'){
-
-        let search = location.href.split('?')[1] || '';
-        let arr = search.split('&') ;
-      
-        for(let i = 0; i < arr.length; i++){
-          if( arr[i].split('=')[0] == 'id' ){
-            vm.getCategory(arr[i].split('=')[1]);
-          }
-        }
-      }
 
       // rich
       if( pathname === '/rich.html'){
@@ -205,9 +193,15 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
       all.value.webcategory.forEach(category => {
         let link;
         // category.Class 0: all category rich, 1: contact, 2: 外部連結, 3: 自訂義
-        if(category.Class === '1') link = '/contact.html'
+        if(category.Class === '1') link = '/contact'
         else if(category.Class === '2') link = category.Text
-        else if(category.Class === '3') link = `/rich.html?id=${category.ID}&cid=3`
+        else if(category.Class === '3') link = `/rich?id=${category.ID}&cid=3`
+
+        if(state.webVersion === 'demo') {
+          if(category.Class === '1' || category.Class === '3') {
+            link = 'https://demo.uniqcarttest.com' + link
+          }
+        }
 
         category.Link = link;
         category.isDropDown = false;
@@ -216,10 +210,15 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
       all.value.websubcategory.forEach(category => {
         let link;
         //category.Class 0: all, 1: category, 2: rich, 3: rich(footer)
-        if(category.Class === '3') link = `/rich.html?id=${category.CategoryID}&cid=1`
-        else if(category.Class === '2') link = `/rich.html?id=${category.ID}&cid=0`
-        else if(category.Class === '1') link = `/category.html?id=${category.ID}`
-        else link = `/allProducts.html?id=${category.ID}`
+        if(category.Class === '3') link = `/rich?id=${category.CategoryID}&cid=1`
+        else if(category.Class === '2') link = `/rich?id=${category.ID}&cid=0`
+        else if(category.Class === '1') link = `/category?id=${category.ID}`
+        else link = `/allProducts?id=${category.ID}`
+
+        if(state.webVersion === 'demo') {
+          link = 'https://demo.uniqcarttest.com' + link
+        }
+
         category.Link = link;
 
         let nav = navbar.find(nav => nav.ID == category.Category)
@@ -244,6 +243,12 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
           all.value.client.push(item);
         }
       })
+
+      if(webVersion.value === 'demo') {
+        all.value.data.forEach(item => {
+          item.Img1 = 'https://demo.uniqcarttest.com' + item.Img1
+        })
+      }
 
       getFavorite();
     },

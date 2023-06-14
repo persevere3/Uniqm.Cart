@@ -18,6 +18,8 @@ export const useCommon = defineStore('common', () => {
     copyRight: {},
     customerService: {},
 
+    is_getSite: false,
+
     carts: [],
     favorite: {},
     is_carts_active: false,
@@ -63,7 +65,7 @@ export const useCommon = defineStore('common', () => {
 
   // methods ==================================================
   const methods = {
-    ...useFilters().methods,
+    ...useFilters(),
 
     async login() {
       let params = `site=${state.site.Site}&store=${state.site.Name}&preview=${state.site.Preview}&WebPreview=${state.site.WebPreview}`;
@@ -113,7 +115,7 @@ export const useCommon = defineStore('common', () => {
         let res = await getStoreApi(params)
         if(res.data.errormessage) {
           await methods.login();
-          methods.getStoreApi(params);
+          methods.getStore();
           return
         }
 
@@ -155,7 +157,7 @@ export const useCommon = defineStore('common', () => {
         }
 
         state.customerService = res.data.data[0] || {};
-        // state.customerService.Type == 1 ? methods.appendScript(state.customerService.Text, 'head') : methods.appendScript(state.customerService.Text, 'body');
+        state.customerService.Type == 1 ? methods.appendScript(state.customerService.Text, 'head') : methods.appendScript(state.customerService.Text, 'body');
         // if(state.customerService.FBText ) methods.appendScript(state.customerService.FBText, 'body');
       } catch (error) {
         throw new Error(error)

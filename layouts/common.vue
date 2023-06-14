@@ -341,13 +341,12 @@
 
   // store ==================================================
   import { useCommon }  from '@/stores/common/common'
-  import { useFilters }  from '@/stores/cross/filters'
+  import { useHandlerCommon }  from '@/stores/handlerCommon'
 
   let { site, user_account, all, store, footer_community, copyRight, customerService, 
     carts, is_carts_active, favorite, is_favorite_active } = storeToRefs(useCommon())
-  let { delete_carts_item, productTotalQty, setCarts, pushTo_cart, urlPush } = useCommon()
-
-  let { numberThousands } = useFilters()
+  let { delete_carts_item, productTotalQty, setCarts, pushTo_cart, urlPush, numberThousands } = useCommon()
+  let { getSiteHandler } = useHandlerCommon()
 
   // state ==================================================
   const state = reactive({
@@ -395,9 +394,15 @@
   })
 
   // onMounted ==================================================
-  onMounted(() => {
+  onMounted(async() => {
+    site.value = JSON.parse(localStorage.getItem('site')) || {} ;
+    user_account.value = localStorage.getItem('user_account')
+    await getSiteHandler()
+
+    // ???
     state.pathname = location.pathname;
     if(state.pathname === '/index.html') state.pathname = '/'
+
     window.addEventListener('scroll', scrollHandler);
     window.addEventListener('resize', resizeHandler);
     window.addEventListener("webkitAnimationStart", function(event) {
@@ -447,7 +452,7 @@
   })
 
   // watch ==================================================
-  watch(is_chat, () => {
+  watch(is_chat, (val) => {
     let arr = [];
 
     let tawkbutton;
