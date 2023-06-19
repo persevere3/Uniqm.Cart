@@ -5,7 +5,7 @@ import {  } from '@/api/index';
 
 export const useHandlerCommon = defineStore('handlerCommon', () => {
   // store ==================================================
-  let { site, is_getSite, store, user_account, all, totalpage_num, perpage_num, footer_community, webVersion } = storeToRefs(useCommon())
+  let { site, is_getSite, store, user_account, all, is_getAll, totalpage_num, perpage_num, footer_community, webVersion } = storeToRefs(useCommon())
   let { getSite, getAll, getStore, getCopyRight, getCustomerService, getCart, getFavorite, appendScript, urlPush } = useCommon()
 
   // state ==================================================
@@ -31,21 +31,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
       getCart();
 
       let pathname = '';
-
-      // rich
-      if( pathname === '/rich.html'){
-        let search = location.href.split('?')[1] || '';
-        let arr = search.split('&') ;
-
-        for(let i = 0; i < arr.length; i++){
-          if( arr[i].split('=')[0] == 'id' ){
-            vm.rich_id = arr[i].split('=')[1];
-          }
-          else if( arr[i].split('=')[0] == 'cid' ){
-            vm.rich_cid = arr[i].split('=')[1];
-          }
-        }
-      }
 
       // order
       if (pathname === '/order.html' || pathname === '/shoppingOrder.html') {
@@ -235,11 +220,11 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
 
       all.value.footer.forEach(item => {
         if(item.CID == 1) {
-          item.Link = `/rich.html?id=${item.ID}&cid=1`;
+          item.Link = `/rich?id=${item.ID}&cid=1`;
           all.value.about.push(item);
         }
         else if(item.CID == 2) {
-          item.Link = `/rich.html?id=${item.ID}&cid=2`;
+          item.Link = `/rich?id=${item.ID}&cid=2`;
           all.value.client.push(item);
         }
       })
@@ -249,6 +234,8 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
           item.Img1 = 'https://demo.uniqcarttest.com' + item.Img1
         })
       }
+
+      is_getAll.value = true
 
       getFavorite();
     },

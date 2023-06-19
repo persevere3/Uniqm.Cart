@@ -19,6 +19,7 @@ export const useCommon = defineStore('common', () => {
     customerService: {},
 
     is_getSite: false,
+    is_getAll: false,
 
     carts: [],
     favorite: {},
@@ -414,7 +415,7 @@ export const useCommon = defineStore('common', () => {
     imgHandler() {
       let editorWidth = 0;
       let editor_input =  document.querySelector('#EditerWidth');
-      if(editor_input){
+      if(editor_input) {
         editorWidth = editor_input.value  * 1
       }
 
@@ -422,9 +423,7 @@ export const useCommon = defineStore('common', () => {
 
       let rich_container = document.querySelector('.rich_container');
 
-      if(!ql_editor || !rich_container){
-        return
-      }
+      if(!ql_editor || !rich_container) return
 
       let rich_container_width = parseFloat(window.getComputedStyle(rich_container).width);
       let rich_container_padding = parseFloat(window.getComputedStyle(rich_container).padding);

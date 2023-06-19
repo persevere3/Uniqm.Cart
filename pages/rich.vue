@@ -3,53 +3,60 @@
 </style>
 
 <template>
-  <div class="main">
-    {{ testData }}
-
+  <div class="main" v-if="content_obj">
+    <div class="title">
+      {{ content_obj[rich_id].Name }}
+    </div>
+    <div class="rich_container">
+      <div class="ql-editor" v-html="unescapeHTML(content_obj[rich_id].Text)"></div>
+    </div>
   </div>
 </template>
 
 <script setup>
   import { storeToRefs } from 'pinia'
-  import { getHomePageApi } from '@/api/index.js'
 
   // store
   import { useCommon }  from '@/stores/common/common'
 
-  let { site, all, user_account, testData } = storeToRefs(useCommon())
-  let { login } = useCommon()
-
-  onMounted(async() => {
-    
-  })
+  let { all, is_getAll } = storeToRefs(useCommon())
+  let { imgHandler, unescapeHTML } = useCommon()
   
   const state = reactive({
-    // rich location.href
     rich_id: 0,
-    // rich_cid 0: navbar, 1: 關於我們, 2: 顧客服務
     rich_cid: 0,
+    content_obj: null
   })
-  let {  } = toRefs(state)
+  let { rich_id, rich_cid, content_obj } = toRefs(state)
 
-  // computed ==================================================
-  let customize_obj = computed(() => {
-    return getObj_ID(all.value.webcategory)
-  })
-  let navbar_obj = computed(() => {
-    return getObj_ID(all.value.websubcategory)
-  })
-  let footer_obj = computed(() => {
-    return getObj_ID(all.value.footer)
-  })
+  watch(is_getAll, () => {
+    const { id, cid } = useRoute().query
+    state.rich_id = id
+    state.rich_cid = cid
 
-  // watch ==================================================
+    // navbar
+    if(state.rich_cid === '0') {
+      state.content_obj = toObj(all.value.websubcategory)
+    }
+    // footer
+    else if(state.rich_cid === '1' || state.rich_cid === '2') {
+      state.content_obj = toObj(all.value.footer)
+    }
+    // customize
+    else if(state.rich_cid === '3') {
+      state.content_obj = toObj(all.value.webcategory)
+    }
+
+    nextTick(() => {
+      imgHandler()
+    })
+  })
 
   // methods ==================================================
-  function getObj_ID(arr) {
+  function toObj(arr) {
     let obj = {};
-    if(!arr.length) return
+    if(!arr || !arr.length) return
     arr.forEach(item => obj[item.ID] = item)
     return obj;
   }
-
 </script>

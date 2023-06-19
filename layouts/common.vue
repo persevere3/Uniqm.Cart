@@ -582,7 +582,7 @@
   }
   function searchHandler() {
     if(state.searchStr){
-      urlPush(`/search.html?query=${this.searchStr}&type=0`);
+      urlPush(`/search?query=${this.searchStr}&type=0`);
     }
   }
 
