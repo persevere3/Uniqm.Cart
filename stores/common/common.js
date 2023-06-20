@@ -100,7 +100,7 @@ export const useCommon = defineStore('common', () => {
         let res = await getAllApi(params)
         if(res.data.errormessage) {
           await methods.login();
-          methods.getAllApi(params);
+          methods.getAll();
           return
         }
 

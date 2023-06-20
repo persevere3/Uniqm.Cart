@@ -8,24 +8,7 @@
       </div>
     </div>
 
-    <div class="favorite_container" :class="{active : is_favorite_active}">
-      <ul class="favorite_items">
-        <template v-for="item in favorite" :key="item.ID">
-          <li @click.stop="pushTo_cart(item.ID)">
-            <div class="img_and_name">
-              <div class="img" :style="{backgroundImage: `url(${item.Img1})`}"></div>
-              <div class="name"> {{ item.Name }} </div>
-            </div>
-            <div class="price_and_delete">
-              <div class="price"> NT${{numberThousands(item.NowPrice)}} </div>
-              <div class="delete" @click.stop="toggleFavorite(item.ID)">
-                <i class="fas fa-trash-alt"></i>
-              </div>
-            </div>
-          </li>
-        </template>
-      </ul>
-    </div>
+    <LayoutFavoriteContainer />
 
     <div class="carts_container" :class="{active : is_carts_active}">
       <ul class="carts_items">
@@ -344,7 +327,7 @@
   import { useHandlerCommon }  from '@/stores/handlerCommon'
 
   let { site, user_account, all, store, footer_community, copyRight, customerService, 
-    carts, is_carts_active, favorite, is_favorite_active } = storeToRefs(useCommon())
+    carts, is_carts_active } = storeToRefs(useCommon())
   let { delete_carts_item, productTotalQty, setCarts, pushTo_cart, urlPush, numberThousands } = useCommon()
   let { getSiteHandler } = useHandlerCommon()
 
@@ -682,11 +665,6 @@
         state.is_sidebar = 0;
       }, 350)
     }
-  }
-
-  // 
-  function toggleFavorite(id) {
-    this.$bus.$emit('toggleFavorite', id);
   }
 
   // scroll

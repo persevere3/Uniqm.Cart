@@ -13,7 +13,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
     
   })
 
-  // methods =========================================6=========
+  // methods ==================================================
   const methods = {
     async getSiteHandler() {
       await getSite()
@@ -153,17 +153,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
           window.history.replaceState({}, document.title, vm.getPathname('info'));
         } else {
           vm.urlPush(vm.getPathname('user'));
-        }
-      }
-
-      // shopping
-      if (pathname === '/shopping.html') {
-        vm.getCategories()
-        vm.getProducts()
-
-        if(location.search.indexOf('account') > -1) {
-          vm.user_account = location.search.split('account=')[1]
-          localStorage.setItem('user_account', vm.user_account)
         }
       }
     },

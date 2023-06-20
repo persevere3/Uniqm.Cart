@@ -10,22 +10,15 @@
   </div>
 
   <div class="main">
-    <!-- <div class="category_list" v-if="sortCategory">
-      <ul>
-        <li v-for="item in sortCategory" :key="item.ID" @click="urlPush(`/search.html?id=${item.ID}&name=${item.Name}`)">{{item.Name}}</li>
-      </ul>
-    </div> -->
     <template v-if="search && search.length">
       <div class="product_list">
         <div class="top">
-          <!-- <div class="title">{{search_title}}</div> -->
           <div class="perpageNum_select">
             <div class="select">
               {{sortBy_arr[sortBy_index]}}
               <i class="fa fa-angle-down" aria-hidden="true"></i>
             </div>
             <ul>
-              <!-- getSearch(index:string) -->
               <li v-for="(item, index) in sortBy_arr" :key="index" 
                   @click="getSearch('' + index)">
                 {{item}}
@@ -84,7 +77,7 @@
         </ul>
       </div>
     </template>
-    <template v-if="search && search.length < 1">
+    <template v-else>
       <div class="no_product">
         <img src="../.././assets/img/search.png" alt="">
         <h3>未找到商品</h3>
@@ -101,8 +94,8 @@
   // store
   import { useCommon }  from '@/stores/common/common'
 
-  let { site, perpage_num, totalpage_num, page_active } = storeToRefs(useCommon())
-  let { login } = useCommon()
+  let { site, is_getSite, favorite, perpage_num, totalpage_num, page_active, webVersion } = storeToRefs(useCommon())
+  let { login, toggleFavorite, pushTo_cart, pagePush, numberThousands } = useCommon()
   
   const state = reactive({
     sortBy_arr: [ '商品排序', '上架時間: 由新至舊', '上架時間: 由舊至新', '價格: 由高至低', '價格: 由低至高'],
@@ -111,13 +104,13 @@
     // query
     search_title: '',
     // res
-    search: '',
+    search: null,
   })
-  let {  } = toRefs(state)
+  const { sortBy_arr, sortBy_index, perpage_num_arr, search_title, search } = toRefs(state)
 
-  const {query, type} = useRoute().params
+  const { query, type } = useRoute().query
 
-  onMounted(() => {
+  watch(is_getSite, () => {
     if(query) getSearch()
   })
 
@@ -143,7 +136,12 @@
       }
 
       state.search = res.data.data;
-      perpage_num.value =  6;
+      if(webVersion.value === 'demo') {
+        state.search.forEach(item => {
+          item.Img = 'https://demo.uniqcarttest.com' + item.Img
+        })
+      }
+      if(perpage_num.value % 3 !== 0) perpage_num.value =  6;
       totalpage_num.value = Math.ceil(state.search.length / perpage_num.value);
       page_active.value = 1;
     } catch (error) {
