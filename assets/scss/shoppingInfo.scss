@@ -453,7 +453,7 @@ input{
                   color: #fff;
                 }
               }
-              .td.products {
+              .td.uniqm_products {
                 &.expandable {
                   .icon {
                     color: #fff;
@@ -500,7 +500,7 @@ input{
                 width: 20%;
                 word-break: break-all;
               }
-              &.products{
+              &.uniqm_products{
                 width: 25%;
   
                 &.expandable{
@@ -602,7 +602,7 @@ input{
         .body{
           .tr{
             .td{
-              &.products{
+              &.uniqm_products{
                 align-items: center;
               }
             }
@@ -754,7 +754,7 @@ input{
                 &.number{
                   width: 30%;
                 }
-                &.products{
+                &.uniqm_products{
                   width: 45%;
                 }
                 &.amount{
@@ -791,7 +791,7 @@ input{
         .body{
           .tr{
             .td{
-              &.products{
+              &.uniqm_products{
                 align-items: flex-start;
               }
             }

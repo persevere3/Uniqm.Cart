@@ -2,6 +2,8 @@
   <div>
     <LayoutFavoriteContainer />
 
+    <LayoutCartContainer />
+
     <header>
       <div class="logo" v-if="store">
         <a @click="urlPush(getPathname('index'))">
@@ -15,7 +17,7 @@
             <i class="fa-solid fa-heart"></i>
             <span class="none650"> 收藏 </span> 
           </li>
-          <li @click.stop="carts.length ? is_carts_active = !is_carts_active : pushTo_cart();" tabindex="0" @blur="is_carts_active = false"> 
+          <li @click.stop="cart.length ? is_carts_active = !is_carts_active : pushTo_cart();" tabindex="0" @blur="is_carts_active = false"> 
             <i class="fa-solid fa-cart-shopping"></i> 
             <span class="none650"> 購物車 </span> 
           </li>
@@ -30,7 +32,7 @@
         </ul>
       </div>
     </header>
-
+    
     <slot />
 
     <footer>
@@ -70,7 +72,7 @@
   import { useCommon }  from '@/stores/common/common'
   import { useHandlerCommon }  from '@/stores/handlerCommon'
 
-  let { site, user_account, store, carts, is_carts_active, is_favorite_active } = storeToRefs(useCommon())
+  let { site, user_account, store, cart, is_carts_active, is_favorite_active } = storeToRefs(useCommon())
   let { pushTo_cart, getPathname, urlPush } = useCommon()
   let { getSiteHandler } = useHandlerCommon()
 

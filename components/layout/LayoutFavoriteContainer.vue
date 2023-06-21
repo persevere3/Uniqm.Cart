@@ -1,5 +1,5 @@
 <template> 
-  <div class="favorite_container" :class="{active : is_favorite_active}">
+  <div class="favorite_container" :class="{active : is_favorite_active}" v-if="Object.keys(favorite).length">
     <ul class="favorite_items">
       <template v-for="item in favorite" :key="item.ID">
         <li @click.stop="pushTo_cart(item.ID)">

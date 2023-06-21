@@ -89,23 +89,23 @@ export const useInfo = defineStore('info', () => {
       })
     },
     login_handle_carts() {
-      let carts = JSON.parse(localStorage.getItem(`${site.value.Name}@${user_account.value}@carts`)) || [];
-      let localCarts = JSON.parse(localStorage.getItem(`${site.value.Name}@carts`)) || [];
+      let cart = JSON.parse(localStorage.getItem(`${site.value.Name}@${user_account.value}@cart`)) || [];
+      let localCarts = JSON.parse(localStorage.getItem(`${site.value.Name}@cart`)) || [];
       for(let localIndex in localCarts) {
         let f = false;
-        for(let cartsIndex in carts) {
-          if(localCarts[localIndex].ID === carts[cartsIndex].ID) {
-            carts[cartsIndex] = localCarts[localIndex]
+        for(let cartsIndex in cart) {
+          if(localCarts[localIndex].ID === cart[cartsIndex].ID) {
+            cart[cartsIndex] = localCarts[localIndex]
             f = true;
           }
         }
         if(!f) {
-          carts[carts.length] = localCarts[localIndex]
+          cart[cart.length] = localCarts[localIndex]
         }
       }
-      state.carts = [];
-      carts.forEach((item, index) => vm.carts[index] = item)
-      localStorage.setItem(`${site.value.Name}@${user_account.value}@carts`, JSON.stringify(state.carts));
+      state.cart = [];
+      cart.forEach((item, index) => vm.cart[index] = item)
+      localStorage.setItem(`${site.value.Name}@${user_account.value}@cart`, JSON.stringify(state.cart));
     },
     
     add_address() {

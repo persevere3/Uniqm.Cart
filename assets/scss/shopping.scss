@@ -58,10 +58,11 @@ $primary_color: #202d40;
     right: 10px;
     transform: translateY(-50%);
     font-size: 2rem;
+    display: flex;
   }
 }
 
-.products {
+.uniqm_products {
   margin: 0 10.494791vw;
 
   .productsTitle {

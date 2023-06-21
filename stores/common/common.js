@@ -21,7 +21,7 @@ export const useCommon = defineStore('common', () => {
     is_getSite: false,
     is_getAll: false,
 
-    carts: [],
+    cart: [],
     favorite: {},
     is_carts_active: false,
     is_favorite_active: false,
@@ -487,7 +487,7 @@ export const useCommon = defineStore('common', () => {
 
     // common component ============================================================
     delete_carts_item(id, specID) {
-      carts.value.forEach((item, index)=> {
+      cart.value.forEach((item, index)=> {
         if(item.ID === id) {
           if(item.specArr) {
             item.specArr.forEach((item2, index2) => {
@@ -497,11 +497,11 @@ export const useCommon = defineStore('common', () => {
             })
 
             if(methods.productTotalQty(item) < 1) {
-              carts.value.splice(index, 1);
+              cart.value.splice(index, 1);
             }
           }
           else {
-            carts.value.splice(index, 1);
+            cart.value.splice(index, 1);
           }
         }
       })
@@ -522,11 +522,11 @@ export const useCommon = defineStore('common', () => {
     setCarts() {
       if(user_account.value) {
         console.log('登入')
-        localStorage.setItem(`${site.value.Name}@${user_account.value}@carts`, JSON.stringify(carts.value));
+        localStorage.setItem(`${site.value.Name}@${user_account.value}@cart`, JSON.stringify(cart.value));
       }
       else {
         console.log('登出')
-        localStorage.setItem(`${site.value.Name}@carts`, JSON.stringify(carts.value));
+        localStorage.setItem(`${site.value.Name}@cart`, JSON.stringify(cart.value));
       }
     },
     // ============================================================
