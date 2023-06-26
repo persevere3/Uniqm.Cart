@@ -34,7 +34,7 @@ export const getOrderApi = data => cartRequestFormData.post('/interface/web/GetO
 export const getMemberOrderApi = data => cartRequestFormData.post('/interface/Webmember/GetMemberOrders', data);
 
 
-export const checkPaytApi = data => cartRequest.post('/interface/web/ATMComfirmBack', data);
+export const checkPayApi = data => cartRequestFormData.post('/interface/web/ATMComfirmBack', data);
 export const rePayApi = data => cartRequest.post('/LineMK/Line/RePayConfirm', data);
 export const send_verify_codeApi = data => cartRequest.post('/interface/WebMember/SendValidateMessage', data);
 export const connectHandlerApi = data => cartRequestFormData.post('/interface/web/PostFeedback', data);
@@ -63,5 +63,3 @@ export const deleteAccount_testApi = data => cartRequestFormData.post('/interfac
 // shopping
 export const getCategoriesApi = data => cartRequest.post('/interface/store/GetCategory', data);
 export const getProductsApi = data => cartRequest.post('/interface/store/storeLogin', data);
-
-export const checkPayApi = data => cartRequestFormData.post('/interface/web/ATMComfirmBack', data);

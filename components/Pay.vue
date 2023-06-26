@@ -5,7 +5,7 @@
 
       <!-- 顯示帳戶 -->
       <template v-if="payModal_message == 'template1'">
-        <div> 匯款銀行 : {{store.SelfAtmBankId}} {{bank[store.SelfAtmBankId]}} </div>
+        <div> 匯款銀行 : {{ store.SelfAtmBankId }} {{ bank[store.SelfAtmBankId] }} </div>
         <div class='bank_account'>
           <div class="bank_title"> 匯款帳號 : </div>
           <input type='text' id='bank_copy_input' readonly v-model='store.SelfAtmId'>
@@ -77,3 +77,109 @@
 
   <div class="ECPay_form_container" v-html="ECPay_form" ></div>
 </template>
+
+<script setup>
+  import { storeToRefs } from 'pinia'
+
+  import { checkPayApi } from '../api/index'
+
+  // store
+  import { useCommon }  from '@/stores/common/common'
+  import { useInfo }  from '@/stores/common/info'
+  import { useUser }  from '@/stores/common/user'
+  import { useVerify }  from '@/stores/common/verify'
+
+  let { store, bank, account_number, order_number, 
+    is_payModal, payModal_message, is_logout 
+  } = storeToRefs(useCommon())
+  let { copy } = useCommon()
+  let {  } = storeToRefs(useInfo())
+  let { logout } = useInfo()
+  let { o_password, o_password_type, r_password, r_password_type, r_confirm_password, r_confirm_password_type } = storeToRefs(useUser())
+  let {  } = useUser()
+  let { verify } = useVerify()
+
+  const state = reactive({
+
+  })
+  let {  } = toRefs(state)
+
+  definePageMeta({
+    layout: 'uniqm'
+  })
+
+  // computed ==================================================
+
+  // watch ==================================================
+
+  // methods ==================================================
+  function filter_account_number() {
+    if(account_number.value.length > 6) {
+      account_number.value = account_number.value.substring(0, 6)
+    }
+  }
+  async function checkPay() {
+    if(!order_number.value || !account_number.value || account_number.value.length < 6) {
+      payModal_message.value = '請填寫匯款帳號末6碼';
+      is_payModal.value = true;
+      return
+    }
+
+    let formData = new FormData();
+    formData.append("payflino", order_number.value);
+    formData.append("paytradeno", account_number.value);
+
+    try {
+      let res = await checkPayApi(formData)
+      if(res.data.errormessage) {
+        await methods.login();
+        checkPayApi(formData);
+        return
+      }
+
+      if(res.data.status) payModal_message.value = '帳號末6碼已送出，確認您的付款中' 
+      else payModal_message.value = '抱歉，請重新輸入帳號末6碼'
+      is_payModal.value = true;
+
+      let pathname = location.pathname;
+      if(pathname.indexOf('order') > -1 && !user_account.value) getOrder('page', true)
+      else state.getMemberOrder('page', true)
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+  function toPay() {
+    // LinePay
+    if(pay_method.value == 'LinePay') {
+      urlPush(payResult.value.payUrl)
+    }
+    // ecpay
+    else {
+      if(webVersion.value == 'demo') {
+        // target="_blank"
+        ECPay_form.value = `<form id="ECPay_form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
+      } else {
+        ECPay_form.value = `<form id="ECPay_form" action="https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
+      }
+
+      for(let item in payResult.value) {
+        if(item === 'success' || item === 'message') continue
+        // EncryptType TotalAmount ExpireDate: number，other: text
+        ECPay_form.value += `<input type="${item == 'EncryptType' || item == 'TotalAmount' || item == 'ExpireDate' ? 'number' : 'text'}" name="${item}" value="${payResult.value[item]}">`;
+      }
+      ECPay_form.value += `
+          <div class="message"> 前往付款頁面 </div>
+          <div class="button_row">
+            <div class="button" onclick="document.querySelector('.ECPay_form_container').style.display = 'none'" > 取消 </div> 
+            <div class="button" onclick="document.querySelector('#ECPay_form').submit(); document.querySelector('.ECPay_form_container').style.display = 'none'" > 確認 </div> 
+          </div>
+        </form>
+      `;
+
+      setTimeout(() => {
+        document.querySelector('.ECPay_form_container').style.display = 'block'
+      }, 100)
+    }
+  }
+  
+</script>
