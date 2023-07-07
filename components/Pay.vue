@@ -148,38 +148,5 @@
       throw new Error(error)
     }
   }
-  function toPay() {
-    // LinePay
-    if(pay_method.value == 'LinePay') {
-      urlPush(payResult.value.payUrl)
-    }
-    // ecpay
-    else {
-      if(webVersion.value == 'demo') {
-        // target="_blank"
-        ECPay_form.value = `<form id="ECPay_form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
-      } else {
-        ECPay_form.value = `<form id="ECPay_form" action="https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
-      }
-
-      for(let item in payResult.value) {
-        if(item === 'success' || item === 'message') continue
-        // EncryptType TotalAmount ExpireDate: number，other: text
-        ECPay_form.value += `<input type="${item == 'EncryptType' || item == 'TotalAmount' || item == 'ExpireDate' ? 'number' : 'text'}" name="${item}" value="${payResult.value[item]}">`;
-      }
-      ECPay_form.value += `
-          <div class="message"> 前往付款頁面 </div>
-          <div class="button_row">
-            <div class="button" onclick="document.querySelector('.ECPay_form_container').style.display = 'none'" > 取消 </div> 
-            <div class="button" onclick="document.querySelector('#ECPay_form').submit(); document.querySelector('.ECPay_form_container').style.display = 'none'" > 確認 </div> 
-          </div>
-        </form>
-      `;
-
-      setTimeout(() => {
-        document.querySelector('.ECPay_form_container').style.display = 'block'
-      }, 100)
-    }
-  }
   
 </script>

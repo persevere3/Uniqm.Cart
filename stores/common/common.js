@@ -17,6 +17,7 @@ export const useCommon = defineStore('common', () => {
     footer_community: {},
     copyRight: {},
     customerService: {},
+    pathname: useRoute.name,
 
     is_getSite: false,
     is_getAll: false,
@@ -308,7 +309,7 @@ export const useCommon = defineStore('common', () => {
         let res = await rePayApi(formData)
         if(res.data.errormessage) {
           await methods.login();
-          rePayApi(formData);
+          methods.rePay(FilNo, url);
           return
         }
 
