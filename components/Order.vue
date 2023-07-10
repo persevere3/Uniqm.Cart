@@ -91,7 +91,7 @@
                 <div v-if="item.Shipping * 1"> 運費: NT$ {{numberThousands(item.Shipping)}} </div>
                 <div v-if="item.Discount * 1"> 折扣: NT$ {{numberThousands(item.Discount)}} </div>
                 <div v-if="item.DiscountCode && item.DiscountCode.split(' ')[0] * 1">
-                  <div> 折扣碼優惠: NT$ {{numberThousands(item.DiscountCode.split(' ')[0])}} {{item.DiscountCode.split(' ')[1]}}</div>
+                  <div> 折扣碼優惠: NT$ {{numberThousands(item.DiscountCode.split(' ')[0])}} {{item.DiscountCode.split(' ')[1]}} </div>
                 </div>
                 <div v-if="item.UsedWallet * 1">
                   <div> 使用購物金: NT$ {{numberThousands(item.UsedWallet)}} </div>

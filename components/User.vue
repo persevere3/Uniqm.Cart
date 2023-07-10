@@ -243,8 +243,37 @@
   </div>
 </template>
 
-<script src="../.././Common.js"></script>
+<script setup>
+  import { storeToRefs } from 'pinia'
 
-<style lang="scss">
-  @import "../.././assets/scss/shoppingUser.scss";
-</style>
+  import {  } from '../api/index'
+
+  // store
+  import { useCommon }  from '@/stores/common/common'
+  import { useInfo }  from '@/stores/common/info'
+  import { useUser }  from '@/stores/common/user'
+  import { useOrder }  from '@/stores/common/order'
+  import { useVerify }  from '@/stores/common/verify'
+
+  let { store, site, user_account } = storeToRefs(useCommon())
+  let { send_verify_code, unescapeHTML } = useCommon()
+  let { } = storeToRefs(useInfo())
+  let { } = useInfo()
+  let { user_nav_active, r_name, r_account, r_mail, r_birthday, sex, r_recommender, r_phone2, r_verify_code, r_verify_code2, second, r_password, r_password_type, r_confirm_password, r_confirm_password_type, r_is_agree, is_userModal, l_account, l_password, l_password_type, forget_step, f_mail, mailOrAccount, f_account, f_second, f_verify_code, f_password, f_password_type, f_confirm_password, f_confirm_password_type, is_LineRegister, is_userMessage, user_message } = storeToRefs(useUser())
+  let { register, user_login, send_forget_verify_code, check_forget_verify_code, reset_input, edit_forget_pass, LineLogin } = useUser()
+  let {  } = storeToRefs(useOrder())
+  let { verify } = useVerify()
+
+  const state = reactive({
+
+  })
+  let {  } = toRefs(state)
+
+  // computed ==================================================
+
+  // watch ==================================================
+
+  // methods ==================================================
+
+  
+</script>
