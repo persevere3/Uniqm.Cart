@@ -126,16 +126,16 @@
         for(let j = 0; j < websubcategory.length; j++) {
           if(Ex[i].Link == websubcategory[j].ID) {
             if(websubcategory[j].Class == 3) {
-              Ex[i].direct_link = `/rich.html?id=${websubcategory[j].CategoryID}&cid=1`;
+              Ex[i].direct_link = `/rich?id=${websubcategory[j].CategoryID}&cid=1`;
             }
             else if(websubcategory[j].Class == 2) {
-              Ex[i].direct_link = `/rich.html?id=${Ex[i].Link}&cid=0`;
+              Ex[i].direct_link = `/rich?id=${Ex[i].Link}&cid=0`;
             }
             else if(websubcategory[j].Class == 1) {
-              Ex[i].direct_link = `/category.html?id=${Ex[i].Link}`;
+              Ex[i].direct_link = `/category?id=${Ex[i].Link}`;
             }
             else if(websubcategory[j].Class == 0){
-              Ex[i].direct_link = `/allProducts.html?id=${Ex[i].Link}`;
+              Ex[i].direct_link = `/allProducts?id=${Ex[i].Link}`;
             }
 
             arr.push(Ex[i]);
@@ -158,16 +158,16 @@
       for(let j = 0; j < websubcategory.length; j++) {
         if(Category[i].Link == websubcategory[j].ID) {
           if(websubcategory[j].Class == 3) {
-            Category[i].direct_link = `/rich.html?id=${websubcategory[j].CategoryID}&cid=1`;
+            Category[i].direct_link = `/rich?id=${websubcategory[j].CategoryID}&cid=1`;
           }
           else if(websubcategory[j].Class == 2) {
-            Category[i].direct_link = `/rich.html?id=${Category[i].Link}&cid=0`;
+            Category[i].direct_link = `/rich?id=${Category[i].Link}&cid=0`;
           }
           else if(websubcategory[j].Class == 1) {
-            Category[i].direct_link = `/category.html?id=${Category[i].Link}`;
+            Category[i].direct_link = `/category?id=${Category[i].Link}`;
           }
           else if(websubcategory[j].Class == 0) {
-            Category[i].direct_link = `/allProducts.html?id=${Category[i].Link}`;
+            Category[i].direct_link = `/allProducts?id=${Category[i].Link}`;
           }
 
           arr.push(Category[i]);

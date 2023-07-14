@@ -47,9 +47,9 @@
           </div>
           <div class="input_container" :class="{ error: r_birthday.is_error }" v-else>
             <div class="title"> 生日 </div>
-            <date-picker placeholder="* 請輸入生日" format="YYYY/MM/DD" v-model="r_birthday.value"
+            <!-- <date-picker placeholder="* 請輸入生日" format="YYYY/MM/DD" v-model="r_birthday.value"
               @close="verify(r_birthday)" @clear="verify(r_birthday)">
-            </date-picker>
+            </date-picker> -->
           </div>
           <div class="radio_container">
             <div class="title"> 性別 </div>
@@ -74,7 +74,7 @@
 
           <div class="input_container" :class="{ error: r_phone2.is_error }">
             <div class="title"> 手機 </div>
-            <input type="number" placeholder="* 請輸入手機" :readonly="!!user_info.Phone2" v-model.trim="r_phone2.value" @input="!!user_info.Phone2 ? r_phone2.value = $event.target.value : verify(r_phone2)">
+            <input type="text" placeholder="* 請輸入手機" :readonly="!!user_info.Phone2" v-model.trim="r_phone2.value" @input="!!user_info.Phone2 ? r_phone2.value = $event.target.value : verify(r_phone2)">
           </div>
           <template v-if="!user_info.Phone2 && (store.NotificationSystem == 1 || store.NotificationSystem == 2)">
             <div class="input_container" :class="{ error: r_verify_code.is_error }">
@@ -213,19 +213,32 @@
 
   // store
   import { useCommon }  from '@/stores/common/common'
-  import { useInfo }  from '@/stores/common/info'
-  import { useUser }  from '@/stores/common/user'
-  import { useOrder }  from '@/stores/common/order'
-  import { useVerify }  from '@/stores/common/verify'
+  import { useVerify }  from '@/stores/cross/verify'
+  import { useInfo }  from '@/stores/info'
+  import { useUser }  from '@/stores/user'
+  import { useOrder }  from '@/stores/order'
 
   let { store, user_account, is_payModal, payModal_message } = storeToRefs(useCommon())
-  let { send_verify_code } = useCommon()
+  let { send_verify_code, getPathname } = useCommon()
   let { user_info_nav_active, user_info, add_address, recommend_code, delivery_address, total_bonus, bonus} = storeToRefs(useInfo())
   let { bindLine, post_logout, getUser_info, getBonus, getMemberOrder, edit_info} = useInfo()
   let { r_name, r_mail, r_birthday, sex, r_recommender, r_phone2, r_verify_code, second, } = storeToRefs(useUser())
   let {  } = useUser()
   let { order_page_index, order_page_number, select_active, order_page_size } = storeToRefs(useOrder())
   let { verify } = useVerify()
+
+  const { RtnMsg , page } = useRoute().query
+  await getUser_info();
+  if(RtnMsg) {
+    payModal_message.value = '已收到您的付款';
+    is_payModal.value = true;
+  }
+  if(page === 'order') {
+    user_info_nav_active.value = 'order'; 
+    getMemberOrder()
+  }
+
+  useRouter().replace({ path: getPathname('info') })
 
   const state = reactive({
 

@@ -1,13 +1,13 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
-import { getOrderApi, getMemberOrderApi } from '@/api/index';
+import { getOrderApi, getMemberOrderApi, rePayApi } from '@/api/index';
 
 
 export const useOrder = defineStore('order', () => {
   // store ==================================================
-  let { user_account } = storeToRefs(useCommon())
-  let { getFormData } = useCommon()
+  let { site, user_account, payModal_message, is_payModal } = storeToRefs(useCommon())
+  let { getFormData, urlPush } = useCommon()
 
   // state ==================================================
   const state = reactive({
@@ -40,8 +40,6 @@ export const useOrder = defineStore('order', () => {
     order_page_size: 10,
     select_active: false,
 
-    is_payModal: false,
-    payModal_message: '',
     is_logout: false,
 
     order_number: '',
@@ -117,7 +115,7 @@ export const useOrder = defineStore('order', () => {
 
         setTimeout(() => {
           let uls = document.querySelectorAll('.td.products ul');
-          uls.forEach(function(item, index){
+          uls.forEach(function(item, index) {
             let lis = item.querySelectorAll('li')
             if(lis.length > 4){
               state.order[index]['expandable'] = true
@@ -165,7 +163,7 @@ export const useOrder = defineStore('order', () => {
           if(res.data.status) {
             let data = res.data.datas[0]
 
-            state.order_page_number = Math.ceil(data.Count / order_page_size.value);
+            state.order_page_number = Math.ceil(data.Count / state.order_page_size);
             if(state.order_page_number == 0){
               payModal_message.value = '沒有您查詢的訂單資料';
               is_payModal.value = true;
@@ -173,14 +171,14 @@ export const useOrder = defineStore('order', () => {
               return;
             }
 
-            vm.order = data.Orders;
+            state.order = data.Orders;
 
             setTimeout(() => {
               let uls = document.querySelectorAll('.td.products ul');
               uls.forEach(function(item, index) {
                 let lis = item.querySelectorAll('li')
                 if(lis.length > 4) {
-                  vm.$set(vm.order[index],"expandable", true)
+                  state.order[index].expandable = true
                 }
               })
             }, 100)
@@ -196,6 +194,67 @@ export const useOrder = defineStore('order', () => {
           resolve()
         }
       })
+    },
+
+    async rePay(FilNo, url) {
+      let formData = new FormData();
+      formData.append("StoreId", site.value.Name);
+      formData.append("flino", FilNo);
+      formData.append("url", url);
+
+      try {
+        let res = await rePayApi(formData)
+        if(res.data.errormessage) {
+          await login();
+          methods.rePay(FilNo, url);
+          return
+        }
+
+        if('status' in res.data) {
+          alert(res.data.msg)
+          if(user_account.value) methods.getMemberOrder()
+          else methods.getOrder()
+        }
+        else {
+          state.payResult = res.data
+          methods.toPay()
+        }
+      } catch (error) {
+        throw new Error(error)
+      }
+    },
+    toPay() {
+      // LinePay
+      if(state.pay_method == 'LinePay') {
+        urlPush(state.payResult.payUrl)
+      }
+      // ecpay
+      else {
+        if(webVersion.value == 'demo') {
+          // target="_blank"
+          state.ECPay_form = `<form id="ECPay_form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
+        } else {
+          state.ECPay_form = `<form id="ECPay_form" action="https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
+        }
+
+        for(let item in state.payResult) {
+          if(item === 'success' || item === 'message') continue
+          // EncryptType TotalAmount ExpireDate: number，other: text
+          state.ECPay_form += `<input type="${item == 'EncryptType' || item == 'TotalAmount' || item == 'ExpireDate' ? 'number' : 'text'}" name="${item}" value="${state.payResult[item]}">`;
+        }
+        state.ECPay_form += `
+            <div class="message"> 前往付款頁面 </div>
+            <div class="button_row">
+              <div class="button" onclick="document.querySelector('.ECPay_form_container').style.display = 'none'" > 取消 </div> 
+              <div class="button" onclick="document.querySelector('#ECPay_form').submit(); document.querySelector('.ECPay_form_container').style.display = 'none'" > 確認 </div> 
+            </div>
+          </form>
+        `;
+
+        setTimeout(() => {
+          document.querySelector('.ECPay_form_container').style.display = 'block'
+        }, 100)
+      }
     },
   }
 

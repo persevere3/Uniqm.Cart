@@ -8,7 +8,7 @@ import { getUser_infoApi, edit_infoApi, edit_passApi, getBonusApi,
 
 export const useInfo = defineStore('info', () => {
   // store ==================================================
-  let { site, store, user_account } = storeToRefs(useCommon())
+  let { site, store, user_account, is_payModal, payModal_message } = storeToRefs(useCommon())
   let { login, check_logout, getFormData, urlPush } = useCommon()
 
   // state ==================================================
@@ -104,7 +104,7 @@ export const useInfo = defineStore('info', () => {
         }
       }
       state.cart = [];
-      cart.forEach((item, index) => vm.cart[index] = item)
+      cart.forEach((item, index) => state.cart[index] = item)
       localStorage.setItem(`${site.value.Name}@${user_account.value}@cart`, JSON.stringify(state.cart));
     },
     
@@ -213,14 +213,14 @@ export const useInfo = defineStore('info', () => {
     async getBonus(type) {
       await methods.getUser_info()
 
-      if(!type) state.order_page_index = 1
+      if(!type) order_page_index.value = 1
       let obj = {
-        storeid: this.site.Name,
-        storename: this.site.Store,
-        phone: this.user_account,
-        recommander: this.recommend_code,
-        pageindex: this.order_page_index,
-        pagesize: this.order_page_size,
+        storeid: site.value.Name,
+        storename: site.value.Store,
+        phone: user_account.value,
+        recommander: recommend_code.value,
+        pageindex: order_page_index.value,
+        pagesize: order_page_size.value,
       }
       let formData = getFormData(obj)
 

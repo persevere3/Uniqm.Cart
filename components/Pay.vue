@@ -85,14 +85,14 @@
 
   // store
   import { useCommon }  from '@/stores/common/common'
-  import { useInfo }  from '@/stores/common/info'
-  import { useUser }  from '@/stores/common/user'
-  import { useVerify }  from '@/stores/common/verify'
+  import { useVerify }  from '@/stores/cross/verify'
+  import { useOrder }  from '@/stores/order'
+  import { useInfo }  from '@/stores/info'
+  import { useUser }  from '@/stores/user'
 
-  let { store, bank, account_number, order_number, 
-    is_payModal, payModal_message, is_logout 
-  } = storeToRefs(useCommon())
+  let { store, bank, is_payModal, payModal_message, is_logout } = storeToRefs(useCommon())
   let { copy } = useCommon()
+  let { order_number, account_number, ECPay_form } = storeToRefs(useOrder())
   let {  } = storeToRefs(useInfo())
   let { logout } = useInfo()
   let { o_password, o_password_type, r_password, r_password_type, r_confirm_password, r_confirm_password_type } = storeToRefs(useUser())
@@ -103,10 +103,6 @@
 
   })
   let {  } = toRefs(state)
-
-  definePageMeta({
-    layout: 'uniqm'
-  })
 
   // computed ==================================================
 
@@ -132,8 +128,8 @@
     try {
       let res = await checkPayApi(formData)
       if(res.data.errormessage) {
-        await methods.login();
-        checkPayApi(formData);
+        await login();
+        checkPay();
         return
       }
 

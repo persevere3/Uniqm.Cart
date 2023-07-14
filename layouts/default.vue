@@ -73,11 +73,11 @@
               購物車
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             </li>
-            <li @click="urlPush('/order.html')">
+            <li @click="urlPush('/order')">
               訂單查詢
               <i class="fas fa-clipboard-list"></i>
             </li>
-            <li v-if="site.MemberFuction * 1" @click="user_account ? urlPush('/user_info.html') : urlPush('/user.html')">
+            <li v-if="site.MemberFuction * 1" @click="user_account ? urlPush('/user_info') : urlPush('/user')">
               會員登入
               <i class="fas fa-user"></i>
             </li>
@@ -113,10 +113,10 @@
             <li @click.stop="cart.length ? is_carts_active = !is_carts_active : pushTo_cart()" tabindex="0" @blur="is_carts_active = false">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             </li>
-            <li @click="urlPush('/order.html')">
+            <li @click="urlPush('/order')">
               <i class="fas fa-clipboard-list"></i>
             </li>
-            <li v-if="site.MemberFuction * 1" @click="user_account ? urlPush('/user_info.html') : urlPush('/user.html')">
+            <li v-if="site.MemberFuction * 1" @click="user_account ? urlPush('/user_info') : urlPush('/user')">
               <i class="fas fa-user"></i>
             </li>
           </ul>
@@ -307,13 +307,11 @@
 
   // onMounted ==================================================
   onMounted(async() => {
-    site.value = JSON.parse(localStorage.getItem('site')) || {} ;
-    user_account.value = localStorage.getItem('user_account')
-    await getSiteHandler()
-
-    // ???
-    state.pathname = location.pathname;
-    if(state.pathname === '/index.html') state.pathname = '/'
+    if(!site.value.site) {
+      site.value = JSON.parse(localStorage.getItem('site')) || null ;
+      user_account.value = localStorage.getItem('user_account')
+      await getSiteHandler()
+    }
 
     window.addEventListener('scroll', scrollHandler);
     window.addEventListener('resize', resizeHandler);
@@ -356,7 +354,7 @@
           setTimeout(()=>{
             let tawkbutton = document.querySelector('.widget-visible iframe').contentWindow.document.querySelector('button');
             tawkbutton.click();
-            vm.isTawkOpen = true;
+            isTawkOpen.value = true;
           }, 0)
         }
       }
@@ -494,7 +492,7 @@
   }
   function searchHandler() {
     if(state.searchStr){
-      urlPush(`/search?query=${this.searchStr}&type=0`);
+      urlPush(`/search?query=${state.searchStr}&type=0`);
     }
   }
 

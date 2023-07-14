@@ -21,7 +21,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
       is_getSite.value = true
 
       if(site.value.WebEnable == 0) {
-        urlPush('/error.html');
+        urlPush('/error');
       }
 
       methods.getAllHandler();
@@ -29,132 +29,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
       getCopyRight();
       getCustomerService();
       getCart();
-
-      let pathname = '';
-
-      // order
-      if (pathname === '/order.html' || pathname === '/shoppingOrder.html') {
-
-        let RtnMsg = location.href.split('RtnMsg=')[1] &&
-        location.href.split('RtnMsg=')[1].split('&')[0];
-        if(RtnMsg) {
-          vm.payModal_message = '已收到您的付款';
-          vm.is_payModal = true;
-        }
-
-        // Line 登入
-        let account = location.search.split('account=')[1] && 
-        location.search.split('account=')[1].split('&')[0];
-        if(account) {
-          vm.user_account = account
-          localStorage.setItem('user_account', vm.user_account)
-        }
-
-        // Line 綁定
-        let result = location.search.split('result=')[1] && 
-        location.search.split('result=')[1].split('&')[0];
-        if(result) {
-          result = JSON.parse(decodeURI(result))
-          if(!result.status) alert(result.msg)
-          else {
-            vm.user_account = result.account
-            localStorage.setItem('user_account', vm.user_account)
-          }
-        }
-
-        if(vm.user_account) {
-          await vm.getUser_info();
-          vm.order_phone = vm.user_info.Phone;
-          vm.order_mail = vm.user_info.Email;
-          vm.getMemberOrder();
-        } else {
-          let phone = location.href.split('phone=')[1] && 
-          location.href.split('phone=')[1].split('&')[0];
-          let email = location.href.split('email=')[1] && 
-          location.href.split('email=')[1].split('&')[0];
-
-          if(phone && email) {
-            vm.order_phone = phone;
-            vm.order_mail = email;
-            vm.getOrder();
-          }
-        }
-
-        window.history.replaceState({}, document.title, vm.getPathname('order'));
-      }
-
-      // user
-      if (pathname === '/user.html' || pathname === '/shoppingUser.html') {
-        if(!(vm.site.MemberFuction * 1)){
-          vm.urlPush(vm.getPathname('index'));
-        }
-        if(vm.user_account){
-          vm.urlPush(vm.getPathname('info'));
-        }
-
-        if( vm.site.TermsNotices && location.search.split('?term=')[1]){
-          vm.user_nav_active = 'register';
-          vm.is_userModal = true;
-        }
-
-        vm.LineToken = location.href.split('code=')[1] && 
-                      location.href.split('code=')[1].split('&')[0];       
-        if(vm.LineToken) {
-          window.history.replaceState({}, document.title, vm.getPathname('user'));
-          vm.getLineProfile();
-        }
-      }
-
-      // user_info
-      if (pathname === '/user_info.html' || pathname === '/shoppingInfo.html') {
-        // 沒有開啟會員功能
-        if(!(vm.site.MemberFuction * 1)) {
-          vm.urlPush(vm.getPathname('index'));
-        }
-
-        // Line 登入
-        let account = location.search.split('account=')[1] && 
-        location.search.split('account=')[1].split('&')[0];
-        if(account) {
-          vm.user_account = account
-          localStorage.setItem('user_account', vm.user_account)
-        }
-
-        // Line 綁定
-        let result = location.search.split('result=')[1] && 
-        location.search.split('result=')[1].split('&')[0];
-        if(result) {
-          result = JSON.parse(decodeURI(result))
-          if(!result.status) alert(result.msg)
-          else {
-            vm.user_account = result.account
-            localStorage.setItem('user_account', vm.user_account)
-          }
-        }
-
-        //
-        if(vm.user_account) {
-          await vm.getUser_info();
-
-          let RtnMsg = location.href.split('RtnMsg=')[1] && 
-          location.href.split('RtnMsg=')[1].split('&')[0];
-          if(RtnMsg){
-            vm.payModal_message = '已收到您的付款';
-            vm.is_payModal = true;
-          }
-
-          let active_page = location.href.split('page=')[1] && 
-          location.href.split('page=')[1].split('&')[0];
-          if(active_page && active_page == 'order'){
-            vm.user_info_nav_active = 'order'; 
-            vm.getMemberOrder()
-          }
-
-          window.history.replaceState({}, document.title, vm.getPathname('info'));
-        } else {
-          vm.urlPush(vm.getPathname('user'));
-        }
-      }
     },
 
     async getAllHandler() {

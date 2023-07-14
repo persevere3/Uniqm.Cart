@@ -1,6 +1,6 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi,
-  getFavoriteApi, deleteFavoriteApi, addFavoriteApi, checkPayApi } from '@/api/index';
+  getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/api/index';
 
 import { useFilters }  from '../cross/filters'
 
@@ -35,10 +35,6 @@ export const useCommon = defineStore('common', () => {
     perpage_num: 8,
     totalpage_num: 0,
     page_active: 1,
-
-    //
-    order_number: '',
-    account_number: '',
 
     //
     is_logout: null,
@@ -138,7 +134,7 @@ export const useCommon = defineStore('common', () => {
         let res = await getCopyRightApi(params)
         if(res.data.errormessage) {
           await methods.login();
-          methods.getCopyRightApi(params);
+          methods.getCopyRight();
           return
         }
 
@@ -167,9 +163,7 @@ export const useCommon = defineStore('common', () => {
     },
 
     // 
-    getCart() {
-      let vm = this;
-      
+    getCart() {      
       if(state.user_account) {
         state.cart = JSON.parse(localStorage.getItem(`${state.site.Name}@${state.user_account}@cart`)) || [];
       }
@@ -263,102 +257,6 @@ export const useCommon = defineStore('common', () => {
       }
     },
 
-    // order info ========================================
-    filter_account_number() {
-      if(this.account_number.length > 6) {
-        this.account_number = this.account_number.substring(0, 6)
-      }
-    },
-    async checkPay() {
-      if(!state.order_number || !state.account_number || state.account_number.length < 6) {
-        state.payModal_message = '請填寫匯款帳號末6碼';
-        state.is_payModal = true;
-        return
-      }
-
-      let formData = new FormData();
-      formData.append("payflino", state.order_number);
-      formData.append("paytradeno", state.account_number);
-
-      try {
-        let res = await checkPayApi(formData)
-        if(res.data.errormessage) {
-          await methods.login();
-          checkPayApi(formData);
-          return
-        }
-
-        if(res.data.status) state.payModal_message = '帳號末6碼已送出，確認您的付款中' 
-        else state.payModal_message = '抱歉，請重新輸入帳號末6碼'
-        state.is_payModal = true;
-
-        let pathname = location.pathname;
-        if(pathname.indexOf('order') > -1 && !state.user_account) state.getOrder('page', true)
-        else state.getMemberOrder('page', true)
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
-    async rePay(FilNo, url) {
-      let formData = new FormData();
-      formData.append("StoreId", state.site.Name);
-      formData.append("flino", FilNo);
-      formData.append("url", url);
-
-      try {
-        let res = await rePayApi(formData)
-        if(res.data.errormessage) {
-          await methods.login();
-          methods.rePay(FilNo, url);
-          return
-        }
-
-        if('status' in res.data) {
-          alert(res.data.msg)
-          if(state.user_account) getMemberOrder()
-          else getOrder()
-        }
-        else {
-          payResult.value = res.data
-          methods.toPay()
-        }
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
-    toPay() {
-      // LinePay
-      if(pay_method.value == 'LinePay') {
-        urlPush(payResult.value.payUrl)
-      }
-      // ecpay
-      else {
-        if(webVersion.value == 'demo') {
-          // target="_blank"
-          ECPay_form.value = `<form id="ECPay_form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
-        } else {
-          ECPay_form.value = `<form id="ECPay_form" action="https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
-        }
-
-        for(let item in payResult.value) {
-          if(item === 'success' || item === 'message') continue
-          // EncryptType TotalAmount ExpireDate: number，other: text
-          ECPay_form.value += `<input type="${item == 'EncryptType' || item == 'TotalAmount' || item == 'ExpireDate' ? 'number' : 'text'}" name="${item}" value="${payResult.value[item]}">`;
-        }
-        ECPay_form.value += `
-            <div class="message"> 前往付款頁面 </div>
-            <div class="button_row">
-              <div class="button" onclick="document.querySelector('.ECPay_form_container').style.display = 'none'" > 取消 </div> 
-              <div class="button" onclick="document.querySelector('#ECPay_form').submit(); document.querySelector('.ECPay_form_container').style.display = 'none'" > 確認 </div> 
-            </div>
-          </form>
-        `;
-
-        setTimeout(() => {
-          document.querySelector('.ECPay_form_container').style.display = 'block'
-        }, 100)
-      }
-    },
     // ==================================================
     // user info ========================================
     async send_verify_code() {
@@ -387,7 +285,7 @@ export const useCommon = defineStore('common', () => {
         let res = await send_verify_codeApi(formData)
         if(res.data.errormessage) {
           await methods.login();
-          send_verify_codeApi(formData);
+          send_verify_code();
           return
         }
 
@@ -405,10 +303,6 @@ export const useCommon = defineStore('common', () => {
       } catch (error) {
         throw new Error(error)
       }
-    },
-    birthday(birthday) {
-      let b = new Date(birthday);
-      return `${b.getFullYear()}/${b.getMonth() + 1 < 10  ? '0' : '' }${b.getMonth() + 1}/${b.getDate() < 10  ? '0' : '' }${b.getDate()}`
     },
     // ==================================================
 
@@ -607,22 +501,22 @@ export const useCommon = defineStore('common', () => {
           'uniqm.net': '/',
         },
         order: {
-          'common': '/order.html',
-          'demo': '/order.html',
-          'uniqm.com': '/shoppingOrder.html',
-          'uniqm.net': '',
+          'common': '/order',
+          'demo': '/order',
+          'uniqm.com': '/shoppingOrder',
+          'uniqm.net': '/',
         },
         user: {
-          'common': '/user.html',
-          'demo': '/user.html',
-          'uniqm.com': '/shoppingUser.html',
-          'uniqm.net': '',
+          'common': '/user',
+          'demo': '/user',
+          'uniqm.com': '/shoppingUser',
+          'uniqm.net': '/',
         },
         info: {
-          'common': '/user_info.html',
-          'demo': '/user_info.html',
-          'uniqm.com': '/shoppingInfo.html',
-          'uniqm.net': '',
+          'common': '/user_info',
+          'demo': '/user_info',
+          'uniqm.com': '/shoppingInfo',
+          'uniqm.net': '/',
         },
       }
 

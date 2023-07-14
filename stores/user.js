@@ -1,5 +1,6 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
+import { useVerify }  from '@/stores/cross/verify'
 
 import { registerApi, user_loginApi, send_forget_verify_codeApi, check_forget_verify_codeApi, 
   edit_forget_passApi, getLineProfileApi, validateRecommenderCodeApi } from '@/api/index';
@@ -8,7 +9,8 @@ import { registerApi, user_loginApi, send_forget_verify_codeApi, check_forget_ve
 export const useUser = defineStore('user', () => {
   // store ==================================================
   let { site, store, user_account } = storeToRefs(useCommon())
-  let { login, getFormData, urlPush } = useCommon()
+  let { login, getFormData, getPathname, urlPush } = useCommon()
+  let { verify } = useVerify()
 
   // state ==================================================
   const state = reactive({

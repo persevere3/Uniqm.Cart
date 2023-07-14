@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="order">
     <div class="box" v-if="!user_account">
       <div class="info">
         <label> 訂單查詢 </label>
@@ -125,8 +125,8 @@
                 </template>
               </div>
               <div class="state_container" v-else-if="item.PayStatus == 2 && item.PayMethod != 'PayOnDelivery'">
-                <div class="button" v-if="pathname.toLowerCase().indexOf('order') > -1" @click="pay_method = item.PayMethod; rePay( item.FilNo, `${ item.PayType === '2' ? '' : location.origin + '/' + getPathname('order') }`)"> 立即付款 </div>
-                <div class="button" v-if="pathname.toLowerCase().indexOf('info') > -1" @click="pay_method = item.PayMethod; rePay(item.FilNo, `${ item.PayType === '2' ? '' : location.origin + '/' + getPathname('info') + '?page=order' }`)"> 立即付款 </div>
+                <div class="button" v-if="pathname.toLowerCase().indexOf('order') > -1" @click="pay_method = item.PayMethod; rePay( item.FilNo, `${ item.PayType === '2' ? '' : location.origin + getPathname('order') }`)"> 立即付款 </div>
+                <div class="button" v-if="pathname.toLowerCase().indexOf('info') > -1" @click="pay_method = item.PayMethod; rePay(item.FilNo, `${ item.PayType === '2' ? '' : location.origin + getPathname('info') + '?page=order' }`)"> 立即付款 </div>
               </div>
               <div class="state_container" v-else>
                 <div> {{ payStatus_arr[item.PayStatus] }} </div>
@@ -186,33 +186,61 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  import {  } from '../api/index'
-
   // store
   import { useCommon }  from '@/stores/common/common'
-  import { useOrder }  from '@/stores/common/order'
+  import { useOrder }  from '@/stores/order'
+  import { useInfo } from '@/stores/info'
 
-  let { store, user_account, pathname } = storeToRefs(useCommon())
-  let { numberThousands, rePay } = useCommon()
+  let { store, user_account, pathname, is_payModal, payModal_message } = storeToRefs(useCommon())
+  let { numberThousands, rePay, getPathname } = useCommon()
   let { order_phone, order_mail, filter_number, filter_pay, filter_delivery, payStatus_arr, delivery_arr,
-    order, noOrder, product_active, payMethod_obj, is_payModal, payModal_message, account_number,
+    order, noOrder, product_active, payMethod_obj, account_number,
     order_number, order_page_index, order_page_number, select_active, order_page_size
   } = storeToRefs(useOrder())
   let { getOrder, getMemberOrder } = useOrder()
+  let { user_info } = storeToRefs(useInfo())
+  let { getUser_info } = useInfo()
 
-  const state = reactive({
+  const { RtnMsg, account, result, phone, email } = useRoute().query
+  // 付款成功
+  if(RtnMsg) {
+    payModal_message.value = '已收到您的付款';
+    is_payModal.value = true;
+  }
 
-  })
-  let {  } = toRefs(state)
+  // Line 登入
+  if(account) {
+    user_account.value = account
+    localStorage.setItem('user_account', user_account.value)
+  }
+  // Line 綁定
+  if(result) {
+    result = JSON.parse(decodeURI(result))
+    if(!result.status) alert(result.msg)
+    else {
+      user_account.value = result.account
+      localStorage.setItem('user_account', user_account.value)
+    }
+  }
+
+  if(user_account.value) {
+    await getUser_info();
+    order_phone.value = user_info.Phone;
+    order_mail.value = user_info.Email;
+    getMemberOrder();
+  } else {
+    if(phone && email) {
+      order_phone.value = phone;
+      order_mail.value = email;
+      getOrder();
+    }
+  }
+
+  useRouter().replace({ path: getPathname('order') })
 
   // computed ==================================================
   let getOrderHandler = computed(() => {
     return user_account.value ? getMemberOrder : getOrder
   })
 
-  // watch ==================================================
-
-  // methods ==================================================
-
-  
 </script>
