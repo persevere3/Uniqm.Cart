@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="scss" scoped>
   @import "../assets/scss/shoppingInfo.scss";
 </style>
 
@@ -22,7 +22,8 @@
   let {  } = toRefs(state)
 
   definePageMeta({
-    layout: 'uniqm'
+    layout: 'uniqm',
+    // middleware: 'auth'
   })
 
   // computed ==================================================

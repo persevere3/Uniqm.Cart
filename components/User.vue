@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "../assets/scss/user.scss";
+</style>
+
 <template>
   <div class="main" :class="user_nav_active">
     <div class="navs">
