@@ -37,7 +37,7 @@
               <div class="info">
                 <div class="name"> {{item2.Name}} </div>
                 <div class="discount_price"> NT${{numberThousands(item2.NowPrice)}} </div>
-                <div class="origin_price"> NT${{numberThousands(item2.Price)}} </div>
+                <div class="origin_price" v-if="parseInt(item2.Price) > -1"> NT${{numberThousands(item2.Price)}} </div>
               </div>
               <div class="l_addTo_cart_btn">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>

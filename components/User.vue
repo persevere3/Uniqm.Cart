@@ -210,7 +210,12 @@
 
     <div class="third_login" v-if="user_nav_active != 'forget'">
       <div v-if="false" class="button" style="background-color: #3B5998;" > <i class="fa-brands fa-facebook"></i> 使用Facebook登入 </div>
-      <div class="button" style="background-color: #00c300;" @click="user_nav_active === 'login' ? LineLogin() : is_LineRegister = true"> <i class="fa-brands fa-line"></i> 使用Line <span v-if="user_nav_active === 'register'">註冊</span> <span v-if="user_nav_active === 'login'">登入</span> </div>
+      <div class="button" style="background-color: #00c300;" @click="user_nav_active === 'login' ? LineLogin() : is_LineRegister = true"> 
+        <i class="fa-brands fa-line"></i> 
+        使用Line 
+        <span v-if="user_nav_active === 'register'">註冊</span> 
+        <span v-if="user_nav_active === 'login'">登入</span> 
+      </div>
     </div>
   </div>
 

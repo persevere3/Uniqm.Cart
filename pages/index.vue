@@ -52,7 +52,7 @@
             <div class="info">
               <div class="name"> {{item.Name}} </div>
               <div class="discount_price"> NT$ {{ numberThousands(item.NowPrice) }} </div>
-              <div class="origin_price"> NT$ {{ numberThousands(item.Price) }} </div>
+              <div class="origin_price" v-if="parseInt(item.Price) > -1"> NT$ {{ numberThousands(item.Price) }} </div>
             </div>
             <div class="l_addTo_favorite_btn" @click.stop="toggleFavorite(item.ID)">
               <i class="fas fa-heart" :class="{is_favorite : favorite[item.ID]}"></i>

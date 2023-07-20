@@ -565,6 +565,17 @@ input{
               &.transportState{
                 width: 12.5%;
                 flex-direction: column;
+
+                .text {
+                  display: flex;   
+                  align-items: center;
+                }
+                .search {
+                  margin-left: 5px;
+                  color: deepskyblue;
+                  text-decoration: underline;
+                  cursor: pointer;
+                }
               }
               &.time{
                 width: 15%;

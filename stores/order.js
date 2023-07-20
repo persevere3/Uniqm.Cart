@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
-import { getOrderApi, getMemberOrderApi, rePayApi } from '@/api/index';
+import { getOrderApi, getMemberOrderApi, rePayApi, searchMartDeliveryApi } from '@/api/index';
 
 
 export const useOrder = defineStore('order', () => {
@@ -21,19 +21,32 @@ export const useOrder = defineStore('order', () => {
     product_active: '',
 
     payStatus_arr: [
-      '', '付款成功', '尚未付款', '已退款', '待對帳'
+      '', '付款成功', '尚未付款', '已退款', '待對帳', '尚未付款'
     ],
-    delivery_arr: [
-      '', '已出貨', '準備中', '已退貨', '已取消', '已自取'
+    delivery_arr: [     
+      '', '已出貨', '準備中', '已退貨', '已取消', '已自取', '已送達', '已取貨'
     ],
     payMethod_obj: {
       'CreditCard':'信用卡',
       'ATM':'ATM',
       'PayCode':'超商代碼',
       'PayBarCode':'超商條碼',
-      'PayOnDelivery':'取貨付款',
+      'PayOnDelivery':'宅配取貨付款',
       'LinePay':'LinePay',
+      'MartPayOnDelivery': '超商取貨付款',
+      'MartOnDelivery': '超商取貨不付款'
     },
+
+    martObj: {
+      'UNIMART': '7-11',
+      'UNIMARTFREEZE': '7-11 冷凍',
+      'FAMI': '全家',
+      'HILIFE': '萊爾富',
+      'OKMART': 'OK超商'
+    },
+
+    // import
+    activeOrder: null,
 
     order_page_number: 0,
     order_page_index: 1,
@@ -225,12 +238,12 @@ export const useOrder = defineStore('order', () => {
     },
     toPay() {
       // LinePay
-      if(state.pay_method == 'LinePay') {
+      if(state.pay_method === 'LinePay') {
         urlPush(state.payResult.payUrl)
       }
       // ecpay
       else {
-        if(webVersion.value == 'demo') {
+        if(webVersion.value === 'demo') {
           // target="_blank"
           state.ECPay_form = `<form id="ECPay_form" action="https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5" method="post">`
         } else {
@@ -256,6 +269,35 @@ export const useOrder = defineStore('order', () => {
         }, 100)
       }
     },
+
+    async searchMartDelivery(item) {
+      let MerchantTradeNo = item.FilNo
+      let LogisticsSubType = item.Mart.replace('Delivery', '')
+      let formData = new FormData();
+      formData.append("Site", site.value.Site);
+      formData.append("Store", site.value.Name);
+      formData.append("MerchantTradeNo", MerchantTradeNo);
+      formData.append("LogisticsSubType", LogisticsSubType);
+
+      try {
+        let res = await searchMartDeliveryApi(formData)
+        if(res.data.errormessage) {
+          await login();
+          methods.searchMartDelivery(item);
+          return
+        }
+
+        let martName = decodeURI(item.Address).split(' - ')[1]
+        let deliveryMsg = res.data.split('|')[0]
+        let deliveryNumber = res.data.split('|')[1]
+        if(deliveryMsg.indexOf('已配達') > -1) deliveryMsg += ` - ${martName}`
+        item.deliveryMsg = deliveryMsg
+        if(deliveryNumber) item.deliveryNumber = deliveryNumber
+        state.activeOrder = item
+      } catch (error) {
+        throw new Error(error)
+      }
+    }
   }
 
   return {

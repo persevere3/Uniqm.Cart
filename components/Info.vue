@@ -1,10 +1,10 @@
 <template>
   <div class="main" :class="user_info_nav_active" v-if="user_account">
     <div class="logout_container button_row">
-      <!-- <div> 
+      <template v-if="webVersion === 'demo'"> 
         <div class="button" v-if="user_info && user_info.Registermethod == 2" @click="deleteAccount_test" style="margin-right: 5px;"> 刪除Line帳號(測試用) </div>
         <div class="button" v-if="user_info && user_info.Registermethod <= 1 && user_info.ConnectLine" @click="unbindLine_test" style="margin-right: 5px;"> 解除Line綁定(測試用) </div>
-      </div> -->
+      </template>
       <div class="button" v-if="user_info && user_info.Registermethod <= 1 && !user_info.ConnectLine" @click="bindLine" style="margin-right: 5px;"> 綁定Line帳號 </div>
       <div class="button" @click="post_logout"> 登出 </div>
     </div>
@@ -36,9 +36,14 @@
           </div>
           <div class="input_container" :class="{ error: r_mail.is_error }">
             <div class="title"> 電子信箱 </div>
-            <input type="text" :readonly="!!user_info.Email" placeholder="* 請輸入電子信箱" v-model.trim="r_mail.value" @input="r_mail.value = $event.target.value">
+            <input type="text" placeholder="請輸入電子信箱"
+              :readonly="!!user_info.Email" 
+              v-model.trim="r_mail.value" 
+              @blur="verify(r_mail)"
+            >
             <div class="error message">
-              <i class="error_icon fas fa-exclamation-circle"></i> {{ r_mail.message }}
+              <i class="error_icon fas fa-exclamation-circle"></i> 
+              {{ r_mail.message }}
             </div>
           </div>
           <div class="input_container" :class="{ error: r_birthday.is_error }" v-if="!!user_info.Birthday">
@@ -74,15 +79,32 @@
 
           <div class="input_container" :class="{ error: r_phone2.is_error }">
             <div class="title"> 手機 </div>
-            <input type="text" placeholder="* 請輸入手機" :readonly="!!user_info.Phone2" v-model.trim="r_phone2.value" @input="!!user_info.Phone2 ? r_phone2.value = $event.target.value : verify(r_phone2)">
+            <input type="number" placeholder="請輸入手機" 
+              :readonly="!!user_info.Phone2" 
+              v-model.trim="r_phone2.value" 
+              @blur="verify(r_phone2)"
+            >
+            <div class="error message">
+              <i class="error_icon fas fa-exclamation-circle"></i> 
+              {{ r_phone2.message }}
+            </div>
           </div>
-          <template v-if="!user_info.Phone2 && (store.NotificationSystem == 1 || store.NotificationSystem == 2)">
+          <!-- 手機驗證碼 -->
+          <!-- <template v-if="!user_info.Phone2">
             <div class="input_container" :class="{ error: r_verify_code.is_error }">
               <div class="title"> 手機驗證碼 </div>
-              <input type="text" placeholder="* 請輸入手機驗證碼" v-model.trim="r_verify_code.value" @blur="verify(r_verify_code)"> 
+              <input type="text" placeholder="* 請輸入手機驗證碼" 
+                v-model.trim="r_verify_code.value" 
+                @blur="verify(r_verify_code)"
+              >
             </div>
-            <div class="button" style="margin-bottom: 20px;" @click="send_verify_code"> 獲取驗證碼 <span v-if="second > 0"> ( {{second}}s ) </span> </div>
-          </template>
+            <div class="button" style="margin-bottom: 20px;" 
+              @click="send_verify_code"
+            >
+              獲取驗證碼 
+              <span v-if="second > 0"> ( {{second}}s ) </span> 
+            </div>
+          </template> -->
 
           <div class="password_container" v-if="user_info.Registermethod != 2">
             <div class="title"> 密碼 </div>
@@ -131,6 +153,24 @@
               </div>
             </div>
             <div class="delete" @click="delete_address(item.id)"> <i class="fas fa-trash-alt"></i> </div>
+            
+            <div class="input_container">
+              <div class="title border"> 手機條碼載具 </div>
+              <input type='text' v-model='phone_barCode'>
+            </div>
+            <div class="input_container">
+              <div class="title border"> 自然人憑證載具 </div>
+              <input type='text' v-model='natural_barCode'>
+            </div>
+
+            <div class="input_container">
+              <div class="title border"> 公司抬頭 </div>
+              <input type='text' v-model='user_info.invoice_title'>
+            </div>
+            <div class="input_container">
+              <div class="title border"> 統一編號 </div>
+              <input type='text' v-model='user_info.invoice_uniNumber'>
+            </div>
           </div>
         </div>
 
@@ -218,14 +258,16 @@
   import { useUser }  from '@/stores/user'
   import { useOrder }  from '@/stores/order'
 
-  let { store, user_account, is_payModal, payModal_message } = storeToRefs(useCommon())
+  let { store, user_account, is_payModal, payModal_message, webVersion } = storeToRefs(useCommon())
   let { send_verify_code, getPathname } = useCommon()
-  let { user_info_nav_active, user_info, add_address, recommend_code, delivery_address, total_bonus, bonus} = storeToRefs(useInfo())
+  let { user_info_nav_active, user_info, add_address, phone_barCode, natural_barCode, recommend_code, delivery_address, total_bonus, bonus} = storeToRefs(useInfo())
   let { bindLine, post_logout, getUser_info, getBonus, getMemberOrder, edit_info} = useInfo()
   let { r_name, r_mail, r_birthday, sex, r_recommender, r_phone2, r_verify_code, second, } = storeToRefs(useUser())
   let {  } = useUser()
   let { order_page_index, order_page_number, select_active, order_page_size } = storeToRefs(useOrder())
   let { verify } = useVerify()
+  delete r_mail.value.rules['required']
+  delete r_phone2.value.rules['required']
 
   const { RtnMsg , page } = useRoute().query
   await getUser_info();

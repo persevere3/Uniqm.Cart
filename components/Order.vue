@@ -22,7 +22,7 @@
           <label> 付款狀態 </label>
           <select v-model="filter_pay">
             <option value="0"> === 付款狀態 === </option>
-            <option :value="index" v-for="(item, index) in payStatus_arr" :key="index" v-show="index != 0"> {{ item }} </option>
+            <option :value="index" v-for="(item, index) in payStatus_arr" :key="index" v-show="index != 0 && index != 5"> {{ item }} </option>
           </select>
         </div>
 
@@ -101,8 +101,17 @@
             <div class="td payState">
               <div class="l_head"> 付款狀態 </div>
               <!-- 付款方式 -->
-              <div v-if="item.PayMethod" class="payMethod"> {{payMethod_obj[item.PayMethod]}} </div>
-              
+              <template v-if="item.Mart" > 
+                <div v-if="item.Mart.indexOf('Delivery') < 0" class="payMethod">
+                  <div> {{ payMethod_obj['MartOnDelivery'] }} </div>
+                  <div> {{ payMethod_obj[item.PayMethod] }} </div>
+                </div>
+                <div v-else class="payMethod"> {{payMethod_obj['MartPayOnDelivery']}} </div>
+              </template>
+              <template v-else>
+                <div class="payMethod"> {{ payMethod_obj[item.PayMethod] }} </div>
+              </template>
+
               <!-- 付款狀態 -->
               <div class="state_container" v-if="item.Delivery == 3 || item.Delivery == 4">
                 <div> {{ payStatus_arr[item.PayStatus] }} </div>
@@ -134,7 +143,10 @@
             </div>
             <div class="td transportState">
               <div class="l_head"> 運送狀態 </div>
-              {{delivery_arr[item.Delivery]}}
+              <div class="text">
+                <span> {{delivery_arr[item.Delivery]}} </span>
+                <span class="search" v-if="item.Mart && (item.Delivery === '1' || item.Delivery === '6')" @click="searchMartDelivery(item)"> 查詢 </span>
+              </div>
               <template v-if="item.CancelTime && (item.Delivery == 3 || item.Delivery == 4)">
                 <div> {{ item.CancelTime.split(' ')[0] }} </div>
                 <div> {{ item.CancelTime.split(' ')[1] }} </div>
@@ -151,6 +163,20 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="martDeliveryModal" v-if="activeOrder">
+        <div class='number_container' v-if="activeOrder.deliveryNumber">
+          <div class="number_title"> {{ martObj[activeOrder.Mart.replace('C2C', '').replace('Delivery', '')] }} 包裹查詢號碼 </div>
+          <input type='text' id='number_input' readonly v-model='activeOrder.deliveryNumber'>
+          <div class='copy' @click="copy(activeOrder.deliveryNumber, 'number_input')"> 
+            <i class='fas fa-copy'></i>
+          </div>
+        </div>
+        
+        <div class="message"> {{ activeOrder.deliveryMsg }} </div>
+        <div class="time">  </div>
+        <div class="button close" @click="activeOrder = null"> 確認 </div>
       </div>
 
       <div class="page_container">
@@ -194,10 +220,10 @@
   let { store, user_account, pathname, is_payModal, payModal_message } = storeToRefs(useCommon())
   let { numberThousands, rePay, getPathname } = useCommon()
   let { order_phone, order_mail, filter_number, filter_pay, filter_delivery, payStatus_arr, delivery_arr,
-    order, noOrder, product_active, payMethod_obj, account_number,
+    order, noOrder, product_active, payMethod_obj, martObj, account_number, activeOrder,
     order_number, order_page_index, order_page_number, select_active, order_page_size
   } = storeToRefs(useOrder())
-  let { getOrder, getMemberOrder } = useOrder()
+  let { getOrder, getMemberOrder, searchMartDelivery } = useOrder()
   let { user_info } = storeToRefs(useInfo())
   let { getUser_info } = useInfo()
 

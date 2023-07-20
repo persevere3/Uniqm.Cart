@@ -16,6 +16,9 @@ export const useInfo = defineStore('info', () => {
     user_info: {},
     user_info_nav_active: 'info',
 
+    phone_barCode: '',
+    natural_barCode: '',
+
     recommend_code: '',
 
     delivery_address: [],
@@ -43,6 +46,9 @@ export const useInfo = defineStore('info', () => {
 
           if(res.data.status) {
             state.user_info = res.data.datas[0][0];
+            state.user_info.ThreeLinkCode = state.user_info.ThreeLinkCode || ''
+            state.user_info.invoice_title = state.user_info.ThreeLinkCode.split('|')[0] || ''
+            state.user_info.invoice_uniNumber = state.user_info.ThreeLinkCode.split('|')[1] || ''
   
             methods.login_handle_carts();
   
@@ -54,8 +60,12 @@ export const useInfo = defineStore('info', () => {
             state.recommend_code = state.user_info.Promocode
             state.r_recommender.value = state.user_info.Recommender
             state.total_bonus = state.user_info.Wallet * 1
+
+            state.phone_barCode = state.user_info.PhoneCode
+            state.natural_barCode = state.user_info.NatureCode
   
             let result_arr = [];
+            state.user_info.Adress = decodeURI(state.user_info.Adress)
             let address_arr = state.user_info.Adress.split('_#_');
             address_arr.length = address_arr.length - 1;
             for(let address of address_arr) {
@@ -130,41 +140,46 @@ export const useInfo = defineStore('info', () => {
     },
 
     async edit_info() {
-      let arr = state.delivery_address
-      for(let i = arr.length - 1; i > 0; i --) {
-        for( let j = 0; j < i; j++) {
-          if(arr[j].city == arr[i].city && arr[j].district == arr[i].district && arr[j].detail == arr[i].detail){
-            arr.splice(i, 1);
+      let address_arr = state.delivery_address
+      for(let i = address_arr.length - 1; i > 0; i --) {
+        for(let j = 0; j < i; j++) {
+          if(address_arr[j].city == address_arr[i].city && address_arr[j].district == address_arr[i].district && address_arr[j].detail == address_arr[i].detail){
+            address_arr.splice(i, 1);
             break;
           }
         }
       }
     
-      if(store.value.NotificationSystem == 1 || store.value.NotificationSystem == 2) {
-        if(!verify(state.verify_code)) return
-      }
+      // 手機驗證
+      // if(store.value.NotificationSystem == 1 || store.value.NotificationSystem == 2) {
+      //   if(!verify(state.verify_code)) return
+      // }
+
       if(!verify(state.r_name, state.r_mail, state.r_birthday, state.r_phone2, ...arr)) return
       
-      let b = state.r_birthday.value;
-      let birthday = `${b.getFullYear()}/${b.getMonth() + 1 < 10  ? '0' : '' }${b.getMonth() + 1}/${b.getDate() < 10  ? '0' : '' }${b.getDate()}`
-      let address_str = '';
-      for(let item of arr) {
-        address_str += `${item.id}_ _${item.city}_ _${item.district}_ _${item.detail}_#_`
-      }
       let obj = {
         storeid: site.value.Name,
         phone: user_account.value,
         phone2: state.r_phone2.value,
         email: state.r_mail.value,
         name: state.r_name.value,
-        birthday: birthday,
         gender: state.sex == 'male' ? 1 : 0 ,
-        address: address_str,
         recommender: state.r_recommender.value,
       }
       if(store.value.NotificationSystem == 1 || store.value.NotificationSystem == 2) {
-        obj.validate = state.verify_code.value
+        obj["validate"] = state.verify_code.value
       }
+      let b = state.r_birthday.value
+      obj["birthday"] = `${b.getFullYear()}/${b.getMonth() + 1 < 10  ? '0' : '' }${b.getMonth() + 1}/${b.getDate() < 10  ? '0' : '' }${b.getDate()}` 
+      let address_str = '';
+      for(let item of address_arr) {
+        address_str += `${item.id}_ _${item.city}_ _${item.district}_ _${item.detail}_#_`
+      }
+      obj["address"] = address_str
+      obj["savePhoneCode"] = state.phone_barCode ? state.phone_barCode : ''
+      obj["saveNatureCode"] = state.natural_barCode ? state.natural_barCode : ''
+      obj["threeLinkCode"] = `${state.user_info.invoice_title}|${state.user_info.invoice_uniNumber}`
+
       let formData = getFormData(obj)
 
       try {
@@ -283,7 +298,7 @@ export const useInfo = defineStore('info', () => {
     
     //
     bindLine() {
-      urlPush(`${location.origin}/interface/webmember/LineLoginAuthorize?storeid=${site.value.Name}&site=${site.value.Site}&phone=${user_account.value}`)
+      urlPush(`${location.origin}/interface/webmember/LineLoginAuthorize?storeid=${site.value.Name}&site=${site.value.Site}&phone=${user_account.value}&method=LineRegister`)
     },
 
     async unbindLine_test() {
