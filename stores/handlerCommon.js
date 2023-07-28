@@ -5,7 +5,7 @@ import {  } from '@/api/index';
 
 export const useHandlerCommon = defineStore('handlerCommon', () => {
   // store ==================================================
-  let { site, is_getSite, store, user_account, all, is_getAll, totalpage_num, perpage_num, footer_community, webVersion } = storeToRefs(useCommon())
+  let { site, is_getSite, store, user_account, all, is_getAll, totalpage_num, perpage_num, footer_community, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { getSite, getAll, getStore, getCopyRight, getCustomerService, getCart, getFavorite, appendScript, urlPush } = useCommon()
 
   // state ==================================================
@@ -47,7 +47,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
 
         if(state.webVersion === 'demo') {
           if(category.Class === '1' || category.Class === '3') {
-            link = 'https://demo.uniqcarttest.com' + link
+            link = demoOrigin.value + link
           }
         }
 
@@ -64,7 +64,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
         else link = `/allProducts?id=${category.ID}`
 
         if(state.webVersion === 'demo') {
-          link = 'https://demo.uniqcarttest.com' + link
+          link = demoOrigin.value + link
         }
 
         category.Link = link;
@@ -94,7 +94,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
 
       if(webVersion.value === 'demo') {
         all.value.data.forEach(item => {
-          item.Img1 = 'https://demo.uniqcarttest.com' + item.Img1
+          item.Img1 = demoOrigin.value + item.Img1
         })
       }
 

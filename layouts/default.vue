@@ -1,25 +1,25 @@
 <template>
   <div>
     <!-- click right-top icon -------------------------------------------------- -->
-    <div class="search_container" :class="{active : is_search}" @mousedown="close_search">
-      <div class="search">
+    <div class="search_container" :class="{active : is_search}" @click="close_search">
+      <div class="search" @click.stop="">
         <i class="fa fa-search" aria-hidden="true" @click="searchHandler"></i>
         <input type="text" maxlength="100" placeholder="找商品" v-model="searchStr" @keyup.enter="searchHandler">
       </div>
     </div>
 
-    <LayoutFavoriteContainer />
-
-    <LayoutCartContainer />
-
-    <div class="connect_container" :class="{active : is_connect}" @mousedown="close_connect">
-      <div class="connect">
+    <div class="connect_container" :class="{active : is_connect}" @click="close_connect">
+      <div class="connect" @click.stop="">
         <div class="text">聯絡我們</div>
-        <input type="text" placeholder="輸入你的電子信箱" v-model="connect_mail" :class="{error_border: error_mail}" @input="validate_connect('mail')">
-        <div class="error_color" v-if="error_mail == 1"> 電郵 是必須的 </div>
-        <div class="error_color" v-if="error_mail == 2"> 電郵 無效 </div>
-        <textarea rows="5" v-model.trim="connect_text" :class="{error_border: error_text}" @input="validate_connect('text')" placeholder="輸入你的訊息。若是詢問店內特定商品，請留下商品名稱，也歡迎你留下電子信箱以外的聯絡方式，謝謝！"></textarea>
-        <div class="error_color" v-if="error_text == 1"> 您的訊息 是必須的 </div>
+        <input type="text" placeholder="輸入您的電子信箱" :class="{error_border: connect_mail.is_error}" 
+          v-model="connect_mail.value" @input="verify(connect_mail)"
+        >
+        <div class="error_color" v-if="connect_mail.message"> {{ connect_mail.message }} </div>
+
+        <textarea rows="5" placeholder="輸入您的訊息。若是詢問店內特定商品，請留下商品名稱，也歡迎你留下電子信箱以外的聯絡方式，謝謝！"
+          :class="{error_border: connect_text.is_error}"
+          v-model.trim="connect_text.value" @input="verify(connect_text)" ></textarea>
+        <div class="error_color" v-if="connect_text.message"> {{ connect_text.message }} </div>
 
         <div class="connect_button_container">
           <div class="connect_button" @click="connectHandler" >發送</div>
@@ -27,8 +27,13 @@
       </div>
     </div>
 
-    <div class="sidebar_container" :class="{active : is_sidebar}" @mousedown="close_sidebar">
-      <div class="sidebar" :class="{sidebar_slideout : is_slideout}">
+    <LayoutFavoriteContainer />
+    <LayoutCartContainer />
+
+    <!-- ok --------------------------------------------------  -->
+
+    <div class="sidebar_container" :class="{active : is_sidebar}" @click="close_sidebar">
+      <div class="sidebar" :class="{sidebar_slideout : is_slideout}" @click.stop="">
         <div class="navbar">
           <ul>
             <li @click="urlPush('/')" >
@@ -37,7 +42,7 @@
               </div>
             </li>
 
-            <li v-for="(item, index) in all.Navbar" :key="item.ID" @click="item.Class == 2 ? urlPush(item.Link, true) : urlPush(item.Link)">
+            <li v-for="(item) in all.Navbar" :key="item.ID" @click="item.Class == 2 ? urlPush(item.Link, true) : urlPush(item.Link)">
               <div class="text">
                 {{ item.Name }}
                 <div class="angle" @click.stop="item.isDropDown = !item.isDropDown">
@@ -61,7 +66,7 @@
         <div class="other">
           <div class="text">其他</div>
           <ul>
-            <li @click="is_search = 1; is_sidebar = 0">
+            <li @click="is_search = true; is_sidebar = false">
               搜尋
               <i class="fa fa-search" aria-hidden="true"></i>
             </li>
@@ -91,7 +96,7 @@
     </div>
 
     <!-- content -------------------------------------------------- -->
-    <div class="header" :class="{is_scrollTop: window_scrollTop > 100}">
+    <header class="header" :class="{is_scrollTop: window_scrollTop > 100}">
       <div class="widthContainer">
         <div class="iconbar">
           <ul>
@@ -101,7 +106,7 @@
             </li>
 
             <li class="m_search_button">
-              <i class="fa fa-search" aria-hidden="true" @click="is_search = 1"></i>
+              <i class="fa fa-search" aria-hidden="true" @click="is_search = true"></i>
             </li>
 
             <li class="connect_button" @click="open_connect">
@@ -125,7 +130,7 @@
           </div>
         </div>
 
-        <div class="prev" @click="prev" :class="{ active : pathname !== '/' }">
+        <div class="prev" @click="prev" :class="{active : pathname !== '/'}">
           <img src="@/assets/img/arrow.png" alt="">
         </div>
 
@@ -153,11 +158,13 @@
           </ul>
         </div>
       </div>
-    </div>
+    </header>
+
+    <!-- ok --------------------------------------------------  -->
 
     <slot />
 
-    <div class="footer">
+    <footer class="footer">
       <div class="link_list">
         <ul>
           <li>
@@ -192,17 +199,16 @@
               <li v-if="footer_community">
                 <ul>
                   <li v-if="footer_community.FBLink" @click="urlPush(footer_community.FBLink, 1)">
-                    <img src=".././assets/img/fb.png" alt="">
+                    <img src="@/assets/img/fb.png" alt="">
                   </li>
                   <li v-if="footer_community.LineLink" @click="urlPush(footer_community.LineLink, 1)">
-                    <img src=".././assets/img/line.png" alt="">
+                    <img src="@/assets/img/line.png" alt="">
                   </li>
                   <li v-if="footer_community.IGLink" @click="urlPush(footer_community.IGLink, 1)">
-                    <img src=".././assets/img/ig.png" alt="">
+                    <img src="@/assets/img/ig.png" alt="">
                   </li>
                 </ul>
               </li>
-              
             </ul>
           </li>
         </ul>
@@ -221,16 +227,17 @@
       </div>
 
       <Cookie />
-    </div>
+    </footer>
 
     <!-- fixed -------------------------------------------------- -->
-    <div class="scrollto_top" @click="scrollTo(0)" :class="{is_show: window_scrollTop > 100}">
+    <div class="scrollto_top" @click="scrollto(0)" :class="{is_show: window_scrollTop > 100}">
       <i class="fa fa-arrow-up" aria-hidden="true"></i>
     </div>
 
     <!-- chat controler -->
-    <div class="chat_controler" v-show="customerService.Text || customerService.CSText || customerService.FBText" 
-      @click="is_chat = !is_chat">
+    <div class="chat_controler" @click="is_chat = !is_chat"
+      v-show="customerService.Text || customerService.CSText || customerService.FBText" 
+    >
       <i class="fa-solid fa-comment-dots" v-if="!is_chat"></i>
       <i class="fa-solid fa-comment-slash" v-else></i>
     </div>
@@ -241,7 +248,7 @@
 
     <!-- line -->
     <div class="line_icon" v-if="customerService && customerService.CSText" @click="urlPush(customerService.CSText, true)">
-      <img src="../assets/img/line_icon.png" alt="">
+      <img src="@/assets/img/line_icon.png" alt="">
     </div>
   </div>
 </template>
@@ -253,11 +260,14 @@
 
   // store ==================================================
   import { useCommon }  from '@/stores/common/common'
+  import { useVerify } from '@/stores/cross/verify'
   import { useHandlerCommon }  from '@/stores/handlerCommon'
 
   let { site, user_account, all, store, footer_community, copyRight, customerService, 
-    cart, is_carts_active, is_favorite_active } = storeToRefs(useCommon())
+    cart, is_carts_active, is_favorite_active 
+  } = storeToRefs(useCommon())
   let { delete_carts_item, productTotalQty, setCarts, pushTo_cart, urlPush, numberThousands } = useCommon()
+  let { reset, verify } = useVerify()
   let { getSiteHandler } = useHandlerCommon()
 
   // state ==================================================
@@ -271,27 +281,46 @@
     isTawkOpen: false,
 
     // search
-    is_search: 0,
+    is_search: false,
     searchStr: '',
 
     // connect
-    is_connect: 0,
-
-    connect_mail: '',
-    connect_text: '',
-    error_mail: 0,
-    error_text: 0,
+    is_connect: false,
+    connect_mail: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+        mail: {
+          message: 'email格式不符',
+        }
+      },
+      is_error: false,
+      message: '',
+    },
+    connect_text: {
+      value: '',
+      rules: {
+        required: {
+          message: '此項目為必填'
+        },
+      },
+      is_error: false,
+      message: '',
+    },
 
     // sidebar
-    is_sidebar: 0,
-    is_slideout: 0,
+    is_sidebar: false,
+    is_slideout: false,
 
     // scrollto_top
     window_scrollTop: 0,
   })
   let { pathname, is_search, searchStr, is_sidebar, is_slideout, is_connect, 
-    connect_mail, connect_text, error_mail, error_text, window_scrollTop, 
-    is_chat, isTawkAddClick, isTawkOpen } = toRefs(state)
+    connect_mail, connect_text, window_scrollTop, 
+    is_chat, isTawkAddClick, isTawkOpen 
+  } = toRefs(state)
 
   // head ==================================================
   useHead({
@@ -484,14 +513,12 @@
 
   // function ==================================================
   // search
-  function close_search(event) {
-    if(event.target.className.indexOf('search_container') > -1) {
-      state.is_search = 0;
-      state.searchStr = '';
-    }
+  function close_search() {
+    state.is_search = false;
+    state.searchStr = '';
   }
   function searchHandler() {
-    if(state.searchStr){
+    if(state.searchStr) {
       urlPush(`/search?query=${state.searchStr}&type=0`);
     }
   }
@@ -500,60 +527,24 @@
   function open_connect() {
     if(site.value.WebPreview == 2) alert('預覽模式下不開放')
     else {
-      state.is_sidebar = 0; 
-      state.is_slideout = 0; 
-      state.is_connect = 1;
+      state.is_sidebar = false; 
+      state.is_slideout = false; 
+      state.is_connect = true;
     }
   }
-  function close_connect(event) {
-    if(event.target.className.indexOf('connect_container')>-1) {
-      state.is_connect = 0;
+  function close_connect() {
+    state.is_connect = false;
 
-      state.connect_mail = '';
-      state.connect_text = '';
-      state.error_mail = 0;
-      state.error_text = 0;
-    }
-  }
-  function validate_connect( item ) {
-    let isReturn = false;
-    let RegExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]+)$/;
-
-    // mail 驗證
-    if( !item || (item && item == 'mail') ){
-      if(state.connect_mail === ''){
-        state.error_mail = 1;
-        isReturn = true;
-      }
-      else if(!RegExp.test(state.connect_mail)){
-        state.error_mail = 2;
-        isReturn = true;
-      }
-      else{
-        state.error_mail = 0;
-      }
-    }
-
-    // text 驗證
-    if( !item || (item && item == 'text') ){
-      if(state.connect_text === ''){
-        state.error_text = 1;
-        isReturn = true;
-      }
-      else{
-        state.error_text = 0;
-      }
-    }
-
-    return isReturn;
+    reset(state.connect_mail)
+    reset(state.connect_text)
   }
   async function connectHandler() {
-    let isReturn = validate_connect();
-    if(isReturn) return
+    let isValid = verify(state.connect_mail, state.connect_text);
+    if(!isValid) return
     else {
       let formData = new FormData();
-      formData.append("title", state.connect_mail);
-      formData.append("text", state.connect_text);
+      formData.append("title", state.connect_mail.value);
+      formData.append("text", state.connect_text.value);
       formData.append("WebPreview", site.value.WebPreview);
 
       try {
@@ -564,12 +555,10 @@
           return
         }
 
-        state.is_connect = 0;
+        state.is_connect = false;
 
-        state.connect_mail = '';
-        state.connect_text = '';
-        state.error_mail = 0;
-        state.error_text = 0;
+        reset(state.connect_mail)
+        reset(state.connect_text)
 
         alert('發送成功');
       } catch (error) {
@@ -580,22 +569,20 @@
 
   // sidebar
   function open_sidebar() {
-    state.is_sidebar = 1;
+    state.is_sidebar = true;
     setTimeout(function(){
-      state.is_slideout = 1;
+      state.is_slideout = true;
     }, 100)
   }
-  function close_sidebar(event) {
-    if(event.target.className.indexOf('sidebar_container')>-1) {
-      state.is_slideout = 0;
-      setTimeout(function(){
-        state.is_sidebar = 0;
-      }, 350)
-    }
+  function close_sidebar() {
+    state.is_slideout = false;
+    setTimeout(function(){
+      state.is_sidebar = false;
+    }, 350)
   }
 
   // scroll
-  function scrollTo(targetOffsetTop) {
+  function scrollto(targetOffsetTop) {
     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
     let step = 50;
 

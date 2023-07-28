@@ -4,7 +4,7 @@ import { getCategoryApi } from '@/api/index';
 import { useCommon }  from '@/stores/common/common'
 
 export const useCategory = defineStore('category', () => {
-  let { site, webVersion } = storeToRefs(useCommon())
+  let { site, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { login } = useCommon()
 
   // state ==================================================
@@ -45,7 +45,7 @@ export const useCategory = defineStore('category', () => {
         // product => sort[i].Products[j]
         for(let i = 0; i < product.length; i++) {
           if(webVersion.value === 'demo') {
-            product[i].Img1 = 'https://demo.uniqcarttest.com' + product[i].Img1
+            product[i].Img1 = demoOrigin.value + product[i].Img1
           }
           // Category1~5
           for(let j = 1; j < 6; j++) {
@@ -62,7 +62,7 @@ export const useCategory = defineStore('category', () => {
         for(let i = 1; i < 6; i++) {
           if(data[`Img${i}`]) {
             if(webVersion.value === 'demo') {
-              data[`Img${i}`] = 'https://demo.uniqcarttest.com' + data[`Img${i}`]
+              data[`Img${i}`] = demoOrigin.value + data[`Img${i}`]
             }
             data.Img.push(data[`Img${i}`]);
           }

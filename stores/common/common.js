@@ -47,7 +47,9 @@ export const useCommon = defineStore('common', () => {
     messageArr: [],
 
     //
+    demoOrigin: 'https://demo.uniqcarttest.com',
     webVersion: 'demo',
+
 
     //
     testData: '',
@@ -118,7 +120,7 @@ export const useCommon = defineStore('common', () => {
         }
 
         state.store = res.data.data[0] || {};
-        if(state.webVersion === 'demo') state.store.Logo = 'https://demo.uniqcarttest.com' + state.store.Logo
+        if(state.webVersion === 'demo') state.store.Logo = state.demoOrigin + state.store.Logo
         // 新增 store.footer 放聯絡我們 icon 
         // 有 link 才顯示
         state.footer_community = res.data.footer[0] || {};
@@ -150,7 +152,7 @@ export const useCommon = defineStore('common', () => {
         let res = await getCustomerServiceApi(params)
         if(res.data.errormessage) {
           await methods.login();
-          methods.getCustomerServiceApi(params);
+          methods.getCustomerService();
           return
         }
 
@@ -170,6 +172,17 @@ export const useCommon = defineStore('common', () => {
       else {
         state.cart = JSON.parse(localStorage.getItem(`${state.site.Name}@cart`)) || [];
       }
+      if(state.webVersion === 'demo') {
+        state.cart.forEach(item => {
+          item.Img1 = state.demoOrigin + item.Img1
+          if(item.addPrice) {
+            item.addPrice.forEach(addPriceItem => {
+              addPriceItem.Img = state.demoOrigin + addPriceItem.Img
+            })
+          }
+        })
+      }
+
     },
     //
     async getFavorite() {

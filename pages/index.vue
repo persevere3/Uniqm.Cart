@@ -7,18 +7,25 @@
     <div class="img_container pc" v-if="homePage.TopImg" :style="{backgroundImage: `url(${homePage.TopImg})`}"></div>
     <div class="img_container mobile" v-if="homePage.PhoneImg" :style="{backgroundImage: `url(${homePage.PhoneImg})`}"></div>
 
-    <!-- <div class="banner" v-if="homePage.Ads && homePage.Ads.length">
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="item in homePage.Ads" 
-                :key="item.ID" :style="{backgroundImage: `url(${item.URL})`}"
-          >
-          </div>
-        </div>
-      </div>
-      <div class="swiper-pagination"></div>
-    </div> -->
-
+    <div class="banner" v-if="homePage.Ads && homePage.Ads.length">
+      <swiper class="mySwiper"
+        :loop="true"
+        :autoplay="{
+          delay: 5000,
+          disableOnInteraction: false,
+        }"
+        :pagination="{
+          clickable: true,
+        }"
+        :modules="modules"
+      >
+        <swiper-slide v-for="item in homePage.Ads" :key="item.ID"
+          :style="{backgroundImage: `url(${item.URL})`}"
+        >
+        </swiper-slide>
+      </swiper>
+    </div>
+    
     <div class="category_container" v-if="homePage.Ex && all.websubcategory">
       <ul>
         <li v-for="(item, index) in filter_ex" :key="index" :style="{backgroundImage: `url(${item.Img})`}" @click="item.direct_link ? ( item.type == 0 ? urlPush(item.direct_link, true) : urlPush(item.direct_link)) : '' "></li>
@@ -95,19 +102,25 @@
   import { storeToRefs } from 'pinia'
   import { getHomePageApi } from '@/api/index.js'
 
+  import { Swiper, SwiperSlide } from 'swiper/vue';
+  import { Autoplay, Pagination } from 'swiper/modules';
+
+  import 'swiper/css';
+  import 'swiper/css/pagination';
+
   // store
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getSite, all, store, user_account, favorite, perpage_num, totalpage_num, page_active, 
-    webVersion } = storeToRefs(useCommon())
+    demoOrigin, webVersion } = storeToRefs(useCommon())
   let { toggleFavorite, pagePush, pushTo_cart, urlPush, numberThousands } = useCommon()
 
   const state = reactive({
     homePage: {},
-    
-    swiper: '',
   })
   let { homePage } = toRefs(state)
+
+  const modules = reactive([Autoplay, Pagination])
 
   // computed ==================================================
   // homePage 
@@ -181,8 +194,7 @@
   // watch ==================================================
   watch(is_getSite, async() => {
     await getHomePage()
-    // Swiper ???
-  },)
+  })
 
   // methods ==================================================
   async function getHomePage() {
@@ -226,28 +238,28 @@
       dataSort.Category = dataSort.Category.filter(item => item.Img)
 
       if(webVersion.value === 'demo') {
-        dataSort.TopImg = 'https://demo.uniqcarttest.com' + dataSort.TopImg
-        dataSort.PhoneImg = 'https://demo.uniqcarttest.com' + dataSort.PhoneImg
+        dataSort.TopImg = demoOrigin.value + dataSort.TopImg
+        dataSort.PhoneImg = demoOrigin.value + dataSort.PhoneImg
 
         dataSort.Ads.forEach(item => {
-          item.URL = 'https://demo.uniqcarttest.com' + item.URL
+          item.URL = demoOrigin.value + item.URL
         })
 
         dataSort.Ex.forEach(item => {
-          item.Img = 'https://demo.uniqcarttest.com' + item.Img
+          item.Img = demoOrigin.value + item.Img
         })
 
         dataSort.Category.forEach(item => {
-          item.Img = 'https://demo.uniqcarttest.com' + item.Img
+          item.Img = demoOrigin.value + item.Img
         })
         if(dataSort.Community.FB.Img) {
-          dataSort.Community.FB.Img = 'https://demo.uniqcarttest.com' + dataSort.Community.FB.Img
+          dataSort.Community.FB.Img = demoOrigin.value + dataSort.Community.FB.Img
         }
         if(dataSort.Community.Line.Img) {
-          dataSort.Community.Line.Img = 'https://demo.uniqcarttest.com' + dataSort.Community.Line.Img
+          dataSort.Community.Line.Img = demoOrigin.value + dataSort.Community.Line.Img
         }
         if(dataSort.Community.IG.Img) {
-          dataSort.Community.IG.Img = 'https://demo.uniqcarttest.com' + dataSort.Community.IG.Img
+          dataSort.Community.IG.Img = demoOrigin.value + dataSort.Community.IG.Img
         }
       }
 

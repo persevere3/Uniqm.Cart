@@ -94,7 +94,7 @@
   // store
   import { useCommon }  from '@/stores/common/common'
 
-  let { site, is_getSite, favorite, perpage_num, totalpage_num, page_active, webVersion } = storeToRefs(useCommon())
+  let { site, is_getSite, favorite, perpage_num, totalpage_num, page_active, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { login, toggleFavorite, pushTo_cart, pagePush, numberThousands } = useCommon()
   
   const state = reactive({
@@ -138,7 +138,7 @@
       state.search = res.data.data;
       if(webVersion.value === 'demo') {
         state.search.forEach(item => {
-          item.Img = 'https://demo.uniqcarttest.com' + item.Img
+          item.Img = demoOrigin.value + item.Img
         })
       }
       if(perpage_num.value % 3 !== 0) perpage_num.value =  6;

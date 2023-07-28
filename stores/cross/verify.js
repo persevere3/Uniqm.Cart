@@ -117,6 +117,11 @@ export const useVerify = defineStore('verify', () => {
         return true;
       }
     },
+    reset(item) {
+      item.value = '';
+      item.is_error = false;
+      item.message = '';
+    },
     verify(...arr) {
       let is_valid = true;
       for (let item of arr) {
