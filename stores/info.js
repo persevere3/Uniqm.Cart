@@ -8,8 +8,8 @@ import { getUser_infoApi, edit_infoApi, edit_passApi, getBonusApi,
 
 export const useInfo = defineStore('info', () => {
   // store ==================================================
-  let { site, store, user_account, is_payModal, payModal_message } = storeToRefs(useCommon())
-  let { login, check_logout, getFormData, urlPush } = useCommon()
+  let { site, store, user_account, cart, is_payModal, payModal_message } = storeToRefs(useCommon())
+  let { return_formData, login, check_logout, urlPush } = useCommon()
 
   // state ==================================================
   const state = reactive({
@@ -30,94 +30,6 @@ export const useInfo = defineStore('info', () => {
 
   // methods ==================================================
   const methods = {
-    async getUser_info() {
-      return new Promise(async(resolve, reject) => {
-        let formData = new FormData();
-        formData.append("storeid", site.value.Name);
-        formData.append("phone", user_account.value);
-  
-        try {
-          let res = await getUser_infoApi(formData)
-          if(res.data.errormessage) {
-            await login();
-            methods.getUser_info();
-            return
-          }
-
-          if(res.data.status) {
-            state.user_info = res.data.datas[0][0];
-            state.user_info.ThreeLinkCode = state.user_info.ThreeLinkCode || ''
-            state.user_info.invoice_title = state.user_info.ThreeLinkCode.split('|')[0] || ''
-            state.user_info.invoice_uniNumber = state.user_info.ThreeLinkCode.split('|')[1] || ''
-  
-            methods.login_handle_carts();
-  
-            state.r_name.value = state.user_info.Name
-            state.r_mail.value = state.user_info.Email
-            state.r_birthday.value = state.user_info.Birthday ? new Date(state.user_info.Birthday) : ''
-            state.sex = state.user_info.Gender == 1 ? 'male' : 'female' 
-            state.r_phone2.value = state.user_info.Phone2
-            state.recommend_code = state.user_info.Promocode
-            state.r_recommender.value = state.user_info.Recommender
-            state.total_bonus = state.user_info.Wallet * 1
-
-            state.phone_barCode = state.user_info.PhoneCode
-            state.natural_barCode = state.user_info.NatureCode
-  
-            let result_arr = [];
-            state.user_info.Adress = decodeURI(state.user_info.Adress)
-            let address_arr = state.user_info.Adress.split('_#_');
-            address_arr.length = address_arr.length - 1;
-            for(let address of address_arr) {
-              let item = address.split('_ _');
-              result_arr.push({
-                id: item[0],
-                city: item[1],
-                district: item[2],
-                detail: item[3],
-                rules: {
-                  required: {
-                    message: '請輸入完整地址'
-                  },
-                },
-                is_error: false,
-                message: '',
-              })
-            }
-            state.delivery_address = result_arr;
-  
-          } else {
-            payModal_message.value = res.data.msg;
-            check_logout();
-            is_payModal.value = true;
-          }
-  
-          resolve();
-        } catch (error) {
-          throw new Error(error)
-        }
-      })
-    },
-    login_handle_carts() {
-      let cart = JSON.parse(localStorage.getItem(`${site.value.Name}@${user_account.value}@cart`)) || [];
-      let localCarts = JSON.parse(localStorage.getItem(`${site.value.Name}@cart`)) || [];
-      for(let localIndex in localCarts) {
-        let f = false;
-        for(let cartsIndex in cart) {
-          if(localCarts[localIndex].ID === cart[cartsIndex].ID) {
-            cart[cartsIndex] = localCarts[localIndex]
-            f = true;
-          }
-        }
-        if(!f) {
-          cart[cart.length] = localCarts[localIndex]
-        }
-      }
-      state.cart = [];
-      cart.forEach((item, index) => state.cart[index] = item)
-      localStorage.setItem(`${site.value.Name}@${user_account.value}@cart`, JSON.stringify(state.cart));
-    },
-    
     add_address() {
       let id = new Date().getTime();
       if (state.delivery_address.length > 2) return
@@ -180,7 +92,7 @@ export const useInfo = defineStore('info', () => {
       obj["saveNatureCode"] = state.natural_barCode ? state.natural_barCode : ''
       obj["threeLinkCode"] = `${state.user_info.invoice_title}|${state.user_info.invoice_uniNumber}`
 
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await edit_infoApi(formData)
@@ -207,7 +119,7 @@ export const useInfo = defineStore('info', () => {
         oldpassword: state.o_password.value,
         newpassword: state.r_password.value
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await edit_passApi(formData)
@@ -237,7 +149,7 @@ export const useInfo = defineStore('info', () => {
         pageindex: order_page_index.value,
         pagesize: order_page_size.value,
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await getBonusApi(formData)
@@ -309,7 +221,7 @@ export const useInfo = defineStore('info', () => {
         storeid: site.value.Name,
         phone: user_account.value
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await unbindLine_testApi(formData)
@@ -332,7 +244,7 @@ export const useInfo = defineStore('info', () => {
         storeid: site.value.Name,
         phone: user_account.value
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await deleteAccount_testApi(formData)

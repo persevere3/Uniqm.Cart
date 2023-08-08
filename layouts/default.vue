@@ -30,8 +30,6 @@
     <LayoutFavoriteContainer />
     <LayoutCartContainer />
 
-    <!-- ok --------------------------------------------------  -->
-
     <div class="sidebar_container" :class="{active : is_sidebar}" @click="close_sidebar">
       <div class="sidebar" :class="{sidebar_slideout : is_slideout}" @click.stop="">
         <div class="navbar">
@@ -74,7 +72,7 @@
               我的最愛
               <i class="fas fa-heart"></i>
             </li>
-            <li @click.stop="cart.length ? is_carts_active = !is_carts_active : pushTo_cart()" tabindex="0" @blur="is_carts_active = false">
+            <li @click.stop="cart.length ? is_cart_active = !is_cart_active : pushTo_cart()" tabindex="0" @blur="is_cart_active = false">
               購物車
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             </li>
@@ -115,7 +113,7 @@
             <li @click.stop="is_favorite_active = !is_favorite_active" tabindex="0" @blur="is_favorite_active = false">
               <i class="fas fa-heart"></i>
             </li>
-            <li @click.stop="cart.length ? is_carts_active = !is_carts_active : pushTo_cart()" tabindex="0" @blur="is_carts_active = false">
+            <li @click.stop="cart.length ? is_cart_active = !is_cart_active : pushTo_cart()" tabindex="0" @blur="is_cart_active = false">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             </li>
             <li @click="urlPush('/order')">
@@ -159,8 +157,6 @@
         </div>
       </div>
     </header>
-
-    <!-- ok --------------------------------------------------  -->
 
     <slot />
 
@@ -264,17 +260,14 @@
   import { useHandlerCommon }  from '@/stores/handlerCommon'
 
   let { site, user_account, all, store, footer_community, copyRight, customerService, 
-    cart, is_carts_active, is_favorite_active 
+    pathname, cart, is_cart_active, is_favorite_active
   } = storeToRefs(useCommon())
-  let { delete_carts_item, productTotalQty, setCarts, pushTo_cart, urlPush, numberThousands } = useCommon()
+  let { pushTo_cart, urlPush } = useCommon()
   let { reset, verify } = useVerify()
   let { getSiteHandler } = useHandlerCommon()
 
   // state ==================================================
   const state = reactive({
-    // 
-    pathname: '',
-
     //
     is_chat: false,
     isTawkAddClick: false,
@@ -317,7 +310,7 @@
     // scrollto_top
     window_scrollTop: 0,
   })
-  let { pathname, is_search, searchStr, is_sidebar, is_slideout, is_connect, 
+  let { is_search, searchStr, is_sidebar, is_slideout, is_connect, 
     connect_mail, connect_text, window_scrollTop, 
     is_chat, isTawkAddClick, isTawkOpen 
   } = toRefs(state)

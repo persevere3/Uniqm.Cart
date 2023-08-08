@@ -216,16 +216,17 @@
   import { useCommon }  from '@/stores/common/common'
   import { useOrder }  from '@/stores/order'
   import { useInfo } from '@/stores/info'
+  import { useHandlerInfo } from '@/stores/handlerInfo'
 
   let { store, user_account, pathname, is_payModal, payModal_message } = storeToRefs(useCommon())
-  let { numberThousands, rePay, getPathname } = useCommon()
+  let { rePay, copy, getPathname, numberThousands } = useCommon()
   let { order_phone, order_mail, filter_number, filter_pay, filter_delivery, payStatus_arr, delivery_arr,
-    order, noOrder, product_active, payMethod_obj, martObj, account_number, activeOrder,
-    order_number, order_page_index, order_page_number, select_active, order_page_size
+    order, noOrder, product_active, payMethod_obj, pay_method, martObj, account_number, activeOrder,
+    order_number, order_page_index, order_page_number, order_page_size, select_active
   } = storeToRefs(useOrder())
   let { getOrder, getMemberOrder, searchMartDelivery } = useOrder()
   let { user_info } = storeToRefs(useInfo())
-  let { getUser_info } = useInfo()
+  let { getUser_info } = useHandlerInfo()
 
   const { RtnMsg, account, result, phone, email } = useRoute().query
   // 付款成功
@@ -268,5 +269,4 @@
   let getOrderHandler = computed(() => {
     return user_account.value ? getMemberOrder : getOrder
   })
-
 </script>

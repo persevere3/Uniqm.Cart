@@ -64,7 +64,7 @@
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getSite } = storeToRefs(useCommon())
-  let { login, unescapeHTML } = useCommon()
+  let { login, urlPush, unescapeHTML } = useCommon()
   
   const state = reactive({
     contact: {}
@@ -84,15 +84,13 @@
       let res = await getContactApi(params)
       if(res.data.errormessage) {
         await login();
-        methods.getContactApi(params);
+        getContact();
         return
       }
 
       state.contact = res.data.data[0];
-
     } catch (error) {
       throw new Error(error)
     }
   }
-
 </script>

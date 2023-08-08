@@ -1,5 +1,5 @@
 <template> 
-  <div class="carts_container" :class="{active : is_carts_active}" v-if="cart.length">
+  <div class="carts_container" :class="{active : is_cart_active}" v-if="cart.length">
     <ul class="carts_items">
       <template v-for="item in cart" :key="item.ID">
         <!-- 有規格 -->
@@ -75,18 +75,51 @@
   // store ==================================================
   import { useCommon }  from '@/stores/common/common'
 
-  let { cart, is_carts_active } = storeToRefs(useCommon())
-  let { delete_carts_item, pushTo_cart, numberThousands } = useCommon()
+  let { cart, is_cart_active } = storeToRefs(useCommon())
+  let { numberThousands } = useCommon()
 
-  // state ==================================================
-  const state = reactive({
+  function delete_carts_item(id, specID) {
+    cart.value.forEach((item, index)=> {
+      if(item.ID === id) {
+        if(item.specArr) {
+          item.specArr.forEach((item2, index2) => {
+            if(item2.ID === specID) {
+              item.specArr[index2].buyQty = 0;
+            }
+          })
 
-  })
-  let {  } = toRefs(state)
-
-  // watch ==================================================
-
-  // function ==================================================
-
+          if(productTotalQty(item) < 1) {
+            cart.value.splice(index, 1);
+          }
+        }
+        else {
+          cart.value.splice(index, 1);
+        }
+      }
+    })
+    setCarts();
+  }
+  function productTotalQty(product) {
+    let totalQty = 0;
+    if(product.specArr){
+      for(let i = 0; i < product.specArr.length; i++){
+        totalQty += product.specArr[i].buyQty * 1;
+      }
+    }
+    else {
+      totalQty = product.buyQty;
+    }
+    return totalQty;
+  }
+  function setCarts() {
+    if(user_account.value) {
+      console.log('登入')
+      localStorage.setItem(`${site.value.Name}@${user_account.value}@cart`, JSON.stringify(cart.value));
+    }
+    else {
+      console.log('登出')
+      localStorage.setItem(`${site.value.Name}@cart`, JSON.stringify(cart.value));
+    }
+  }
 
 </script>

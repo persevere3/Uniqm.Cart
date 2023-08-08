@@ -71,6 +71,35 @@ export const useCategory = defineStore('category', () => {
         throw new Error(error)
       }
     },
+
+    // allProducts, category ==============================
+    videoHandler(url) {
+      let code = '';
+      if(url.indexOf('youtu.be') != -1){
+        code = url.split('https://youtu.be/')[1];
+      }
+      else if(url.indexOf('www.youtube.com') != -1){
+        if(url.split('?v=').length > 1){
+          code = url.split('?v=')[1].split('&')[0];
+        }
+      }
+      let iframe = '';
+      if(code){
+        iframe = `
+          <iframe src="https://www.youtube.com/embed/${code}" 
+            frameborder="0" 
+            allow="accelerometer; 
+              autoplay; clipboard-write; 
+              encrypted-media; 
+              gyroscope; 
+              picture-in-picture" 
+            allowfullscreen
+          >
+          </iframe>
+        `
+      }
+      return iframe;
+    },
   }
 
   return {

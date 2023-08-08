@@ -21,6 +21,7 @@
         <div class="input_container">
           <input type="text" placeholder="請輸入推薦代碼" v-model.trim="r_recommender.value">
         </div>
+
         <div class="input_container" :class="{ error: r_name.is_error }">
           <input type="text" placeholder="* 請輸入姓名" v-model.trim="r_name.value" @blur="verify(r_name)">
           <div class="error message">
@@ -68,6 +69,7 @@
             <i class="error_icon fas fa-exclamation-circle"></i> {{  r_birthday.message  }}
           </div>
         </div>
+
         <div class="radio_container">
           <div class="radio">
             <input type="radio" name="sex" id="male" value="male" v-model="sex">
@@ -93,6 +95,7 @@
             <i class="error_icon fas fa-exclamation-circle"></i> {{  r_password.message  }}
           </div>
         </div>
+        
         <div class="input_container" :class="{ error: r_confirm_password.is_error }">
           <input :type="r_confirm_password_type" placeholder="* 請再次輸入密碼" v-model.trim="r_confirm_password.value"
             @blur="verify(r_confirm_password)" autocomplete="false">
@@ -147,12 +150,14 @@
             <option value="0"> 電子信箱 </option>
             <option value="1"> 手機 </option>
           </select>
+          
           <div class="input_container" :class="{ error: f_mail.is_error }" v-if="store.NotificationSystem == 0 || (store.NotificationSystem == 2 && mailOrAccount == 0)">
             <input type="text" placeholder="* 請輸入電子信箱" v-model.trim="f_mail.value" @blur="verify(f_mail)">
             <div class="error message">
               <i class="error_icon fas fa-exclamation-circle"></i> {{  f_mail.message  }}
             </div>
           </div>
+
           <div class="input_container" :class="{ error: f_account.is_error }" v-if="store.NotificationSystem == 1 || (store.NotificationSystem == 2 && mailOrAccount == 1)">
             <input type="text" placeholder="* 請輸入手機(帳號)" v-model.trim="f_account.value" @blur="verify(f_account)">
             <div class="error message">
@@ -188,6 +193,7 @@
               <i class="error_icon fas fa-exclamation-circle"></i> {{  f_password.message  }}
             </div>
           </div>
+
           <div class="input_container" :class="{ error: f_confirm_password.is_error }">
             <input :type="f_confirm_password_type" placeholder="* 請再次輸入密碼" v-model.trim="f_confirm_password.value"
             @blur="verify(f_confirm_password)" autocomplete="false">
@@ -256,26 +262,30 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  import {  } from '../api/index'
-
   // store
   import { useCommon }  from '@/stores/common/common'
-  import { useVerify }  from '@/stores/cross/verify'
-  import { useInfo }  from '@/stores/info'
   import { useUser }  from '@/stores/user'
-  import { useOrder }  from '@/stores/order'
+  import { useVerify }  from '@/stores/cross/verify'
+  import { useHandlerCommon } from '@/stores/handlerCommon'
 
-  let { store, site, user_account } = storeToRefs(useCommon())
-  let { send_verify_code, unescapeHTML, getPathname, urlPush } = useCommon()
-  let { } = storeToRefs(useInfo())
-  let { } = useInfo()
-  let { user_nav_active, r_name, r_account, r_mail, r_birthday, sex, r_recommender, r_phone2, r_verify_code, r_verify_code2, second, r_password, r_password_type, r_confirm_password, r_confirm_password_type, r_is_agree, is_userModal, l_account, l_password, l_password_type, forget_step, f_mail, mailOrAccount, f_account, f_second, f_verify_code, f_password, f_password_type, f_confirm_password, f_confirm_password_type, is_LineRegister, is_userMessage, user_message } = storeToRefs(useUser())
-  let { register, user_login, send_forget_verify_code, check_forget_verify_code, reset_input, edit_forget_pass, LineLogin, getLineProfile } = useUser()
-  let {  } = storeToRefs(useOrder())
+  let { store, site } = storeToRefs(useCommon())
+  let { unescapeHTML, getPathname } = useCommon()
+  let { user_nav_active, r_name, r_account, r_mail, r_birthday, sex, r_recommender, 
+    r_password, r_password_type, r_confirm_password, r_confirm_password_type,
+    r_verify_code, r_verify_code2, second, r_is_agree, is_userModal,
+    l_account, l_password, l_password_type, 
+    forget_step, f_mail, mailOrAccount, f_account, f_second, f_verify_code,
+    f_password, f_password_type, f_confirm_password, f_confirm_password_type, 
+    is_LineRegister, is_userMessage, user_message 
+  } = storeToRefs(useUser())
+  let { register, user_login, LineLogin, getLineProfile, reset_input, validateRecommenderCode,
+    send_forget_verify_code, check_forget_verify_code, edit_forget_pass,
+  } = useUser()
   let { verify } = useVerify()
+  let { send_verify_code } = useHandlerCommon()
 
   const { term, code } = useRoute().query
-  if(site.TermsNotices && term) {
+  if(site.value.TermsNotices && term) {
     user_nav_active.value = 'register';
     is_userModal.value = true;
   }
@@ -284,16 +294,4 @@
     useRouter().replace({ path: getPathname('user') })
     getLineProfile();
   }
-    
-  const state = reactive({
-
-  })
-  let {  } = toRefs(state)
-
-  // computed ==================================================
-
-  // watch ==================================================
-
-  // methods ==================================================
-
 </script>

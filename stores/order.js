@@ -7,7 +7,7 @@ import { getOrderApi, getMemberOrderApi, rePayApi, searchMartDeliveryApi } from 
 export const useOrder = defineStore('order', () => {
   // store ==================================================
   let { site, user_account, payModal_message, is_payModal } = storeToRefs(useCommon())
-  let { getFormData, urlPush } = useCommon()
+  let { return_formData, urlPush } = useCommon()
 
   // state ==================================================
   const state = reactive({
@@ -100,7 +100,7 @@ export const useOrder = defineStore('order', () => {
         filter_pay: state.filter_pay,
         filter_delivery: state.filter_delivery
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await getOrderApi(formData)
@@ -163,7 +163,7 @@ export const useOrder = defineStore('order', () => {
           filter_pay: state.filter_pay,
           filter_delivery: state.filter_delivery,
         }
-        let formData = getFormData(obj)
+        let formData = return_formData(obj)
 
         try {
           let res = await getMemberOrderApi(formData)

@@ -1,6 +1,7 @@
-import { defineStore, storeToRefs } from 'pinia'
+import { defineStore } from 'pinia'
 import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi,
-  getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/api/index';
+  getFavoriteApi, deleteFavoriteApi, addFavoriteApi 
+} from '@/api/index';
 
 import { useFilters }  from '../cross/filters'
 
@@ -24,7 +25,7 @@ export const useCommon = defineStore('common', () => {
 
     cart: [],
     favorite: {},
-    is_carts_active: false,
+    is_cart_active: false,
     is_favorite_active: false,
 
     // 
@@ -49,26 +50,46 @@ export const useCommon = defineStore('common', () => {
     //
     demoOrigin: 'https://demo.uniqcarttest.com',
     webVersion: 'demo',
-
-
-    //
-    testData: '',
   })
 
   onMounted(() => {
     if(document.querySelector('.header')) {
       document.querySelector('body').style['padding-top'] = document.querySelector('.header').getBoundingClientRect().height + 'px';
     }
-
-    
   })
 
   // methods ==================================================
   const methods = {
     ...useFilters(),
 
+    // obj => formData or 只post WebPreview
+    return_formUrlencoded(origin) {
+      if(origin === 'WebPreview') return `WebPreview=${state.site.WebPreview}`
+
+      let formUrlencoded = ''
+      for(let key of origin) {
+        let value = origin[key]
+        formUrlencoded += `${formUrlencoded ? '&' : ''}${key}=${value}`
+      }
+      return formUrlencoded
+    },
+    // obj => formData
+    return_formData(obj) {
+      let formData = new FormData();
+      for(let key in obj) {
+        formData.append(key, obj[key]);
+      }
+      return formData
+    },
+
     async login() {
-      let params = `site=${state.site.Site}&store=${state.site.Name}&preview=${state.site.Preview}&WebPreview=${state.site.WebPreview}`;
+      let obj = {
+        site: state.site.Site,
+        store: state.site.Name,
+        preview: state.site.Preview,
+        WebPreview: state.site.WebPreview
+      }
+      let params = return_formUrlencoded(obj)
 
       try {
         loginApi(params)
@@ -86,14 +107,14 @@ export const useCommon = defineStore('common', () => {
           return
         }
 
-        state.site = res.data.data[0];
+        state.site = res.data.data[0] || {};
         localStorage.setItem('site', JSON.stringify(state.site));
       } catch (error) {
         throw new Error(error)
       }
     },
     async getAll() {
-      let params = `WebPreview=${state.site.WebPreview}`;
+      let params = return_formUrlencoded('WebPreview')
 
       try {
         let res = await getAllApi(params)
@@ -109,7 +130,7 @@ export const useCommon = defineStore('common', () => {
       }
     },
     async getStore() {
-      let params = `WebPreview=${state.site.WebPreview}`;
+      let params = return_formUrlencoded('WebPreview')
 
       try {
         let res = await getStoreApi(params)
@@ -121,16 +142,14 @@ export const useCommon = defineStore('common', () => {
 
         state.store = res.data.data[0] || {};
         if(state.webVersion === 'demo') state.store.Logo = state.demoOrigin + state.store.Logo
-        // 新增 store.footer 放聯絡我們 icon 
-        // 有 link 才顯示
-        state.footer_community = res.data.footer[0] || {};
 
+        state.footer_community = res.data.footer[0] || {};
       } catch (error) {
         throw new Error(error)
       }
     },
     async getCopyRight() {
-      let params = `WebPreview=${state.site.WebPreview}`;
+      let params = return_formUrlencoded('WebPreview')
 
       try {
         let res = await getCopyRightApi(params)
@@ -146,7 +165,7 @@ export const useCommon = defineStore('common', () => {
       }
     },
     async getCustomerService() {
-      let params = `WebPreview=${state.site.WebPreview}`;
+      let params = return_formUrlencoded('WebPreview')
 
       try {
         let res = await getCustomerServiceApi(params)
@@ -157,15 +176,15 @@ export const useCommon = defineStore('common', () => {
         }
 
         state.customerService = res.data.data[0] || {};
-        state.customerService.Type == 1 ? methods.appendScript(state.customerService.Text, 'head') : methods.appendScript(state.customerService.Text, 'body');
-        // if(state.customerService.FBText ) methods.appendScript(state.customerService.FBText, 'body');
+        methods.appendScript(state.customerService.Text, state.customerService.Type == 1 ? 'head' : 'body')
+        // if(state.customerService.FBText ) methods.appendScript(state.customerService.FBText, 'body')
       } catch (error) {
         throw new Error(error)
       }
     },
 
     // 
-    getCart() {      
+    getCart() {
       if(state.user_account) {
         state.cart = JSON.parse(localStorage.getItem(`${state.site.Name}@${state.user_account}@cart`)) || [];
       }
@@ -182,20 +201,20 @@ export const useCommon = defineStore('common', () => {
           }
         })
       }
-
     },
+
     //
     async getFavorite() {
       if(state.user_account) {
-        let formData = new FormData();
-        formData.append("storeid", state.site.Name);
-        formData.append("phone", state.user_account);
+        let formData = new FormData()
+        formData.append("storeid", state.site.Name)
+        formData.append("phone", state.user_account)
 
         try {
           let res = await getFavoriteApi(formData)
           if(res.data.errormessage) {
-            await methods.login();
-            methods.getFavoriteApi(formData);
+            await methods.login()
+            methods.getFavorite()
             return
           }
   
@@ -209,8 +228,8 @@ export const useCommon = defineStore('common', () => {
             return
           }
 
-          state.favorite = {};
-          let favorite_list = res.data.datas[0];
+          state.favorite = {}
+          let favorite_list = res.data.datas[0] || []
           for(let favorite of favorite_list) {
             let id = favorite.Product;
             let index = state.all.data.map((item) => item.ID).indexOf('' + id);
@@ -242,8 +261,7 @@ export const useCommon = defineStore('common', () => {
           else res = await addFavoriteApi(formData)
           if(res.data.errormessage) {
             await methods.login();
-            if(state.favorite[id]) methods.deleteFavoriteApi(formData);
-            else methods.addFavoriteApi(formData);
+            toggleFavorite(id)
             return
           }
 
@@ -270,190 +288,15 @@ export const useCommon = defineStore('common', () => {
       }
     },
 
-    // ==================================================
-    // user info ========================================
-    async send_verify_code() {
-      if(state.second > 0) return
-
-      if(store.value.NotificationSystem == 0) {
-        if(!verify(r_mail.value)) return
-      }
-      else if(store.value.NotificationSystem == 1) {
-        if(!verify(r_account.value)) return
-      }
-      else {
-        if(!verify(r_account.value) || !verify(r_mail.value) ) return
-      }
-
-      let obj = {
-        storeid: site.value.Name,
-        storeName: site.value.Store,
-        phone: r_account.value.value.trim(),
-        mail: r_mail.value.value.trim(),
-        type: store.value.NotificationSystem,
-        notificationsystem: store.value.NotificationSystem,
-      }
-      let formData = getFormData(obj)
-      try {
-        let res = await send_verify_codeApi(formData)
-        if(res.data.errormessage) {
-          await methods.login();
-          send_verify_code();
-          return
-        }
-
-        if(res.data.status) {
-          state.second = 300;
-          let interval =  setInterval(() => {
-            state.second -= 1;
-            if(state.second < 1){
-              clearInterval(interval);
-            }
-          }, 1000)
-        }
-        user_message.value = res.data.msg
-        is_userMessage.value = true;
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
-    // ==================================================
-
-    // allProducts, category, rich, contact(map) ==============================
-    imgHandler() {
-      let editorWidth = 0;
-      let editor_input =  document.querySelector('#EditerWidth');
-      if(editor_input) {
-        editorWidth = editor_input.value  * 1
-      }
-
-      let ql_editor = document.querySelector('.ql-editor');
-
-      let rich_container = document.querySelector('.rich_container');
-
-      if(!ql_editor || !rich_container) return
-
-      let rich_container_width = parseFloat(window.getComputedStyle(rich_container).width);
-      let rich_container_padding = parseFloat(window.getComputedStyle(rich_container).padding);
-      if(rich_container_padding){
-        rich_container_width -= rich_container_padding*2;
-      }
-
-      if( editorWidth < rich_container_width ){
-        ql_editor.style.width = editorWidth + 'px';
-      } 
-      else{
-        ql_editor.style.width = rich_container_width + 'px';
-      }
-
-      let imgs = document.querySelectorAll('.ql-editor img');
-      for(let i = 0; i < imgs.length; i++){
-        let imgWidth = window.getComputedStyle(imgs[i]).width.split('px')[0] * 1;
-
-        if(imgWidth > editorWidth){
-          imgs[i].style.width = editorWidth + 'px';
-        }
-      }
-
-      let videos = document.querySelectorAll('.ql-editor .ql-video');
-      for(let i = 0; i < videos.length; i++){
-        let videosWidth = window.getComputedStyle(videos[i]).width.split('px')[0] * 1;
-        if(videosWidth > editorWidth){
-          videos[i].style.width = editorWidth + 'px';
-        }
-      }
-    },
-    // allProducts, category ==============================
-    videoHandler(url){
-      let code = '';
-      if(url.indexOf('youtu.be') != -1){
-        code = url.split('https://youtu.be/')[1];
-      }
-      else if(url.indexOf('www.youtube.com') != -1){
-        if(url.split('?v=').length > 1){
-          code = url.split('?v=')[1].split('&')[0];
-        }
-      }
-      let iframe = '';
-      if(code){
-        iframe = `
-          <iframe src="https://www.youtube.com/embed/${code}" 
-            frameborder="0" 
-            allow="accelerometer; 
-              autoplay; clipboard-write; 
-              encrypted-media; 
-              gyroscope; 
-              picture-in-picture" 
-            allowfullscreen
-          >
-          </iframe>
-        `
-      }
-      return iframe;
-    },
-    // ==============================
-
-    // common component ============================================================
-    delete_carts_item(id, specID) {
-      cart.value.forEach((item, index)=> {
-        if(item.ID === id) {
-          if(item.specArr) {
-            item.specArr.forEach((item2, index2) => {
-              if(item2.ID === specID) {
-                item.specArr[index2].buyQty = 0;
-              }
-            })
-
-            if(methods.productTotalQty(item) < 1) {
-              cart.value.splice(index, 1);
-            }
-          }
-          else {
-            cart.value.splice(index, 1);
-          }
-        }
-      })
-      methods.setCarts();
-    },
-    productTotalQty(product) {
-      let totalQty = 0;
-      if(product.specArr){
-        for(let i = 0; i < product.specArr.length; i++){
-          totalQty += product.specArr[i].buyQty * 1;
-        }
-      }
-      else {
-        totalQty = product.buyQty;
-      }
-      return totalQty;
-    },
-    setCarts() {
-      if(user_account.value) {
-        console.log('登入')
-        localStorage.setItem(`${site.value.Name}@${user_account.value}@cart`, JSON.stringify(cart.value));
-      }
-      else {
-        console.log('登出')
-        localStorage.setItem(`${site.value.Name}@cart`, JSON.stringify(cart.value));
-      }
-    },
-    // ============================================================
-
+    // payModal_message.indexOf('登入') > -1
     check_logout() {
       if(state.payModal_message == '請先登入會員' ||
-      state.payModal_message == '閒置逾時，請重新登入' ||
-      state.payModal_message == '已登出，請重新登入'
+        state.payModal_message == '閒置逾時，請重新登入' ||
+        state.payModal_message == '已登出，請重新登入'
       ) state.is_logout = true;
     },
 
-    getFormData(obj) {
-      let formData = new FormData();
-      for(let key in obj) {
-        formData.append(key, obj[key]);
-      }
-      return formData
-    },
-
+    // 
     appendScript(text, tag) {
       if(!text) return
 
@@ -491,6 +334,7 @@ export const useCommon = defineStore('common', () => {
       }
     },
 
+    // 
     copy(text, id) {
       let copy_input
       if(id) copy_input = document.querySelector(`#${id}`) 
@@ -500,11 +344,13 @@ export const useCommon = defineStore('common', () => {
       document.execCommand('copy');
     },
 
+    // products page
     pagePush(page) {
       if(page > state.totalpage_num || page < 1) return
       state.page_active = page;
     },
 
+    // 
     getPathname(page) {
       let pageObj = {
         index: {
@@ -536,15 +382,16 @@ export const useCommon = defineStore('common', () => {
       return pageObj[page][state.webVersion];
     },
 
+    // 
     pushTo_cart(id) {
-      let href = state.webVersion === 'uniqm.net' ? 'https://www.uniqm.net' : '/cart'
       if(state.site.WebPreview == 2) alert('預覽模式下不開放')
       else {
+        let href = state.webVersion === 'uniqm.net' ? 'https://www.uniqm.net' : '/cart'
+
         if(id === undefined) methods.urlPush(`${href}?open_carts=true`, true)
         else methods.urlPush(`${href}?id=${id}`, true)
       }
     },
-
     urlPush(url, isOpen) {
       if(!url) return
       if(isOpen) window.open(url)

@@ -104,14 +104,13 @@
 
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import { Autoplay, Pagination } from 'swiper/modules';
-
   import 'swiper/css';
   import 'swiper/css/pagination';
 
   // store
   import { useCommon }  from '@/stores/common/common'
 
-  let { site, is_getSite, all, store, user_account, favorite, perpage_num, totalpage_num, page_active, 
+  let { site, is_getSite, all, store, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion } = storeToRefs(useCommon())
   let { toggleFavorite, pagePush, pushTo_cart, urlPush, numberThousands } = useCommon()
 
@@ -263,12 +262,9 @@
         }
       }
 
-      console.log(dataSort)
-
       state.homePage = dataSort;
     } catch (error) {
       throw new Error(error)
     }
   }
-
 </script>

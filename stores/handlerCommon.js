@@ -1,28 +1,30 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from '@/stores/common/common'
 
-import {  } from '@/api/index';
+import { useCommon }  from '@/stores/common/common'
+import { useUser }  from '@/stores/user'
+import { useVerify }  from '@/stores/cross/verify'
+
+import { send_verify_codeApi } from '@/api/index';
 
 export const useHandlerCommon = defineStore('handlerCommon', () => {
   // store ==================================================
-  let { site, is_getSite, store, user_account, all, is_getAll, totalpage_num, perpage_num, footer_community, demoOrigin, webVersion } = storeToRefs(useCommon())
-  let { getSite, getAll, getStore, getCopyRight, getCustomerService, getCart, getFavorite, appendScript, urlPush } = useCommon()
+  let { site, is_getSite, store, all, is_getAll, 
+    totalpage_num, perpage_num, demoOrigin, webVersion 
+  } = storeToRefs(useCommon())
+  let { return_formData, getSite, getAll, getStore, getCopyRight, getCustomerService, 
+    getCart, getFavorite, appendScript, urlPush 
+  } = useCommon()
+  let { second, r_mail, r_account, user_message, is_userMessage } = storeToRefs(useUser())
+  let { verify  } = useVerify()
 
-  // state ==================================================
-  const state = reactive({
-    
-  })
 
   // methods ==================================================
   const methods = {
     async getSiteHandler() {
       await getSite()
+      if(site.value.WebEnable == 0) urlPush('/error')
 
       is_getSite.value = true
-
-      if(site.value.WebEnable == 0) {
-        urlPush('/error');
-      }
 
       methods.getAllHandler();
       methods.getStoreHandler();
@@ -91,7 +93,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
           all.value.client.push(item);
         }
       })
-
       if(webVersion.value === 'demo') {
         all.value.data.forEach(item => {
           item.Img1 = demoOrigin.value + item.Img1
@@ -124,6 +125,53 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
         document.querySelector('body').insertBefore(noscript, document.querySelector('body div'));
       }
       // appendScript(GAText, 'head');
+    },
+
+    // user info ========================================
+    async send_verify_code() {
+      if(second.value > 0) return
+
+      if(store.value.NotificationSystem == 0) {
+        if(!verify(r_mail.value)) return
+      }
+      else if(store.value.NotificationSystem == 1) {
+        if(!verify(r_account.value)) return
+      }
+      else {
+        if(!verify(r_account.value) || !verify(r_mail.value) ) return
+      }
+
+      let obj = {
+        storeid: site.value.Name,
+        storeName: site.value.Store,
+        phone: r_account.value.value.trim(),
+        mail: r_mail.value.value.trim(),
+        type: store.value.NotificationSystem,
+        notificationsystem: store.value.NotificationSystem,
+      }
+      let formData = return_formData(obj)
+      try {
+        let res = await send_verify_codeApi(formData)
+        if(res.data.errormessage) {
+          await methods.login();
+          send_verify_code();
+          return
+        }
+
+        if(res.data.status) {
+          second.value = 300;
+          let interval =  setInterval(() => {
+            second.value -= 1;
+            if(second.value < 1){
+              clearInterval(interval);
+            }
+          }, 1000)
+        }
+        user_message.value = res.data.msg
+        is_userMessage.value = true;
+      } catch (error) {
+        throw new Error(error)
+      }
     },
   }
 

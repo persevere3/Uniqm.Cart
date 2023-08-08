@@ -1,7 +1,11 @@
 <template>
   <div class="payModal_container" v-if="is_payModal">
     <div class="payModal bank">
-      <div class="close" @click="is_payModal = false; payModal_message = ''; is_logout ? logout() : ''"><i class="fas fa-times"></i></div>
+      <div class="close" 
+        @click="is_payModal = false; payModal_message = ''; is_logout ? logout() : ''"
+      >
+        <i class="fas fa-times"></i>
+      </div>
 
       <!-- 顯示帳戶 -->
       <template v-if="payModal_message == 'template1'">
@@ -75,7 +79,7 @@
     </div>
   </div>
 
-  <div class="ECPay_form_container" v-html="ECPay_form" ></div>
+  <div class="ECPay_form_container" v-html="ECPay_form"></div>
 </template>
 
 <script setup>
@@ -90,23 +94,12 @@
   import { useInfo }  from '@/stores/info'
   import { useUser }  from '@/stores/user'
 
-  let { store, bank, is_payModal, payModal_message, is_logout } = storeToRefs(useCommon())
-  let { copy } = useCommon()
+  let { store, pathname, bank, is_payModal, payModal_message, is_logout } = storeToRefs(useCommon())
+  let { login, copy } = useCommon()
   let { order_number, account_number, ECPay_form } = storeToRefs(useOrder())
-  let {  } = storeToRefs(useInfo())
-  let { logout } = useInfo()
+  let { logout, edit_pass } = useInfo()
   let { o_password, o_password_type, r_password, r_password_type, r_confirm_password, r_confirm_password_type } = storeToRefs(useUser())
-  let {  } = useUser()
   let { verify } = useVerify()
-
-  const state = reactive({
-
-  })
-  let {  } = toRefs(state)
-
-  // computed ==================================================
-
-  // watch ==================================================
 
   // methods ==================================================
   function filter_account_number() {
@@ -137,12 +130,10 @@
       else payModal_message.value = '抱歉，請重新輸入帳號末6碼'
       is_payModal.value = true;
 
-      let pathname = location.pathname;
-      if(pathname.indexOf('order') > -1 && !user_account.value) getOrder('page', true)
+      if(pathname.value.indexOf('order') > -1 && !user_account.value) getOrder('page', true)
       else state.getMemberOrder('page', true)
     } catch (error) {
       throw new Error(error)
     }
   }
-  
 </script>

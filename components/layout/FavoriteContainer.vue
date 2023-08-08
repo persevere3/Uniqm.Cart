@@ -28,15 +28,4 @@
   let { favorite, is_favorite_active } = storeToRefs(useCommon())
   let { toggleFavorite, pushTo_cart, numberThousands } = useCommon()
 
-  // state ==================================================
-  const state = reactive({
-
-  })
-  let {  } = toRefs(state)
-
-  // watch ==================================================
-
-  // function ==================================================
-
-
 </script>

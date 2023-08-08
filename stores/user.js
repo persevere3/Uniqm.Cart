@@ -9,7 +9,7 @@ import { registerApi, user_loginApi, send_forget_verify_codeApi, check_forget_ve
 export const useUser = defineStore('user', () => {
   // store ==================================================
   let { site, store, user_account } = storeToRefs(useCommon())
-  let { login, getFormData, getPathname, urlPush } = useCommon()
+  let { return_formData, login, getPathname, urlPush } = useCommon()
   let { verify } = useVerify()
 
   // state ==================================================
@@ -316,7 +316,7 @@ export const useUser = defineStore('user', () => {
         obj.validate = state.r_verify_code.value
         obj.validate2 = state.r_verify_code2.value
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await registerApi(formData)
@@ -348,7 +348,7 @@ export const useUser = defineStore('user', () => {
         password: state.l_password.value,
         realAccount: state.l_account.value,
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await user_loginApi(formData)
@@ -387,7 +387,7 @@ export const useUser = defineStore('user', () => {
         notificationsystem: store.value.NotificationSystem,
         phoneormail: methods.getPhoneormail()
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await send_forget_verify_codeApi(formData)
@@ -424,7 +424,7 @@ export const useUser = defineStore('user', () => {
         phoneormail: methods.getPhoneormail(),
         validate: state.f_verify_code.value,
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await check_forget_verify_codeApi(formData)
@@ -454,7 +454,7 @@ export const useUser = defineStore('user', () => {
         validate: state.f_verify_code.value,
         newpassword: state.f_password.value
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await edit_forget_passApi(formData)
@@ -514,7 +514,7 @@ export const useUser = defineStore('user', () => {
         storeid: site.value.Name,
         recommender: state.r_recommender.value,
       }
-      let formData = getFormData(obj)
+      let formData = return_formData(obj)
 
       try {
         let res = await validateRecommenderCodeApi(formData)

@@ -1,11 +1,24 @@
 <template>
   <div class="main" :class="user_info_nav_active" v-if="user_account">
     <div class="logout_container button_row">
-      <template v-if="webVersion === 'demo'"> 
-        <div class="button" v-if="user_info && user_info.Registermethod == 2" @click="deleteAccount_test" style="margin-right: 5px;"> 刪除Line帳號(測試用) </div>
-        <div class="button" v-if="user_info && user_info.Registermethod <= 1 && user_info.ConnectLine" @click="unbindLine_test" style="margin-right: 5px;"> 解除Line綁定(測試用) </div>
+      <template v-if="webVersion === 'demo' && user_info">
+        <div class="button" v-if="user_info.Registermethod == 2" 
+          @click="deleteAccount_test" style="margin-right: 5px;"
+        > 
+          刪除Line帳號(測試用) 
+        </div>
+        <div class="button" v-if="user_info.Registermethod <= 1 && user_info.ConnectLine" 
+          @click="unbindLine_test" style="margin-right: 5px;"
+        > 
+          解除Line綁定(測試用)
+        </div>
       </template>
-      <div class="button" v-if="user_info && user_info.Registermethod <= 1 && !user_info.ConnectLine" @click="bindLine" style="margin-right: 5px;"> 綁定Line帳號 </div>
+
+      <div class="button" v-if="user_info && user_info.Registermethod <= 1 && !user_info.ConnectLine" 
+        @click="bindLine" style="margin-right: 5px;"
+      > 
+        綁定Line帳號 
+      </div>
       <div class="button" @click="post_logout"> 登出 </div>
     </div>
 
@@ -24,14 +37,19 @@
     <form class="forms">
       <div class="form info_form">
         <div class="title top">
-          <i class="fas fa-edit"></i> 編輯個人資訊
+          <i class="fas fa-edit"></i>
+          編輯個人資訊
         </div>
         <div class="left">
           <div class="input_container" :class="{ error: r_name.is_error }">
             <div class="title"> 姓名 </div>
-            <input type="text" placeholder="* 請輸入姓名" v-model.trim="r_name.value" @blur="verify(r_name)">
+            <input type="text" placeholder="* 請輸入姓名" 
+              v-model.trim="r_name.value" 
+              @blur="verify(r_name)"
+            >
             <div class="error message">
-              <i class="error_icon fas fa-exclamation-circle"></i> {{ r_name.message }}
+              <i class="error_icon fas fa-exclamation-circle"></i> 
+              {{ r_name.message }}
             </div>
           </div>
           <div class="input_container" :class="{ error: r_mail.is_error }">
@@ -46,9 +64,10 @@
               {{ r_mail.message }}
             </div>
           </div>
+
           <div class="input_container" :class="{ error: r_birthday.is_error }" v-if="!!user_info.Birthday">
             <div class="title"> 生日 </div>
-            <input type="text" readonly v-model.trim="birthday" @input="birthday.value = $event.target.value">
+            <input type="text" readonly v-model.trim="user_info.Birthday">
           </div>
           <div class="input_container" :class="{ error: r_birthday.is_error }" v-else>
             <div class="title"> 生日 </div>
@@ -56,6 +75,7 @@
               @close="verify(r_birthday)" @clear="verify(r_birthday)">
             </date-picker> -->
           </div>
+
           <div class="radio_container">
             <div class="title"> 性別 </div>
             <div class="radio">
@@ -110,9 +130,10 @@
             <div class="title"> 密碼 </div>
             <div class="button" @click="is_payModal = true; payModal_message = 'template3'"> 修改密碼 </div>
           </div>
+
           <div class="input_container">
             <div class="title border"> 推薦代碼 </div>
-            <input type='text' id="copy_input" readonly v-model='recommend_code' @input="recommend_code = $event.target.value">
+            <input type='text' id="copy_input" readonly v-model='recommend_code'>
             <div class='copy' @click='copy(recommend_code)'>
               <i class='fas fa-copy'></i>
             </div>
@@ -124,11 +145,13 @@
               <i class="fas fa-plus-circle"></i>
             </div>
           </div>
-          <div class="address_container" :class="{error : item.is_error}" v-for="(item, index) in delivery_address"
-            :key="index">
+          <div class="address_container" :class="{error : item.is_error}"
+            v-for="(item, index) in delivery_address" :key="index"
+          >
             <div class="address">
               <div class="select"
-                @click.stop="address_select_active == `${item.id}_city`? address_select_active = '' : address_select_active = `${item.id}_city`">
+                @click.stop="address_select_active == `${item.id}_city`? address_select_active = '' : address_select_active = `${item.id}_city`"
+              >
                 <div class="value"> {{ item.city }} </div>
                 <div class="dropdown"> <i class="fas fa-caret-down"></i> </div>
                 <ul :class="{ active: address_select_active == `${item.id}_city` }">
@@ -136,7 +159,8 @@
                 </ul>
               </div>
               <div class="select"
-                @click.stop="address_select_active == `${item.id}_district`? address_select_active = '' : address_select_active = `${item.id}_district`">
+                @click.stop="address_select_active == `${item.id}_district`? address_select_active = '' : address_select_active = `${item.id}_district`"
+              >
                 <div class="value"> {{ item.district }} </div>
                 <div class="dropdown"> <i class="fas fa-caret-down"></i> </div>
                 <ul :class="{ active: address_select_active == `${item.id}_district` }">
@@ -144,6 +168,7 @@
                   </li>
                 </ul>
               </div>
+
               <div class="input_container">
                 <input type='text' placeholder="請輸入詳細地址" v-model.trim='item.detail'>
                 <div class="error message">
@@ -180,7 +205,11 @@
       </div>
 
       <div class="form bonus_form">
-        <div class="title top"> <i class="fas fa-wallet"></i> 現有購物金: <span class="current_bonus"> {{ total_bonus }} </span> </div>
+        <div class="title top"> 
+          <i class="fas fa-wallet"></i> 
+          現有購物金: 
+          <span class="current_bonus"> {{ total_bonus }} </span> 
+        </div>
 
         <div class="table">
           <div class="head">
@@ -257,15 +286,22 @@
   import { useInfo }  from '@/stores/info'
   import { useUser }  from '@/stores/user'
   import { useOrder }  from '@/stores/order'
+  import { useHandlerCommon } from '@/stores/handlerCommon'
+  import { useHandlerInfo } from '@/stores/handlerInfo'
 
-  let { store, user_account, is_payModal, payModal_message, webVersion } = storeToRefs(useCommon())
-  let { send_verify_code, getPathname } = useCommon()
-  let { user_info_nav_active, user_info, add_address, phone_barCode, natural_barCode, recommend_code, delivery_address, total_bonus, bonus} = storeToRefs(useInfo())
-  let { bindLine, post_logout, getUser_info, getBonus, getMemberOrder, edit_info} = useInfo()
-  let { r_name, r_mail, r_birthday, sex, r_recommender, r_phone2, r_verify_code, second, } = storeToRefs(useUser())
-  let {  } = useUser()
-  let { order_page_index, order_page_number, select_active, order_page_size } = storeToRefs(useOrder())
+  let { user_account, city_district, is_payModal, payModal_message, webVersion } = storeToRefs(useCommon())
+  let { getPathname } = useCommon()
+  let { user_info_nav_active, user_info, add_address, delivery_address, address_select_active, 
+    phone_barCode, natural_barCode, recommend_code, total_bonus, bonus
+  } = storeToRefs(useInfo())
+  let { bindLine, post_logout, getBonus, getMemberOrder, delete_address, edit_info, 
+    deleteAccount_test, unbindLine_test 
+  } = useInfo()
+  let { r_name, r_mail, r_birthday, sex, r_recommender, r_phone2, r_verify_code, second } = storeToRefs(useUser())
+  let { order, order_page_index, order_page_number, select_active, order_page_size } = storeToRefs(useOrder())
   let { verify } = useVerify()
+  let { send_verify_code } = useHandlerCommon()
+  let { getUser_info } = useHandlerInfo()
   delete r_mail.value.rules['required']
   delete r_phone2.value.rules['required']
 
@@ -281,17 +317,4 @@
   }
 
   useRouter().replace({ path: getPathname('info') })
-
-  const state = reactive({
-
-  })
-  let {  } = toRefs(state)
-
-  // computed ==================================================
-
-  // watch ==================================================
-
-  // methods ==================================================
-
-  
 </script>

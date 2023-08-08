@@ -21,14 +21,14 @@
             <ul>
               <li v-for="(item, index) in sortBy_arr" :key="index" 
                   @click="getSearch('' + index)">
-                {{item}}
+                {{ item }}
               </li>
             </ul>
           </div>
 
           <div class="perpageNum_select">
             <div class="select">
-              每頁顯示 {{perpage_num}} 個
+              每頁顯示 {{ perpage_num }} 個
               <i class="fa fa-angle-down" aria-hidden="true"></i>
             </div>
             <ul>
@@ -37,7 +37,7 @@
                   totalpage_num = Math.ceil(search.length / perpage_num); 
                   page_active = 1;
               ">
-                每頁顯示 {{item}} 個
+                每頁顯示 {{ item }} 個
               </li>
             </ul>
           </div>
@@ -94,7 +94,9 @@
   // store
   import { useCommon }  from '@/stores/common/common'
 
-  let { site, is_getSite, favorite, perpage_num, totalpage_num, page_active, demoOrigin, webVersion } = storeToRefs(useCommon())
+  let { site, is_getSite, favorite, perpage_num, totalpage_num, page_active, 
+    demoOrigin, webVersion 
+  } = storeToRefs(useCommon())
   let { login, toggleFavorite, pushTo_cart, pagePush, numberThousands } = useCommon()
   
   const state = reactive({
@@ -131,7 +133,7 @@
       let res = await getSearchApi(formData)
       if(res.data.errormessage) {
         await login();
-        methods.getSearchApi(formData);
+        getSearch(index);
         return
       }
 
@@ -148,5 +150,4 @@
       throw new Error(error)
     }
   }
-
 </script>

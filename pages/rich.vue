@@ -20,7 +20,7 @@
   import { useCommon }  from '@/stores/common/common'
 
   let { all, is_getAll } = storeToRefs(useCommon())
-  let { imgHandler, unescapeHTML } = useCommon()
+  let { unescapeHTML } = useCommon()
   
   const state = reactive({
     rich_id: 0,
@@ -46,10 +46,6 @@
     else if(state.rich_cid === '3') {
       state.content_obj = toObj(all.value.webcategory)
     }
-
-    nextTick(() => {
-      imgHandler()
-    })
   })
 
   // methods ==================================================

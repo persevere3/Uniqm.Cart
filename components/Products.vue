@@ -58,20 +58,14 @@
   import { useCategory}  from '@/stores/category'
 
   let { is_getSite, favorite } = storeToRefs(useCommon())
-  let { videoHandler, toggleFavorite, pushTo_cart, numberThousands, unescapeHTML } = useCommon()
+  let { toggleFavorite, pushTo_cart, numberThousands, unescapeHTML } = useCommon()
   let { category_product } = storeToRefs(useCategory())
-  let { getCategory } = useCategory()
-
-  const state = reactive({
-    
-  })
-  let {  } = toRefs(state)
+  let { getCategory, videoHandler } = useCategory()
 
   const { id } = useRoute().query
 
   // watch ==================================================
   watch(is_getSite, async() => {
     await getCategory(id)
-    console.log(category_product.value)
   },)
 </script>

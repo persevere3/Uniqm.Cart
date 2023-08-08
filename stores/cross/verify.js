@@ -1,4 +1,4 @@
-import { defineStore, storeToRefs } from 'pinia'
+import { defineStore } from 'pinia'
 
 export const useVerify = defineStore('verify', () => {
   // methods ==================================================
@@ -29,6 +29,7 @@ export const useVerify = defineStore('verify', () => {
         }
       }
     },
+
     name_verify(item) {
       let regExp = /^[\u4e00-\u9fa5]+$|^[a-zA-Z]+$/
       if(!regExp.test(item.value)) {
@@ -67,6 +68,7 @@ export const useVerify = defineStore('verify', () => {
         return true;
       }
     },
+    
     cellphone_verify(item) {
       let rep = /^(09)[0-9]{8}$/;
       if (item.value && !rep.test(item.value)) {
