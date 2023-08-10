@@ -111,11 +111,11 @@
           </div>
           <!-- 手機驗證碼 -->
           <!-- <template v-if="!user_info.Phone2">
-            <div class="input_container" :class="{ error: r_verify_code.is_error }">
+            <div class="input_container" :class="{ error: r_phone_verify_code.is_error }">
               <div class="title"> 手機驗證碼 </div>
               <input type="text" placeholder="* 請輸入手機驗證碼" 
-                v-model.trim="r_verify_code.value" 
-                @blur="verify(r_verify_code)"
+                v-model.trim="r_phone_verify_code.value" 
+                @blur="verify(r_phone_verify_code)"
               >
             </div>
             <div class="button" style="margin-bottom: 20px;" 
@@ -278,8 +278,6 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  import {  } from '../api/index'
-
   // store
   import { useCommon }  from '@/stores/common/common'
   import { useVerify }  from '@/stores/cross/verify'
@@ -297,7 +295,7 @@
   let { bindLine, post_logout, getBonus, getMemberOrder, delete_address, edit_info, 
     deleteAccount_test, unbindLine_test 
   } = useInfo()
-  let { r_name, r_mail, r_birthday, sex, r_recommender, r_phone2, r_verify_code, second } = storeToRefs(useUser())
+  let { r_name, r_mail, r_birthday, sex, r_recommender, r_phone2, r_phone_verify_code, second } = storeToRefs(useUser())
   let { order, order_page_index, order_page_number, select_active, order_page_size } = storeToRefs(useOrder())
   let { verify } = useVerify()
   let { send_verify_code } = useHandlerCommon()

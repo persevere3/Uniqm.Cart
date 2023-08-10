@@ -36,10 +36,10 @@
           </div>
         </div>
         <template v-if="store.NotificationSystem == 1 || store.NotificationSystem == 2">
-          <div class="input_container" :class="{ error: r_verify_code.is_error }">
-            <input type="text" placeholder="* 請輸入手機驗證碼" v-model.trim="r_verify_code.value" @blur="verify(r_verify_code)"> 
+          <div class="input_container" :class="{ error: r_phone_verify_code.is_error }">
+            <input type="text" placeholder="* 請輸入手機驗證碼" v-model.trim="r_phone_verify_code.value" @blur="verify(r_phone_verify_code)"> 
             <div class="error message">
-              <i class="error_icon fas fa-exclamation-circle"></i> {{  r_verify_code.message  }}
+              <i class="error_icon fas fa-exclamation-circle"></i> {{  r_phone_verify_code.message  }}
             </div>
           </div>
         </template>
@@ -51,10 +51,10 @@
           </div>
         </div>
         <template v-if="store.NotificationSystem == 0 || store.NotificationSystem == 2">
-          <div class="input_container" :class="{ error: r_verify_code2.is_error }">
-            <input type="text" placeholder="* 請輸入電子信箱驗證碼" v-model.trim="r_verify_code2.value" @blur="verify(r_verify_code2)"> 
+          <div class="input_container" :class="{ error: r_mail_verify_code.is_error }">
+            <input type="text" placeholder="* 請輸入電子信箱驗證碼" v-model.trim="r_mail_verify_code.value" @blur="verify(r_mail_verify_code)"> 
             <div class="error message">
-              <i class="error_icon fas fa-exclamation-circle"></i> {{  r_verify_code2.message  }}
+              <i class="error_icon fas fa-exclamation-circle"></i> {{  r_mail_verify_code.message  }}
             </div>
           </div>
         </template>
@@ -272,7 +272,7 @@
   let { unescapeHTML, getPathname } = useCommon()
   let { user_nav_active, r_name, r_account, r_mail, r_birthday, sex, r_recommender, 
     r_password, r_password_type, r_confirm_password, r_confirm_password_type,
-    r_verify_code, r_verify_code2, second, r_is_agree, is_userModal,
+    r_phone_verify_code, r_mail_verify_code, second, r_is_agree, is_userModal,
     l_account, l_password, l_password_type, 
     forget_step, f_mail, mailOrAccount, f_account, f_second, f_verify_code,
     f_password, f_password_type, f_confirm_password, f_confirm_password_type, 

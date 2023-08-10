@@ -71,7 +71,8 @@
             </div>
             <div class="td products"
               :class="{active : product_active == item.FilNo, expandable : item.expandable }"
-              @click="product_active == item.FilNo ? product_active = '' : product_active = item.FilNo">
+              @click="product_active == item.FilNo ? product_active = '' : product_active = item.FilNo"
+            >
               <ul>
                 <li v-for="(item2, index) in item.Items" :key="index" v-show="product_active == item.FilNo || index < 4">
                   {{item2.ProductType == 2 ? '加價購' : ''}} {{item2.Name}}{{item2.Spec ? `(${item2.Spec})` : ''}}
@@ -252,8 +253,6 @@
 
   if(user_account.value) {
     await getUser_info();
-    order_phone.value = user_info.Phone;
-    order_mail.value = user_info.Email;
     getMemberOrder();
   } else {
     if(phone && email) {

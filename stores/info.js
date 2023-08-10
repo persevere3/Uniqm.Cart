@@ -1,15 +1,13 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
-import { getUser_infoApi, edit_infoApi, edit_passApi, getBonusApi, 
-  post_logoutApi, unbindLine_testApi, deleteAccount_testApi
-} from '@/api/index';
+import { post_logoutApi, deleteAccount_testApi } from '@/api/index';
 
 
 export const useInfo = defineStore('info', () => {
   // store ==================================================
-  let { site, store, user_account, cart, is_payModal, payModal_message } = storeToRefs(useCommon())
-  let { return_formData, login, check_logout, urlPush } = useCommon()
+  let { site, user_account } = storeToRefs(useCommon())
+  let { return_formData, login, getPathname, urlPush } = useCommon()
 
   // state ==================================================
   const state = reactive({
@@ -50,143 +48,6 @@ export const useInfo = defineStore('info', () => {
     delete_address(id) {
       state.delivery_address = state.delivery_address.filter(address => address.id != id)
     },
-
-    async edit_info() {
-      let address_arr = state.delivery_address
-      for(let i = address_arr.length - 1; i > 0; i --) {
-        for(let j = 0; j < i; j++) {
-          if(address_arr[j].city == address_arr[i].city && address_arr[j].district == address_arr[i].district && address_arr[j].detail == address_arr[i].detail){
-            address_arr.splice(i, 1);
-            break;
-          }
-        }
-      }
-    
-      // 手機驗證
-      // if(store.value.NotificationSystem == 1 || store.value.NotificationSystem == 2) {
-      //   if(!verify(state.verify_code)) return
-      // }
-
-      if(!verify(state.r_name, state.r_mail, state.r_birthday, state.r_phone2, ...arr)) return
-      
-      let obj = {
-        storeid: site.value.Name,
-        phone: user_account.value,
-        phone2: state.r_phone2.value,
-        email: state.r_mail.value,
-        name: state.r_name.value,
-        gender: state.sex == 'male' ? 1 : 0 ,
-        recommender: state.r_recommender.value,
-      }
-      if(store.value.NotificationSystem == 1 || store.value.NotificationSystem == 2) {
-        obj["validate"] = state.verify_code.value
-      }
-      let b = state.r_birthday.value
-      obj["birthday"] = `${b.getFullYear()}/${b.getMonth() + 1 < 10  ? '0' : '' }${b.getMonth() + 1}/${b.getDate() < 10  ? '0' : '' }${b.getDate()}` 
-      let address_str = '';
-      for(let item of address_arr) {
-        address_str += `${item.id}_ _${item.city}_ _${item.district}_ _${item.detail}_#_`
-      }
-      obj["address"] = address_str
-      obj["savePhoneCode"] = state.phone_barCode ? state.phone_barCode : ''
-      obj["saveNatureCode"] = state.natural_barCode ? state.natural_barCode : ''
-      obj["threeLinkCode"] = `${state.user_info.invoice_title}|${state.user_info.invoice_uniNumber}`
-
-      let formData = return_formData(obj)
-
-      try {
-        let res = await edit_infoApi(formData)
-        if(res.data.errormessage) {
-          await login();
-          methods.edit_info();
-          return
-        }
-
-        methods.getUser_info();
-        payModal_message.value = res.data.msg;
-        if(!res.data.status) check_logout()
-        is_payModal.value = true;
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
-    async edit_pass() {
-      if (!verify(state.o_password, state.r_password, state.r_confirm_password)) return
-    
-      let obj = {
-        storeid: site.value.Name,
-        phone: user_account.value,
-        oldpassword: state.o_password.value,
-        newpassword: state.r_password.value
-      }
-      let formData = return_formData(obj)
-
-      try {
-        let res = await edit_passApi(formData)
-        if(res.data.errormessage) {
-          await login();
-          methods.edit_pass();
-          return
-        }
-
-        payModal_message.value = res.data.msg;
-        if(!res.data.status) check_logout()
-        is_payModal.value = true;
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
-    
-    async getBonus(type) {
-      await methods.getUser_info()
-
-      if(!type) order_page_index.value = 1
-      let obj = {
-        storeid: site.value.Name,
-        storename: site.value.Store,
-        phone: user_account.value,
-        recommander: recommend_code.value,
-        pageindex: order_page_index.value,
-        pagesize: order_page_size.value,
-      }
-      let formData = return_formData(obj)
-
-      try {
-        let res = await getBonusApi(formData)
-        if(res.data.errormessage) {
-          await login();
-          methods.getBonus();
-          return
-        }
-
-        if(res.data.status) {
-          let data = res.data.datas[0]
-  
-          order_page_number.value = Math.ceil(data.Count / order_page_size.value);
-          if(order_page_number.value == 0) {
-            payModal_message.value = '沒有您的購物金紀錄';
-            is_payModal.value = true;
-            state.bonus = null;
-            return;
-          }
-          else {
-            state.total_bonus = data.Total;
-            state.bonus = data.Bonuses;
-            state.bonus.forEach((item) => {
-              if(item.Type.indexOf('使用點數') > -1) {
-                item.FeedBack = -item.FeedBack;
-              }
-            })
-          }
-        } else {
-          payModal_message.value = res.data.msg;
-          check_logout();
-          is_payModal.value = true;
-        }
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
     
     async post_logout() {
       try {
@@ -213,29 +74,6 @@ export const useInfo = defineStore('info', () => {
       urlPush(`${location.origin}/interface/webmember/LineLoginAuthorize?storeid=${site.value.Name}&site=${site.value.Site}&phone=${user_account.value}&method=LineRegister`)
     },
 
-    async unbindLine_test() {
-      let isConfim = confirm('確定解除Line綁定嗎？');
-      if(!isConfim) return
-
-      let obj = {
-        storeid: site.value.Name,
-        phone: user_account.value
-      }
-      let formData = return_formData(obj)
-
-      try {
-        let res = await unbindLine_testApi(formData)
-        if(res.data.errormessage) {
-          await login();
-          methods.unbindLine_test();
-          return
-        }
-
-        methods.getUser_info()
-      } catch (error) {
-        throw new Error(error)
-      }
-    },
     async deleteAccount_test() {
       let isConfim = confirm('確定刪除帳號嗎？')
       if(!isConfim) return
@@ -254,7 +92,7 @@ export const useInfo = defineStore('info', () => {
           return
         }
 
-        state.logout();
+        methods.logout();
       } catch (error) {
         throw new Error(error)
       }

@@ -3,10 +3,9 @@ import { useCommon }  from '@/stores/common/common'
 
 import { getOrderApi, getMemberOrderApi, rePayApi, searchMartDeliveryApi } from '@/api/index';
 
-
 export const useOrder = defineStore('order', () => {
   // store ==================================================
-  let { site, user_account, payModal_message, is_payModal } = storeToRefs(useCommon())
+  let { site, user_account, payModal_message, is_payModal, webVersion } = storeToRefs(useCommon())
   let { return_formData, urlPush } = useCommon()
 
   // state ==================================================
@@ -18,7 +17,10 @@ export const useOrder = defineStore('order', () => {
     filter_delivery: '0',
     
     order: '',
+    // 展開某一筆訂單的產品列表
     product_active: '',
+    // 某一筆訂單的運送狀態
+    activeOrder: null,
 
     payStatus_arr: [
       '', '付款成功', '尚未付款', '已退款', '待對帳', '尚未付款'
@@ -26,6 +28,7 @@ export const useOrder = defineStore('order', () => {
     delivery_arr: [     
       '', '已出貨', '準備中', '已退貨', '已取消', '已自取', '已送達', '已取貨'
     ],
+
     payMethod_obj: {
       'CreditCard':'信用卡',
       'ATM':'ATM',
@@ -36,7 +39,6 @@ export const useOrder = defineStore('order', () => {
       'MartPayOnDelivery': '超商取貨付款',
       'MartOnDelivery': '超商取貨不付款'
     },
-
     martObj: {
       'UNIMART': '7-11',
       'UNIMARTFREEZE': '7-11 冷凍',
@@ -45,20 +47,18 @@ export const useOrder = defineStore('order', () => {
       'OKMART': 'OK超商'
     },
 
-    // import
-    activeOrder: null,
-
     order_page_number: 0,
     order_page_index: 1,
     order_page_size: 10,
     select_active: false,
 
-    is_logout: false,
-
+    // 確認付款參數
     order_number: '',
     account_number: '',
 
+    // 前往付款
     pay_method: '',
+
     payResult: '',
     ECPay_form: '',
 
@@ -106,7 +106,7 @@ export const useOrder = defineStore('order', () => {
         let res = await getOrderApi(formData)
         if(res.data.errormessage) {
           await login();
-          methods.getOrderApi(formData);
+          methods.getOrder(type, is_filter)
           return
         }
 
@@ -135,12 +135,11 @@ export const useOrder = defineStore('order', () => {
             }
           })
         }, 100)
-  
       } catch (error) {
         throw new Error(error)
       }
     },
-    async getMemberOrder(type, is_filter) {
+    getMemberOrder(type, is_filter) {
       return new Promise(async(resolve) => {
         if(!type) state.order_page_index = 1;
         if(!is_filter) {
@@ -153,8 +152,8 @@ export const useOrder = defineStore('order', () => {
           storeid: site.value.Name,
           storename: site.value.Store,
 
-          phone: user_account.value,
-          email: r_mail.value,
+          phone: state.order_phone,
+          email: state.order_mail,
 
           pageindex: state.order_page_index,
           pagesize: state.order_page_size,
@@ -169,15 +168,15 @@ export const useOrder = defineStore('order', () => {
           let res = await getMemberOrderApi(formData)
           if(res.data.errormessage) {
             await login();
-            methods.getMemberOrderApi(formData);
+            methods.getMemberOrder(type, is_filter)
             return
           }
     
           if(res.data.status) {
-            let data = res.data.datas[0]
+            let data = res.data.datas[0] || {}
 
             state.order_page_number = Math.ceil(data.Count / state.order_page_size);
-            if(state.order_page_number == 0){
+            if(state.order_page_number == 0) {
               payModal_message.value = '沒有您查詢的訂單資料';
               is_payModal.value = true;
               state.order = null;
@@ -191,6 +190,7 @@ export const useOrder = defineStore('order', () => {
               uls.forEach(function(item, index) {
                 let lis = item.querySelectorAll('li')
                 if(lis.length > 4) {
+                  // 產品列表可展開
                   state.order[index].expandable = true
                 }
               })
@@ -204,7 +204,6 @@ export const useOrder = defineStore('order', () => {
           resolve()
         } catch (error) {
           throw new Error(error)
-          resolve()
         }
       })
     },
@@ -253,7 +252,10 @@ export const useOrder = defineStore('order', () => {
         for(let item in state.payResult) {
           if(item === 'success' || item === 'message') continue
           // EncryptType TotalAmount ExpireDate: number，other: text
-          state.ECPay_form += `<input type="${item == 'EncryptType' || item == 'TotalAmount' || item == 'ExpireDate' ? 'number' : 'text'}" name="${item}" value="${state.payResult[item]}">`;
+          state.ECPay_form += `<input 
+            type="${item == 'EncryptType' || item == 'TotalAmount' || item == 'ExpireDate' ? 'number' : 'text'}" 
+            name="${item}" value="${state.payResult[item]}"
+          >`;
         }
         state.ECPay_form += `
             <div class="message"> 前往付款頁面 </div>
@@ -287,9 +289,9 @@ export const useOrder = defineStore('order', () => {
           return
         }
 
-        let martName = decodeURI(item.Address).split(' - ')[1]
-        let deliveryMsg = res.data.split('|')[0]
-        let deliveryNumber = res.data.split('|')[1]
+        let martName = decodeURI(item.Address).split(' - ')[1] || ''
+        let deliveryMsg = res.data.split('|')[0] || ''
+        let deliveryNumber = res.data.split('|')[1] || ''
         if(deliveryMsg.indexOf('已配達') > -1) deliveryMsg += ` - ${martName}`
         item.deliveryMsg = deliveryMsg
         if(deliveryNumber) item.deliveryNumber = deliveryNumber

@@ -68,6 +68,10 @@ export const useFilters = defineStore('filters', () => {
       imgHandler()
       return String(text).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'");
     },
+
+    return_date(date, comma) {
+      return `${date.getFullYear()}${comma}${date.getMonth() + 1 < 10  ? '0' : '' }${date.getMonth() + 1}${comma}${date.getDate() < 10  ? '0' : '' }${date.getDate()}` 
+    }
   }
 
   return {
