@@ -1,5 +1,9 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/products.scss";
+</style>
+
 <template>
-  <div class="main">
+  <div>
     <template v-if="category_product && category_product.Data && category_product.Data[0].Img.length" >
       <div class="img_container" v-for="(item, index) in category_product.Data[0].Img" :key="index" :style="{backgroundImage: `url(${item})`}"></div>
     </template>
@@ -58,7 +62,7 @@
   import { useCategory}  from '@/stores/category'
 
   let { is_getSite, favorite } = storeToRefs(useCommon())
-  let { toggleFavorite, pushTo_cart, numberThousands, unescapeHTML } = useCommon()
+  let { toggleFavorite, imgHandler, pushTo_cart, numberThousands, unescapeHTML } = useCommon()
   let { category_product } = storeToRefs(useCategory())
   let { getCategory, videoHandler } = useCategory()
 
@@ -67,5 +71,7 @@
   // watch ==================================================
   watch(is_getSite, async() => {
     await getCategory(id)
+    await nextTick()
+    imgHandler()
   },)
 </script>

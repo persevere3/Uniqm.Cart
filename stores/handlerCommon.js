@@ -36,6 +36,8 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
     async getAllHandler() {
       await getAll()
 
+      console.log(all.value)
+
       totalpage_num.value = Math.ceil(all.value.data.length / perpage_num.value);
           
       // webcategory, websubcategory => navbar
@@ -46,12 +48,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
         if(category.Class === '1') link = '/contact'
         else if(category.Class === '2') link = category.Text
         else if(category.Class === '3') link = `/rich?id=${category.ID}&cid=3`
-
-        if(state.webVersion === 'demo') {
-          if(category.Class === '1' || category.Class === '3') {
-            link = demoOrigin.value + link
-          }
-        }
 
         category.Link = link;
         category.isDropDown = false;
@@ -64,10 +60,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
         else if(category.Class === '2') link = `/rich?id=${category.ID}&cid=0`
         else if(category.Class === '1') link = `/category?id=${category.ID}`
         else link = `/allProducts?id=${category.ID}`
-
-        if(state.webVersion === 'demo') {
-          link = demoOrigin.value + link
-        }
 
         category.Link = link;
 
@@ -176,8 +168,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
   }
 
   return {
-    ...toRefs(state),
-
     ...methods
   }
 })

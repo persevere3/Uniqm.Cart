@@ -64,7 +64,7 @@
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getSite } = storeToRefs(useCommon())
-  let { login, urlPush, unescapeHTML } = useCommon()
+  let { login, imgHandler, urlPush, unescapeHTML } = useCommon()
   
   const state = reactive({
     contact: {}
@@ -73,7 +73,9 @@
 
   // watch ==================================================
   watch(is_getSite, async() => {
-    getContact()
+    await getContact()
+    await nextTick()
+    imgHandler()
   },)
 
   // methods ==================================================

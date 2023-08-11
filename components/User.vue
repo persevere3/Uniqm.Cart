@@ -268,8 +268,8 @@
   import { useVerify }  from '@/stores/cross/verify'
   import { useHandlerCommon } from '@/stores/handlerCommon'
 
-  let { store, site } = storeToRefs(useCommon())
-  let { unescapeHTML, getPathname } = useCommon()
+  let { store, site, is_getSite } = storeToRefs(useCommon())
+  let { imgHandler, getPathname, unescapeHTML } = useCommon()
   let { user_nav_active, r_name, r_account, r_mail, r_birthday, sex, r_recommender, 
     r_password, r_password_type, r_confirm_password, r_confirm_password_type,
     r_phone_verify_code, r_mail_verify_code, second, r_is_agree, is_userModal,
@@ -294,4 +294,10 @@
     useRouter().replace({ path: getPathname('user') })
     getLineProfile();
   }
+
+  //
+  watch(is_getSite, async() => {
+    await nextTick()
+    imgHandler()
+  },)
 </script>

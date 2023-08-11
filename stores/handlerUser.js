@@ -2,7 +2,7 @@ import { defineStore, storeToRefs } from 'pinia'
 
 import { useCommon }  from '@/stores/common/common'
 import { useUser }  from '@/stores/user'
-import { useVerify }  from '@/stores/verify'
+import { useVerify }  from '@/stores/cross/verify'
 
 import { registerApi, user_loginApi, send_forget_verify_codeApi, 
   check_forget_verify_codeApi, edit_forget_passApi 

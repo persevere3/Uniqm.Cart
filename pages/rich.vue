@@ -20,7 +20,7 @@
   import { useCommon }  from '@/stores/common/common'
 
   let { all, is_getAll } = storeToRefs(useCommon())
-  let { unescapeHTML } = useCommon()
+  let { imgHandler, unescapeHTML } = useCommon()
   
   const state = reactive({
     rich_id: 0,
@@ -29,7 +29,7 @@
   })
   let { rich_id, rich_cid, content_obj } = toRefs(state)
 
-  watch(is_getAll, () => {
+  watch(is_getAll, async() => {
     const { id, cid } = useRoute().query
     state.rich_id = id
     state.rich_cid = cid
@@ -46,6 +46,9 @@
     else if(state.rich_cid === '3') {
       state.content_obj = toObj(all.value.webcategory)
     }
+
+    await nextTick()
+    imgHandler()
   })
 
   // methods ==================================================

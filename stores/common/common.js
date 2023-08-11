@@ -67,7 +67,7 @@ export const useCommon = defineStore('common', () => {
       if(origin === 'WebPreview') return `WebPreview=${state.site.WebPreview}`
 
       let formUrlencoded = ''
-      for(let key of origin) {
+      for(let key in origin) {
         let value = origin[key]
         formUrlencoded += `${formUrlencoded ? '&' : ''}${key}=${value}`
       }
@@ -89,7 +89,7 @@ export const useCommon = defineStore('common', () => {
         preview: state.site.Preview,
         WebPreview: state.site.WebPreview
       }
-      let params = return_formUrlencoded(obj)
+      let params = methods.return_formUrlencoded(obj)
 
       try {
         loginApi(params)
@@ -114,7 +114,7 @@ export const useCommon = defineStore('common', () => {
       }
     },
     async getAll() {
-      let params = return_formUrlencoded('WebPreview')
+      let params = methods.return_formUrlencoded('WebPreview')
 
       try {
         let res = await getAllApi(params)
@@ -130,7 +130,7 @@ export const useCommon = defineStore('common', () => {
       }
     },
     async getStore() {
-      let params = return_formUrlencoded('WebPreview')
+      let params = methods.return_formUrlencoded('WebPreview')
 
       try {
         let res = await getStoreApi(params)
@@ -149,7 +149,7 @@ export const useCommon = defineStore('common', () => {
       }
     },
     async getCopyRight() {
-      let params = return_formUrlencoded('WebPreview')
+      let params = methods.return_formUrlencoded('WebPreview')
 
       try {
         let res = await getCopyRightApi(params)
@@ -165,7 +165,7 @@ export const useCommon = defineStore('common', () => {
       }
     },
     async getCustomerService() {
-      let params = return_formUrlencoded('WebPreview')
+      let params = methods.return_formUrlencoded('WebPreview')
 
       try {
         let res = await getCustomerServiceApi(params)
@@ -342,6 +342,51 @@ export const useCommon = defineStore('common', () => {
       copy_input.value = text;
       copy_input.select();
       document.execCommand('copy');
+    },
+
+    // allProducts, category, rich, contact(map) , user ==============================
+    imgHandler() {
+      let editorWidth = 0;
+      let editor_input =  document.querySelector('#EditerWidth');
+      if(editor_input) {
+        editorWidth = editor_input.value  * 1
+      }
+
+      let ql_editor = document.querySelector('.ql-editor');
+
+      let rich_container = document.querySelector('.rich_container');
+
+      if(!ql_editor || !rich_container) return
+
+      let rich_container_width = parseFloat(window.getComputedStyle(rich_container).width);
+      let rich_container_padding = parseFloat(window.getComputedStyle(rich_container).padding);
+      if(rich_container_padding){
+        rich_container_width -= rich_container_padding*2;
+      }
+
+      if( editorWidth < rich_container_width ){
+        ql_editor.style.width = editorWidth + 'px';
+      } 
+      else{
+        ql_editor.style.width = rich_container_width + 'px';
+      }
+
+      let imgs = document.querySelectorAll('.ql-editor img');
+      for(let i = 0; i < imgs.length; i++) {
+        let imgWidth = window.getComputedStyle(imgs[i]).width.split('px')[0] * 1;
+
+        if(imgWidth > editorWidth){
+          imgs[i].style.width = editorWidth + 'px';
+        }
+      }
+
+      let videos = document.querySelectorAll('.ql-editor .ql-video');
+      for(let i = 0; i < videos.length; i++){
+        let videosWidth = window.getComputedStyle(videos[i]).width.split('px')[0] * 1;
+        if(videosWidth > editorWidth){
+          videos[i].style.width = editorWidth + 'px';
+        }
+      }
     },
 
     // products page

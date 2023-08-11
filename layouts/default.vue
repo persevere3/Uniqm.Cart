@@ -330,6 +330,7 @@
   // onMounted ==================================================
   onMounted(async() => {
     if(!site.value.site) {
+
       site.value = JSON.parse(localStorage.getItem('site')) || null ;
       user_account.value = localStorage.getItem('user_account')
       await getSiteHandler()
