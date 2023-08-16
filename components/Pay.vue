@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/components/pay.scss";
+</style>
+
 <template>
   <div class="payModal_container" v-if="is_payModal">
     <div class="payModal bank">

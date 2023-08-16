@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  @import "../assets/scss/shoppingInfo.scss";
+  
 </style>
 
 <template>

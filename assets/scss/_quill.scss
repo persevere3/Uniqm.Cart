@@ -1,21 +1,18 @@
-// new
-.ql-editor{
+// Customization
+.ql-editor {
   margin: 0 auto;
-
   font-size: 13px;
-
-  word-break: break-all;
   white-space: pre-wrap;
+  word-break: break-all;
 
   h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
     line-height: 1.2;
   }
-
-  a{
+  a {
     display: inline;
   }
-  img{
+  img {
     max-width: 100%;
   }
   .ql-video {
@@ -23,7 +20,7 @@
   } 
 }
 
-.main .rich_container{
+.rich_container {
   .ql-container {
     box-sizing: border-box;
     font-family: Helvetica, Arial, sans-serif;
@@ -963,9 +960,8 @@
   .ql-container.ql-snow {
     border: 1px solid #ccc;
   }
-  
-  // font **************************************************
-  
+
+  // font
   .ql-snow .ql-picker.ql-font .ql-picker-label[data-value=sans-serif]::before, .ql-snow .ql-picker.ql-font .ql-picker-item[data-value=sans-serif]::before {content: 'sans-serif';font-family: sans-serif;}
   .ql-font-sans-serif{ font-family: sans-serif;}
   .ql-snow .ql-picker.ql-font .ql-picker-label[data-value=arial]::before, .ql-snow .ql-picker.ql-font .ql-picker-item[data-value=arial]::before {content: 'Arial';font-family: Arial;}

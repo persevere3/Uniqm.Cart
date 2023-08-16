@@ -1,0 +1,22 @@
+@import '@/assets/scss/_mixin.scss';
+
+*, *:before, *:after {
+  margin: 0;
+  padding :0;
+  list-style: none;
+  box-sizing: border-box;
+  vertical-align: middle;
+}
+
+html {
+  font-size: 14px;
+}
+@include xxl {
+  html { 
+    font-size: 12px; 
+  }
+}
+
+a {
+  text-decoration: none;
+}

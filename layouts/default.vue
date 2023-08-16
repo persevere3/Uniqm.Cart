@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/layout/default.scss";
+</style>
+
 <template>
   <div>
     <!-- click right-top icon -------------------------------------------------- -->
@@ -94,7 +98,13 @@
     </div>
 
     <!-- content -------------------------------------------------- -->
-    <header class="header" :class="{is_scrollTop: window_scrollTop > 100}">
+    <header class="header" 
+      :class="{ 
+        index: pathname === 'index',
+        other: pathname !== 'index',
+        is_scrollTop: window_scrollTop > 100
+      }"
+    >
       <div class="widthContainer">
         <div class="iconbar">
           <ul>
@@ -128,7 +138,7 @@
           </div>
         </div>
 
-        <div class="prev" @click="prev" :class="{active : pathname !== '/'}">
+        <div class="prev" @click="prev">
           <img src="@/assets/img/arrow.png" alt="">
         </div>
 
@@ -330,7 +340,6 @@
   // onMounted ==================================================
   onMounted(async() => {
     if(!site.value.site) {
-
       site.value = JSON.parse(localStorage.getItem('site')) || null ;
       user_account.value = localStorage.getItem('user_account')
       await getSiteHandler()

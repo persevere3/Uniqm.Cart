@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import "../assets/scss/contact.scss";
+  @import "@/assets/scss/contact.scss";
 </style>
 
 <template>

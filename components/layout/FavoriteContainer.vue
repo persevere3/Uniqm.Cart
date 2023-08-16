@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/components/cart_and_favorite_container.scss";
+</style>
+
 <template> 
   <div class="favorite_container" :class="{active : is_favorite_active}" v-if="Object.keys(favorite).length">
     <ul class="favorite_items">

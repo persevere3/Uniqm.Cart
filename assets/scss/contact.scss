@@ -1,31 +1,20 @@
-@import '_all.scss';
+@import '@/assets/scss/_mixin.scss';
+@import '@/assets/scss/_variable.scss';
+@import '@/assets/scss/_all.scss';
 
-// ============================================================
-
-@include others;
-
-// ============================================================
-.main{
-  .opening, .info, .location{
+.main {
+  .opening, .info, .location {
     width: 1170px;
     padding: 15px 30px;
     margin: 0 auto;
     margin-top: 35px;
     margin-bottom: 2%;
-    .title{
+
+    .title {
       padding: 10px 0px 53px 0px;
       position: relative;
 
-      p{
-        font-size: 20px;
-        font-weight: bold;
-        line-height: 24px;
-
-        display: flex;
-        align-items: center;
-      }
-
-      &:before{
+      &:before {
         content: '';
         width: 25px;
         height: 3px;
@@ -34,59 +23,69 @@
         bottom: 30px;
         background-color: $primary_color;
       }
+
+      p {
+        line-height: 24px;
+        font-size: 20px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+      }
     }
-    .text{
-      padding-left: 21px;
-      padding-right: 21px;
-      font-size: 14px;
+    .text {
+      padding: 0 21px;
       line-height: 20px;
-      ul{
-        li{
+      font-size: 14px;
+
+      ul {
+        li {
           white-space: pre-wrap;
           list-style-position: inside; 
+          word-break: break-all;
           display: flex;
 
-          word-break: break-all;
-          .item_name{
+          .item_name {
             flex-shrink: 0;
           }
-          .a{
+          .a {
             display: inline-block; 
             color: $primary_color;
             cursor: pointer;
-          }
-          .a:hover{
-            color: darken($primary_color, 20%);
+
+            &:hover{
+              color: darken($primary_color, 20%);
+            }
           }
         }
       }
     }
   }
-  @include xl{
-    .opening, .info, .location{
+  @include xl {
+    .opening, .info, .location {
       width: 970px;
     }
   }
-  @include l{
-    .opening, .info, .location{
+  @include l {
+    .opening, .info, .location {
       width: 750px;
     }
   }
   @include m{
-    .opening, .info, .location{
+    .opening, .info, .location {
       width: 100%;
       padding: 0px 15px;
     }
   }
 
-  .location{
+  .location {
     display: flex;
     flex-wrap: wrap;
-    .left{
+
+    .left {
       width: 50%;
       padding: 15px 0px;
     }
-    .right{
+    .right {
       width: 50%;
       min-height: 400px;
       padding: 15px 0px;
@@ -96,12 +95,12 @@
       }
     }
   }
-  @include l{
-    .location{
-      .left{
+  @include l {
+    .location {
+      .left {
         width: 100%;
       }
-      .right{
+      .right {
         width: 100%;
       }
     }

@@ -1,0 +1,112 @@
+@import '@/assets/scss/_mixin.scss';
+@import '@/assets/scss/_variable.scss';
+@import '@/assets/scss/_all.scss';
+
+.cart_container, .favorite_container {
+  width: 300px;
+  padding: 15px;
+  position: fixed;
+  top: 45px;
+  right: 10px;
+  transform: translateX(110%);
+
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.25);
+  transition: .5s;
+  z-index: 150;
+
+  &.active {
+    transform: translateX(0%);
+  }
+
+  .carts_items, .favorite_items {
+    max-height: 300px;
+    overflow-y: auto;
+
+    li {
+      padding: 5px; 
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5); 
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      .img_and_name {
+        display: flex;
+
+        .img {
+          flex-grow: 0;
+
+          width: 50px;
+          height: 50px;
+          margin-right: 10px;
+          background-size: cover;
+          background-position: center;
+        }
+        .name {
+          flex-grow: 1;
+
+          @include multiline_ellipsis(3);
+        }
+      }
+
+      .price_and_delete {
+        display: flex;
+        height: 30px;
+        padding-left: 60px;
+
+        .price {
+          flex-grow: 1;
+
+          height: 100%;
+          display: flex;
+          align-items: center;
+        }
+
+        .delete {
+          flex-grow: 0;
+
+          width: 50px;
+          height: 100%;
+          color: rgba(256, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: .3s;
+          cursor: pointer;
+
+          &:hover {
+            color: rgba(256, 0, 0, 1);
+          }
+        }
+      }
+    }
+  }
+
+  .pushTo_cart {
+    height: 40px;
+    margin-top: 10px;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid $primary_color;
+    background: #fff;
+    color: $primary_color;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    transition: 0.4s;
+    cursor: pointer;
+  
+    &:hover{
+      background:$primary_color;
+      color: #fff;
+    }
+
+    i {
+      margin-right: 5px;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import "../assets/scss/rich.scss";
+  
 </style>
 
 <template>

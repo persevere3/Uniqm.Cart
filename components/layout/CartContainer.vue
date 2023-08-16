@@ -1,5 +1,9 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/components/cart_and_favorite_container.scss";
+</style>
+
 <template> 
-  <div class="carts_container" :class="{active : is_cart_active}" v-if="cart.length">
+  <div class="cart_container" :class="{active : is_cart_active}" v-if="cart.length">
     <ul class="carts_items">
       <template v-for="item in cart" :key="item.ID">
         <!-- 有規格 -->

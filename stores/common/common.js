@@ -18,7 +18,7 @@ export const useCommon = defineStore('common', () => {
     footer_community: {},
     copyRight: {},
     customerService: {},
-    pathname: useRoute.name,
+    pathname: useRoute().name,
 
     is_getSite: false,
     is_getAll: false,
