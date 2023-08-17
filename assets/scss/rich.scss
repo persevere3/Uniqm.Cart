@@ -1,3 +1,4 @@
+@import '@/assets/scss/_variable.scss';
 @import '@/assets/scss/_all.scss';
 @import '@/assets/scss/_quill.scss';
 
@@ -8,42 +9,39 @@
   margin: 0 auto;
   padding: 10px 20px;
 
-  .title{
+  .title {
     padding: 10px 0 25px;
     margin-bottom: 28px;
-
-    font-size: 22px;
-    letter-spacing: 3px;
     text-align: center;
+    letter-spacing: 3px;
+    font-size: 22px;
     color: #666;
-
     position: relative;
-  }
-  .title:before{
-    content: '';
-    width: 25px;
-    height: 3px;
-    position: absolute;
-    left: 50%;
-    bottom: -3px;
-    margin-left: -12.5px;
 
-    background-color: $primary_color;
+    :before {
+      content: '';
+      width: 25px;
+      height: 3px;
+      position: absolute;
+      left: 50%;
+      bottom: -3px;
+      margin-left: -12.5px;
+      background-color: $primary_color;
+    }
   }
-  
 }
-@include xl{
-  .main{
+@include xl {
+  .main {
     width: 970px;
   }
 }
-@include l{
-  .main{
+@include l {
+  .main {
     width: 750px;
   }
 }
-@include m{
-  .main{
+@include m {
+  .main {
     width: 100%;
   }
 }

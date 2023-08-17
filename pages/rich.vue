@@ -1,5 +1,6 @@
 <style lang="scss">
-  
+  @import "@/assets/scss/rich.scss";
+  @import "@/assets/scss/_quill.scss";
 </style>
 
 <template>

@@ -1,10 +1,6 @@
-<style lang="scss">
-  *, *:before, *:after{
-    margin: 0;
-    padding :0;
-    box-sizing: border-box;
-    vertical-align: middle;
-  }
+<style lang="scss" scoped>
+  @import "@/assets/scss/_all.scss";
+
   .error_container {
     width: 100vw;
     height: 100vh;

@@ -1,5 +1,6 @@
-<style lang="scss" scoped>
+<style lang="scss">
   @import "@/assets/scss/components/products.scss";
+  @import "@/assets/scss/_quill.scss";
 </style>
 
 <template>
@@ -7,7 +8,6 @@
     <template v-if="category_product && category_product.Data && category_product.Data[0].Img.length" >
       <div class="img_container" v-for="(item, index) in category_product.Data[0].Img" :key="index" :style="{backgroundImage: `url(${item})`}"></div>
     </template>
-
     <div class="content">
       <div class="rich_container"  v-if="category_product && category_product.Data && category_product.Data[0].Text">
         <div class="ql-editor" v-html="unescapeHTML(category_product.Data[0].Text)"></div>

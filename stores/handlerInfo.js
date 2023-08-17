@@ -8,7 +8,7 @@ import { useVerify }  from '@/stores/cross/verify'
 
 import { getUser_infoApi, edit_infoApi, edit_passApi, getBonusApi, unbindLine_testApi } from '@/api/index';
 
-export const useHandlerCommon = defineStore('handlerCommon', () => {
+export const useHandlerInfo = defineStore('handlerInfo', () => {
   // store ==================================================
   let { site, user_account, store, payModal_message, is_payModal } = storeToRefs(useCommon())
   let { login, check_logout, return_date } = useCommon()

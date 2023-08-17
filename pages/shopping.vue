@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  
+  @import "@/assets/scss/shopping.scss";
 </style>
 
 <template>
@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="uniqm_products">
+    <div class="products">
       <div class="productsTitle"> 推薦商品 | RECOMMEND </div>
       <ul>
         <li v-for="item in filter_products" :key="item.ID" @click="pushTo_cart(item.ID)">
