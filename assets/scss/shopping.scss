@@ -11,7 +11,7 @@
 
   ul {
     flex: 1 1;
-    font-size: var(--font-m);
+    font-size: $font_s;
     font-weight: 900;
     color: #fff;
     display: flex;
@@ -49,7 +49,7 @@
       margin-left: auto;
       border-radius: 15px;
       outline: none;
-      font-size: var(--font-m);
+      font-size: $font_s;
     }
 
     .icon {
@@ -68,7 +68,7 @@
 
   .productsTitle {
     margin: 2.604167vw 1vw 1.5625vw 1vw;
-    font-size: var(--font-l);
+    font-size: $font_22px;
     font-weight: 900;
     border-bottom: 1px solid #707070;
     color: #707070;
@@ -118,7 +118,7 @@
         width: 100%;
         margin-bottom: 1.197917vw;
         text-align: center;
-        font-size: var(--font-m);
+        font-size: $font_s;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -136,7 +136,7 @@
           margin-bottom: 5px;
           border: solid 1px #707070;
           background-color: #efefef;
-          font-size: var(--font-m);
+          font-size: $font_s;
           font-weight: 900;
         }
 
