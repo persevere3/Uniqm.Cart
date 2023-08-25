@@ -1,6 +1,4 @@
-@import '@/assets/scss/_mixin.scss';
-@import '@/assets/scss/_variable.scss';
-@import '@/assets/scss/_all.scss';
+@import "@/assets/scss/mixin/_ellipsis.scss";
 
 .cart_container, .favorite_container {
   width: 300px;
@@ -69,7 +67,7 @@
 
           width: 50px;
           height: 100%;
-          color: rgba(256, 0, 0, 0.5);
+          color: $dangerColor;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -77,7 +75,7 @@
           cursor: pointer;
 
           &:hover {
-            color: rgba(256, 0, 0, 1);
+            color: darken($dangerColor, 10%);
           }
         }
       }
@@ -89,9 +87,9 @@
     margin-top: 10px;
     font-size: 14px;
     border-radius: 3px;
-    border: 1px solid $primary_color;
+    border: 1px solid $primaryColor;
     background: #fff;
-    color: $primary_color;
+    color: $primaryColor;
   
     display: flex;
     justify-content: center;
@@ -100,8 +98,8 @@
     transition: 0.4s;
     cursor: pointer;
   
-    &:hover{
-      background:$primary_color;
+    &:hover {
+      background: $primaryColor;
       color: #fff;
     }
 

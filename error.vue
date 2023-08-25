@@ -1,6 +1,4 @@
 <style lang="scss" scoped>
-  @import "@/assets/scss/_all.scss";
-
   .error_container {
     width: 100vw;
     height: 100vh;

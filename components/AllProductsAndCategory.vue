@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import "@/assets/scss/components/products.scss";
+  @import "@/assets/scss/components/allProductsAndCategory.scss";
   @import "@/assets/scss/_quill.scss";
 </style>
 

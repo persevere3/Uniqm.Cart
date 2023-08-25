@@ -1,137 +1,104 @@
-$primary_color: #202d40;
+@import "@/assets/scss/mixin/_datepicker.scss";
+@import "@/assets/scss/mixin/_input.scss";
+@import "@/assets/scss/mixin/_button.scss";
 
-.input_container{
+// user ==================================================
+@include datepicker;
+  
+.input_container {
   margin-bottom: 10px;
   position: relative;
 
-  input{
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    padding: 0px 30px 0 10px;
-    margin-bottom: 5px;
-    font-size: $font_s;
-    border-radius: 3px;
-    border: 1px solid #ddd;
-    transition: box-shadow .3s;
-    outline: none;
-    color: #333;
-
-
-    &[type=number]::-webkit-outer-spin-button,
-    &[type=number]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    &[type=number] {
-      -moz-appearance: textfield;
-    }
-
-    &:focus{
-      box-shadow: 0 0 3px 1px $primary_color;
-    }
+  input {
+    // input($width, $height, $padding, $margin, $borderRadius, $border, $shadow, $backgroundColor, $color, $font-size)
+    @include input(100%, 40px, 0 30px 0 10px, 0 0 5px 0, 3px, 1px solid #ddd, 0 0 3px 1px $primaryColor, transparent, #333, $font_s);
   }
-  .eyes_icon{
+  .eyes_icon {
     width: 30px;
     height: 40px;
     position: absolute;
     top: 0;
     right: 0;
-    color: $primary_color; 
+    color: $primaryColor; 
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
   }
-  .message{
+  .message {
     padding: 0px 10px;
     font-size: $font_s;
 
-    &.error{
-      color: #dc3545;
+    &.error {
+      color: $dangerColor;
       align-items: center;
       display: none;
 
-      .error_icon{
+      .error_icon {
         margin-right: 5px;
       }
     }
   }
 
-  &.error{
-    input{
-      border: 1px solid #dc3545;
+  &.error {
+    input {
+      border: 1px solid $dangerColor;
     }
-    .message{
-      &.error{       
+    .message {
+      &.error {       
         display: flex;
       }
     }
   }
 
-  &.verify{
+  &.verify {
     display: flex;
     flex-wrap: wrap;
 
-    input{
+    input {
       width: 45%;
       border-radius: 3px 0 0 3px;
     }
-    .button{
+    .button {
       width: 55%;
       border-radius: 0 3px 3px 0;
     }
   }
 }
-.button{
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  font-size: 16px;
-  border-radius: 3px;
-  background-color: #4db38e;
-  color: #fff;
-  opacity: 0.8;
-  transition: .2s;
-  cursor: pointer;
-
-  &:hover{
-    opacity: 1;
-  }
-
-  &.disabled{
-    opacity: 0.3;
-  }
-}
 
 // ============================================================
-.main{
+.button {
+  // button($width, $height, $padding, $margin, $borderRadius, $backgroundColor, $color)
+  @include button(auto, 40px, 0 , 0, 3px, $primaryColor, #fff, $font_s);
+}
+
+.main {
   width: 600px;
-  margin: 70px auto;
+  margin: 70px auto 0;
   border: 1px solid #ddd;
 
-  .navs{
+  .navs {
     display: flex;
 
-    .nav{
+    .nav {
       flex: 1 1;
       height: 60px;
       line-height: 60px;
       text-align: center;
-      font-size: $font_s;
-      background-color: #eee; 
-      color: #888;
       border-right: 1px solid #ddd;
       border-bottom: 1px solid #ddd;
+      background-color: #eee; 
+      color: #888;
+      font-size: $font_s;
       cursor: pointer;
 
-      &:last-child{
+      &:last-child {
         border-right: none;
       }
     }
   }
-  .forms{
-    .form{
+  .forms {
+    .form {
       padding: 20px;
       display: none;
 
@@ -141,17 +108,17 @@ $primary_color: #202d40;
         padding: 0 10px;
         margin-bottom: 21px;
         border: 1px solid #ddd;
+        outline: none;
         color: #333;
         font-size: $font_s;
-        outline: none;
         cursor: pointer;
       }
 
-      .radio_container{
+      .radio_container {
         display: flex;
         margin-bottom: 15px;
 
-        .radio{
+        .radio {
           width: 20px;
           height: 20px;
           margin-right: 5px;
@@ -159,7 +126,7 @@ $primary_color: #202d40;
           border: 1px solid #ddd;
           position: relative;
 
-          input{
+          input {
             width: 100%;
             height: 100%;
             position: absolute;
@@ -170,7 +137,7 @@ $primary_color: #202d40;
             cursor: pointer;
           }
 
-          .circle{
+          .circle {
             width: 13px;
             height: 13px;
             position: absolute;
@@ -178,35 +145,35 @@ $primary_color: #202d40;
             left: 50%;
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            background-color: $primary_color;
+            background-color: $primaryColor;
           }
         }
 
-        label{
+        label {
           margin-right: 15px;
           cursor: pointer;
         }
       }
 
-      .agree_container{
-        display: flex;
-        align-items: center;
+      .agree_container {
         margin-bottom: 15px;
         font-size: $font_s;
+        display: flex;
+        align-items: center;
 
-        .checkbox{
+        .checkbox {
           width: 20px;
           height: 20px;
           margin-right: 10px;
           border-radius: 3px;
           border: 1px solid #ddd;
+          position: relative;
           display: flex;
           justify-content: center;
           align-items: center;
-          position: relative;
           cursor: pointer;
 
-          input[type="checkbox"]{
+          input[type="checkbox"] {
             width: 100%;
             height: 100%;
             position: absolute;
@@ -216,50 +183,29 @@ $primary_color: #202d40;
             z-index: 1;
             cursor: pointer;
           }
-          i{
+          i {
             width: 100%;
             height: 100%;
             position: absolute;
             top: 0;
             left: 1.5px;
-            color: $primary_color;
+            color: $primaryColor;
           }
         }
-        label{
+        label {
           cursor: pointer;
         }
-        .modal_text{
+        .modal_text {
           margin-left: 5px;
-          color: $primary_color;
+          color: $primaryColor;
           text-decoration: underline;
           opacity: 0.8;
           transition: .2s;
           cursor: pointer;
 
-          &:hover{
+          &:hover {
             opacity: 1;
           }
-        }
-      }
-
-      .button{
-        height: 40px;
-        line-height: 40px;
-        text-align: center;
-        font-size: $font_s;
-        border-radius: 3px;
-        background-color: $primary_color;
-        color: #fff;
-        opacity: 0.8;
-        transition: .2s;
-        cursor: pointer;
-
-        &:hover{
-          opacity: 1;
-        }
-
-        &.disabled{
-          opacity: 0.3;
         }
       }
     }
@@ -273,16 +219,9 @@ $primary_color: #202d40;
     
     .button {
       flex: 1 1;
-      height: 40px;
       margin-left: 2px;
-      border-radius: 3px;
-      font-size: $font_s;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       position: relative;
-      cursor: pointer;
+
       &:first-child {
         margin-left: 0;
       }
@@ -293,38 +232,38 @@ $primary_color: #202d40;
     }
   }
 
-  &.register{
-    .register_nav{
+  &.register {
+    .register_nav {
+      border-bottom: none;
       background-color: #fff; 
       color: #555;
-      border-bottom: none;
     }
-    .register_form{
+    .register_form {
       display: block;
     }
   }
-  &.login{
-    .login_nav{
+  &.login {
+    .login_nav {
+      border-bottom: none;
       background-color: #fff; 
       color: #555;
-      border-bottom: none;
     }
-    .login_form{
+    .login_form {
       display: block;
     }
   }
-  &.forget{
-    .forget_nav{
+  &.forget {
+    .forget_nav {
+      border-bottom: none;
       background-color: #fff; 
       color: #555;
-      border-bottom: none;
     }
-    .forget_form{
+    .forget_form {
       display: block;
 
       .input_container {
-        &.verify{
-          input{
+        &.verify {
+          input {
             width: 100%;
           }
         }
@@ -336,70 +275,63 @@ $primary_color: #202d40;
     }
   }
 
-  @include m{
+  @include m {
     width: calc(98% - 20px);
   }
 }
 
-.user_modal_container{
+.user_modal_container {
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $modalBackground;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2147483645;
 
-  .close{
+  .close {
     width: 50px;
     height: 50px;
     position: absolute;
     top: 20px;
     right: 20px;
-    font-size: 30px;
     color: #fff;
-    opacity: 0.8;
-    transition: .2s;
+    font-size: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0.8;
+    transition: .2s;
     cursor: pointer;
 
-    &:hover{
+    &:hover {
       opacity: 1;
       transform: scale(1.1);
     }
   }
-  .user_modal{
+  .user_modal {
     width: 90%;
     max-height: 80%;
+    overflow-y: auto;
     padding: 3%;
     border-radius: 5px;
     background: #fff;
-    overflow-y: auto;
-
-    input {
-      
-    }
-    .button {
-
-    }
   }
 }
 
-.user_message_container{
+.user_message_container {
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $modalBackground;
   z-index: 100;
 
-  .user_message{
+  .user_message {
     width: 300px;
     padding: 20px;
     margin: 200px auto 0 auto;
@@ -407,10 +339,10 @@ $primary_color: #202d40;
     background: #fff;
     position: relative;
     display: flex;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
 
-    .close{
+    .close {
       width: 20px;
       height: 20px;
       position: absolute;
@@ -422,7 +354,7 @@ $primary_color: #202d40;
       cursor: pointer;
     }
 
-    .message{
+    .message {
       display: flex;
       flex-direction: column;
       align-items: center;

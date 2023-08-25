@@ -1,6 +1,4 @@
-@import '@/assets/scss/_mixin.scss';
-@import '@/assets/scss/_variable.scss';
-@import '@/assets/scss/_all.scss';
+@import '@/assets/scss/mixin/_productList.scss';
 
 .main {
   .img_container {
@@ -48,7 +46,6 @@
           height: 100%;
           background-size: cover;
           background-position: center;
-          background-color: #ccc;
           font-size: 48px;
           display: flex;
           justify-content: center;
@@ -71,20 +68,20 @@
           height: 10px;
           margin: 5px 7px;
           border-radius: 50%;
-          border: 1px solid white;
-          background-color: white;
+          border: 1px solid #fff;
+          background-color: #fff;
           opacity: 1;
           cursor: pointer;
 
           &:hover {
-            background-color: $primary_color;
+            background-color: $primaryColor !important;
           }
           &:focus {
             outline: none;
           }
         }
         .swiper-pagination-bullet-active {
-          background-color: $primary_color;
+          background-color: $primaryColor !important;
         }
       }
     }
@@ -180,7 +177,7 @@
     }
   }
 
-  @include products;
+  @include productList;
 
   .community_category_container {
     width: 1170px;

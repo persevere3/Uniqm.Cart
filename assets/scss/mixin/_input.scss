@@ -1,0 +1,28 @@
+@mixin input($width, $height, $padding, $margin, $borderRadius, $border, $shadow, $backgroundColor, $color, $font-size) {
+  width: $width;
+  height: $height;
+  line-height: $height;
+  padding: $padding;
+  margin: $margin;
+  border-radius: $borderRadius;
+  outline: none;
+  border: $border;
+  background-color: $backgroundColor;
+  color: $color;
+  font-size: $font-size;
+  transition: box-shadow .3s;
+  
+  &:focus {
+    box-shadow: $shadow;
+  }
+
+  &[type=number] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}

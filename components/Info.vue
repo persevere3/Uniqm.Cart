@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/components/info.scss";
+</style>
+
 <template>
   <div class="main" :class="user_info_nav_active" v-if="user_account">
     <div class="logout_container button_row">

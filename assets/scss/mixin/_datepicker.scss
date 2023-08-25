@@ -1,0 +1,33 @@
+@mixin datepicker {
+  .mx-datepicker {
+    width: 100%;
+  
+    .mx-input-wrapper {
+      i {
+        top: 45%;
+        color: $primaryColor;
+      }
+    }
+  }
+  .mx-datepicker-main {
+    button {
+      &:hover {
+        color: $primaryColor;
+      }
+    }
+  
+    .cell {
+      &.today {
+        color: $primaryColor
+      }
+  
+      &.active {
+        background-color: $primaryColor;
+      }
+  
+      &:hover {
+        background-color: lighten($primaryColor, 20%);
+      }
+    }
+  }
+}

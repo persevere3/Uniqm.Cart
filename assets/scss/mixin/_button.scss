@@ -1,0 +1,27 @@
+@mixin button($width, $height, $padding, $margin, $borderRadius, $backgroundColor, $color, $font-size) {
+  width: $width;
+  height: $height;
+  padding: $padding;
+  margin: $margin;
+  border-radius: $borderRadius;
+  background-color: $backgroundColor;
+  color: $color;
+  white-space: nowrap;
+  font-size: $font-size;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.8;
+  transition: .3s;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.disabled {
+    background-color: $backgroundColor !important;
+    color: $color !important;
+    opacity: 0.3 !important;
+  }
+}

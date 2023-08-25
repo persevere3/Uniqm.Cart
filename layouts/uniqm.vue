@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/layout/uniqm.scss";
+</style>
+
 <template>
   <div>
     <LayoutFavoriteContainer />
@@ -60,7 +64,7 @@
           <p>Copyright &copy; 2023 - All Rights Reserved - UNIQ Micronet . </p>
         </div>
       </div>
-      <Cookie />
+      <!-- <Cookie /> -->
     </footer>
   </div>
 </template>

@@ -1,12 +1,10 @@
-@import '@/assets/scss/_all.scss';
-
 .payModal_container {
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: $modalBackground;
   z-index: 100;
 
   .payModal {
@@ -40,7 +38,7 @@
       input {
         width: 100%;
         margin: 10px 0px;
-        border: 1px solid #4db38e;
+        border: 1px solid $primaryColor;
       }
     }
 
@@ -71,7 +69,7 @@
 
       .copy {
         font-size: 20px;
-        color: #4db38e;
+        color: $primaryColor;
         display: flex;
         align-items: center;
         cursor: pointer;

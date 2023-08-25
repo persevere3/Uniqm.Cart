@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  @import "@/assets/scss/components/cart_and_favorite_container.scss";
+  @import "@/assets/scss/components/cart_and_favorite_container";
 </style>
 
 <template> 

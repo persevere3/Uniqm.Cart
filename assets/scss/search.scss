@@ -1,5 +1,4 @@
-@import "@/assets/scss/_variable.scss";
-@import "@/assets/scss/_all.scss";
+@import "@/assets/scss/mixin/_ellipsis.scss";
 
 .breadcrumb {
   background: rgba(247, 247, 247, 0.98);
@@ -32,7 +31,7 @@
         cursor: pointer;
 
         &:hover {
-          color: $primary_color;
+          color: $primaryColor;
         }
       }
     }
@@ -58,7 +57,7 @@
         margin-left: 10px;
         margin-bottom: 20px;
         font-size: 14px;
-        color: #333333;
+        color: #333;
         position: relative;
         cursor: pointer;
 
@@ -99,8 +98,8 @@
             padding: 10px 20px 10px 10px;
 
             &:hover {
-              background: $primary_color;
-              color: white;
+              background: $primaryColor;
+              color: #fff;
             }
           } 
         }
@@ -131,7 +130,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: $modalBackground;
             display: none;
           }
 
@@ -152,7 +151,7 @@
             transition: 0.4s;
 
             &:hover {
-              background: $primary_color;
+              background: $primaryColor;
               color: #fff;
             }
           }
@@ -164,7 +163,7 @@
               margin-left: 5px;
             }
             .is_favorite {
-              color: red;
+              color: $dangerColor;
             }
           }
         }
@@ -189,7 +188,7 @@
           .discount_price {
             font-size: 16px;
             font-weight: bold;
-            color: $primary_color;
+            color: $primaryColor;
             @include single_ellipsis;
           }
           .origin_price {
@@ -206,13 +205,13 @@
           margin-top: 5px;
           border-radius: 3px;
           background-color: #f7f7f7;
-          color: $primary_color;
+          color: $primaryColor;
           justify-content: center;
           align-items: center;
           display: none;
 
           .is_favorite {
-            color: red;
+            color: $dangerColor;
           }
         }
 
@@ -250,7 +249,7 @@
         cursor: pointer;
 
         &:hover {
-          color: $primary_color;
+          color: $primaryColor;
         }
       }
 
@@ -259,7 +258,7 @@
       }
 
       .li_active {
-        border-bottom: 2px solid $primary_color;
+        border-bottom: 2px solid $primaryColor;
       }
     }
   }

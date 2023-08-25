@@ -1,39 +1,7 @@
-@import '@/assets/scss/_mixin.scss';
-@import '@/assets/scss/_uniqm_variable.scss';
-@import '@/assets/scss/_uniqm_all.scss';
+@import "@/assets/scss/mixin/_datepicker.scss";
 
 // ==================================================
-.mx-datepicker {
-  width: 100%;
-
-  .mx-input-wrapper {
-    i {
-      top: 45%;
-      color: $primary_color;
-    }
-  }
-}
-.mx-datepicker-main {
-  button {
-    &:hover {
-      color: $primary_color;
-    }
-  }
-
-  .cell {
-    &.today {
-      color: $primary_color
-    }
-
-    &.active {
-      background-color: $primary_color;
-    }
-
-    &:hover {
-      background-color: rgb(184, 224, 209);
-    }
-  }
-}
+@include datepicker;
 
 // header ==================================================
 header {

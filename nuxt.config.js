@@ -8,6 +8,27 @@ export default defineNuxtConfig({
   // imports: {
   //   "dirs": ['stores']
   // },
+  css: [
+    webVersion.indexOf('uniqm') < 0 
+      ? '@/assets/scss/_all.scss'
+      : '@/assets/scss/_uniqm_all.scss'
+    ,
+  ],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: webVersion.indexOf('uniqm') < 0
+            ? ` @import "@/assets/scss/mixin/_common.scss";
+                @import "@/assets/scss/_variable.scss";
+            `
+            : ` @import "@/assets/scss/mixin/_common.scss";
+                @import "@/assets/scss/_uniqm_variable.scss"; 
+            `
+          },
+      },
+    },
+  },
   modules: [
     '@pinia/nuxt',
     // [

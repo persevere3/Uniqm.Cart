@@ -1,3 +1,3 @@
 <template>
-  <Products/>
+  <AllProductsAndCategory/>
 </template>

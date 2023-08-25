@@ -1,6 +1,4 @@
-@import '@/assets/scss/_mixin.scss';
-@import '@/assets/scss/_variable.scss';
-@import '@/assets/scss/_all.scss';
+@import '@/assets/scss/mixin/_productList.scss';
 @import '@/assets/scss/_quill.scss';
 
 .img_container {
@@ -64,4 +62,4 @@
   }
 }
 
-@include products;
+@include productList;

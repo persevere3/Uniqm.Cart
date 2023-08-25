@@ -47,8 +47,8 @@
   let { getCategories, getProducts } = useShopping()
 
   definePageMeta({
-    layout: 'uniqm'
-  })
+    layout: "uniqm",
+  });
 
   // computed ==================================================
   let filter_products = computed(() => {

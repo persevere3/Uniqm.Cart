@@ -1,3 +1,7 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/components/order.scss";
+</style>
+
 <template>
   <div class="order">
     <div class="box" v-if="!user_account">
