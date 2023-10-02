@@ -125,6 +125,7 @@ export const useCommon = defineStore('common', () => {
         }
 
         state.all = res.data;
+        console.log(state.all)
       } catch (error) {
         throw new Error(error)
       }
@@ -391,8 +392,28 @@ export const useCommon = defineStore('common', () => {
 
     // products page
     pagePush(page) {
-      if(page > state.totalpage_num || page < 1) return
+      if(page > state.totalpage_num || page < 1 || page == state.page_active) {
+        return;
+      }
+
       state.page_active = page;
+    },
+
+    is_show_page(item, totalpage_num) {
+      let showpage_num = 5
+
+      if(totalpage_num < showpage_num + 1) {
+        return item < totalpage_num + 1
+      }
+      else if(state.page_active < (showpage_num / 2)) {
+        return item < showpage_num + 1
+      }
+      else if(state.page_active > totalpage_num - (showpage_num / 2)) {
+        return item > (totalpage_num - 5) 
+      }
+      else {
+        return item >= (state.page_active - 2) && item <= (state.page_active + 2)
+      }
     },
 
     // 

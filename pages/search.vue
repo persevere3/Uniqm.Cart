@@ -68,12 +68,33 @@
       </div>
       <div class="product_page">
         <ul>
-          <li @click="pagePush(page_active - 1)" :class="{opacity0: page_active < 2}"> <i class="fa fa-angle-double-left" aria-hidden="true"></i> </li>
-          <li v-for="item in totalpage_num" :class="{li_active: page_active === item}" 
-              @click="pagePush(item)">
+          <li :class="{opacity0: page_active == 1}" 
+              @click="pagePush(1)"
+          >
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+          </li>
+          <li :class="{opacity0: page_active < 2}" 
+              @click="pagePush(page_active - 1)"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </li>
+          <li v-for="item in totalpage_num"
+              v-show="is_show_page(item, totalpage_num)"
+              :class="{li_active: page_active === item}" 
+              @click="pagePush(item)"
+          >
             {{item}}
           </li>
-          <li @click="pagePush(page_active + 1)" :class="{opacity0: page_active > totalpage_num - 1}"> <i class="fa fa-angle-double-right" aria-hidden="true"></i> </li>
+          <li :class="{opacity0: page_active > totalpage_num - 1}" 
+              @click="pagePush(page_active + 1)" 
+          > 
+            <i class="fa-solid fa-chevron-right"></i> 
+          </li>
+          <li :class="{opacity0: page_active == totalpage_num}" 
+              @click="pagePush(totalpage_num)" 
+          > 
+            <i class="fa fa-angle-double-right" aria-hidden="true"></i> 
+          </li>
         </ul>
       </div>
     </template>
@@ -94,10 +115,10 @@
   // store
   import { useCommon }  from '@/stores/common/common'
 
-  let { site, is_getSite, favorite, perpage_num, totalpage_num, page_active, 
+  let { site, is_getAll, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion 
   } = storeToRefs(useCommon())
-  let { login, toggleFavorite, pushTo_cart, pagePush, numberThousands } = useCommon()
+  let { login, toggleFavorite, pushTo_cart, pagePush, is_show_page, numberThousands } = useCommon()
   
   const state = reactive({
     sortBy_arr: [ '商品排序', '上架時間: 由新至舊', '上架時間: 由舊至新', '價格: 由高至低', '價格: 由低至高'],
@@ -112,7 +133,7 @@
 
   const { query, type } = useRoute().query
 
-  watch(is_getSite, () => {
+  watch(is_getAll, () => {
     if(query) getSearch()
   })
 
@@ -136,6 +157,7 @@
         getSearch(index);
         return
       }
+      console.log('search')
 
       state.search = res.data.data;
       if(webVersion.value === 'demo') {
