@@ -125,6 +125,7 @@ export const useCommon = defineStore('common', () => {
         }
 
         state.all = res.data;
+        methods.multiPriceHandler(state.all.data);
         console.log(state.all)
       } catch (error) {
         throw new Error(error)
@@ -295,6 +296,26 @@ export const useCommon = defineStore('common', () => {
         state.payModal_message == '閒置逾時，請重新登入' ||
         state.payModal_message == '已登出，請重新登入'
       ) state.is_logout = true;
+    },
+
+    //
+    multiPriceHandler(data) {
+      data.forEach(item => {
+        if(item.PriceType === 'multiPrice') {
+          // 建議售價
+          // 所有規格都有填建議售價
+          if(item.MinPrice > 0 && item.MaxPrice > 0) {        
+            // 建議售價都一樣
+            if(item.MinPrice === item.MaxPrice) item.priceRange = methods.numberThousands(item.MinPrice)
+            else item.priceRange = `${methods.numberThousands(item.MinPrice)} - ${methods.numberThousands(item.MaxPrice)}`
+          }
+
+          // 售價
+          // 售價都一樣
+          if(item.NowMinPrice === item.NowMaxPrice) item.nowPriceRange = methods.numberThousands(item.NowMinPrice)
+          else item.nowPriceRange = `${methods.numberThousands(item.NowMinPrice)} - ${methods.numberThousands(item.NowMaxPrice)}`
+        }
+      })
     },
 
     // 

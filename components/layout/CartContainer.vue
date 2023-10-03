@@ -14,7 +14,10 @@
               <div class="name"> {{ item.Name }}({{spec.Name}}) </div>
             </div>
             <div class="price_and_delete">
-              <div class="price"> NT${{numberThousands(item.NowPrice)}} x {{spec.buyQty}}  </div>
+              <!-- 多價格 cart_container 主商品 小計 -->
+              <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ numberThousands(item.NowPrice) }} x {{ spec.buyQty }}  </div>
+              <div class="price" v-else> NT${{ numberThousands(spec.ItemNowPrice) }} x {{ spec.buyQty }}  </div>
+
               <div class="delete" @click.stop="delete_carts_item(item.ID, spec.ID)">
                 <i class="fas fa-trash-alt"></i>
               </div>
@@ -46,7 +49,9 @@
                   <div class="name"> 加價購 {{ item2.Name }}({{spec2.Name}}) </div>
                 </div>
                 <div class="price_and_delete">
-                  <div class="price"> NT${{numberThousands(item2.Price)}} x {{spec2.buyQty}}  </div>
+                  <!-- 多價格 carts_container 加價購 小計 -->
+                  <div class="price" v-if="item2.PriceType === 'onePrice'"> NT${{ numberThousands(item2.Price) }} x {{ spec2.buyQty }} </div>
+                  <div class="price" v-else> NT${{ numberThousands(spec2.ItemNowPrice) }} x {{ spec2.buyQty }} </div>
                 </div>
               </li>
             </template>

@@ -80,7 +80,7 @@
               <ul>
                 <li v-for="(item2, index) in item.Items" :key="index" v-show="product_active == item.FilNo || index < 4">
                   {{item2.ProductType == 2 ? '加價購' : ''}} {{item2.Name}}{{item2.Spec ? `(${item2.Spec})` : ''}}
-                  NT${{numberThousands(item2.Price)}} x {{item2.Amount}}
+                  NT${{ numberThousands(item2.Price) }} x {{ item2.Amount }}
                 </li>
               </ul>
               <template v-if="item.expandable">

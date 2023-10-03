@@ -7,6 +7,7 @@ import { getCategoriesApi, getProductsApi } from '@/api/index';
 export const useShopping = defineStore('shopping', () => {
   // store ==================================================
   let { site, webVersion } = storeToRefs(useCommon())
+  let { multiPriceHandler } = useCommon()
 
   // state ==================================================
   const state = reactive({
@@ -48,6 +49,7 @@ export const useShopping = defineStore('shopping', () => {
         }
 
         let products = res.data.data;
+        multiPriceHandler(products)
         if(webVersion.value === 'demo') {
           products.forEach(product => {
             product.Img1 = 'https://www.uniqm.com' + product.Img1

@@ -5,7 +5,7 @@ import { useCommon }  from '@/stores/common/common'
 
 export const useCategory = defineStore('category', () => {
   let { site, demoOrigin, webVersion } = storeToRefs(useCommon())
-  let { login } = useCommon()
+  let { login, multiPriceHandler } = useCommon()
 
   // state ==================================================
   const state = reactive({
@@ -34,6 +34,8 @@ export const useCategory = defineStore('category', () => {
         let data = state.category_product.Data[0];
         let category = state.category_product.Category;
         let product = state.category_product.Product;
+
+        multiPriceHandler(product)
         
         // category => sort[i]
         for(let i = 0; i < category.length; i++) {

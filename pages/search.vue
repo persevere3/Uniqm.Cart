@@ -56,9 +56,16 @@
               </div>
             </div>
             <div class="info">
-              <div class="name"> {{item.Name}} </div>
-              <div class="discount_price"> NT$ {{numberThousands(item.NowPrice)}} </div>
-              <div class="origin_price" v-if="parseInt(item.Price) > -1"> NT$ {{numberThousands(item.Price)}} </div>
+              <div class="name"> {{ item.Name }} </div>
+              <!-- 多價格 products 主商品 單價 -->
+              <template v-if="item.PriceType === 'onePrice'">
+                <div class="discount_price"> NT${{ numberThousands(item.NowPrice) }} </div>
+                <div class="origin_price" v-if="parseInt(item.Price) > -1"> NT${{numberThousands(item.Price)}} </div>
+              </template>
+              <template v-else>
+                <div class="discount_price"> NT${{ item.nowPriceRange }} </div>
+                <div class="origin_price" v-if="item.priceRange"> NT${{ item.priceRange }} </div>
+              </template>
             </div>
             <div class="l_addTo_cart_btn">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -118,7 +125,7 @@
   let { site, is_getAll, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion 
   } = storeToRefs(useCommon())
-  let { login, toggleFavorite, pushTo_cart, pagePush, is_show_page, numberThousands } = useCommon()
+  let { login, toggleFavorite, multiPriceHandler, pushTo_cart, pagePush, is_show_page, numberThousands } = useCommon()
   
   const state = reactive({
     sortBy_arr: [ '商品排序', '上架時間: 由新至舊', '上架時間: 由舊至新', '價格: 由高至低', '價格: 由低至高'],
@@ -160,6 +167,7 @@
       console.log('search')
 
       state.search = res.data.data;
+      multiPriceHandler(state.search);
       if(webVersion.value === 'demo') {
         state.search.forEach(item => {
           item.Img = demoOrigin.value + item.Img

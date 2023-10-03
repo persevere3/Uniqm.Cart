@@ -22,7 +22,10 @@
           <div class="image"><img :src="item.Img1" alt=""></div>
           <div class="name">{{ item.Name }}</div>
           <div class="priceAndControl">
-            <div class="price">NT {{ item.NowPrice }}</div>
+            <!-- 多價格 products 主商品 單價 -->
+            <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ numberThousands(item.NowPrice) }} </div>
+            <div class="price" v-else> NT${{ item.nowPriceRange }} </div>
+
             <div class="control">
               <i class="fa-solid fa-heart" :class="{is_favorite : favorite[item.ID]}" @click.stop="toggleFavorite(item.ID)"></i>
               <i class="fa-solid fa-cart-shopping"></i>

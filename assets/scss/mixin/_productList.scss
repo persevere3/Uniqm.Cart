@@ -119,6 +119,10 @@
               font-size: 14px;
               color: #888;
               @include single_ellipsis;
+
+              &.opacity0 {
+                opacity: 0;
+              }
             }
           }
   

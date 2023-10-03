@@ -58,8 +58,16 @@
             </div>
             <div class="info">
               <div class="name"> {{item.Name}} </div>
-              <div class="discount_price"> NT$ {{ numberThousands(item.NowPrice) }} </div>
-              <div class="origin_price" v-if="parseInt(item.Price) > -1"> NT$ {{ numberThousands(item.Price) }} </div>
+            
+              <!-- 多價格 products 主商品 單價 -->
+              <template v-if="item.PriceType === 'onePrice'">
+                <div class="discount_price"> NT${{ numberThousands(item.NowPrice) }} </div>
+                <div class="origin_price" v-if="parseInt(item.Price) > -1"> NT${{ numberThousands(item.Price) }} </div>
+              </template>
+              <template v-else>
+                <div class="discount_price"> NT${{ item.nowPriceRange }} </div>
+                <div class="origin_price" v-if="item.priceRange"> NT${{ item.priceRange }} </div>
+              </template>
             </div>
             <div class="l_addTo_favorite_btn" @click.stop="toggleFavorite(item.ID)">
               <i class="fas fa-heart" :class="{is_favorite : favorite[item.ID]}"></i>
