@@ -35,7 +35,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
 
     async getAllHandler() {
       await getAll()
-      console.log(toRaw(all.value))
 
       totalpage_num.value = Math.ceil(all.value.data.length / perpage_num.value);
           

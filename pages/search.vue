@@ -9,8 +9,8 @@
     </div>
   </div>
 
-  <div class="main">
-    <template v-if="search && search.length">
+  <div class="main" v-if="search">
+    <template v-if="search.length">
       <div class="product_list">
         <div class="top">
           <div class="perpageNum_select">
@@ -164,7 +164,6 @@
         getSearch(index);
         return
       }
-      console.log('search')
 
       state.search = res.data.data;
       multiPriceHandler(state.search);

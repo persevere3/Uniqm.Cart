@@ -287,8 +287,6 @@ export const useHandlerInfo = defineStore('handlerInfo', () => {
   }
 
   return {
-    ...toRefs(state),
-
     ...methods
   }
 })

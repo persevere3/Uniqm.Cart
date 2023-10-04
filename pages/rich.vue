@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="scss" scoped>
   @import "@/assets/scss/rich.scss";
   @import "@/assets/scss/_quill.scss";
 </style>

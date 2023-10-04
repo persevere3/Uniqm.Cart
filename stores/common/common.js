@@ -126,7 +126,7 @@ export const useCommon = defineStore('common', () => {
 
         state.all = res.data;
         methods.multiPriceHandler(state.all.data);
-        console.log(state.all)
+        console.log('all: ', state.all)
       } catch (error) {
         throw new Error(error)
       }

@@ -220,7 +220,6 @@
   // store
   import { useCommon }  from '@/stores/common/common'
   import { useOrder }  from '@/stores/order'
-  import { useInfo } from '@/stores/info'
   import { useHandlerInfo } from '@/stores/handlerInfo'
 
   let { store, user_account, pathname, is_payModal, payModal_message } = storeToRefs(useCommon())
@@ -230,7 +229,6 @@
     order_number, order_page_index, order_page_number, order_page_size, select_active
   } = storeToRefs(useOrder())
   let { getOrder, getMemberOrder, searchMartDelivery } = useOrder()
-  let { user_info } = storeToRefs(useInfo())
   let { getUser_info } = useHandlerInfo()
 
   const { RtnMsg, account, result, phone, email } = useRoute().query

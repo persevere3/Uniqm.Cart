@@ -8,7 +8,7 @@ import { registerApi, user_loginApi, send_forget_verify_codeApi,
   check_forget_verify_codeApi, edit_forget_passApi 
 } from '@/api/index';
 
-export const useHandlerCommon = defineStore('handlerCommon', () => {
+export const useHandlerUser = defineStore('handlerUser', () => {
   // store ==================================================
   let { site, store } = storeToRefs(useCommon())
   let { return_formData, getPathname, urlPush, return_date } = useCommon()
