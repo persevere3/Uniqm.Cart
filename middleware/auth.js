@@ -4,11 +4,11 @@ import { storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 import { useHandlerCommon }  from '@/stores/handlerCommon'
 
-let { site, user_account } = storeToRefs(useCommon())
-let { getPathname, urlPush } = useCommon()
-let { getSiteHandler } = useHandlerCommon()
-
 export default defineNuxtRouteMiddleware(async(to, from) => {
+  let { site, user_account } = storeToRefs(useCommon())
+  let { getPathname, urlPush } = useCommon()
+  let { getSiteHandler } = useHandlerCommon()
+
   console.log(to, from)
 
   if(!site.value) {
