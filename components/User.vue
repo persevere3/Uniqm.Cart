@@ -3,7 +3,7 @@
 </style>
 
 <template>
-  <div class="main" :class="user_nav_active">
+  <div class="main" :class="user_nav_active" v-if="is_getSite">
     <div class="navs">
       <div class="nav register_nav" @click="user_nav_active = 'register'">
         註冊會員

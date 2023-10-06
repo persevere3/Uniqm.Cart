@@ -1,3 +1,5 @@
+import { useRoute } from 'vue-router'
+
 import { defineStore } from 'pinia'
 import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi,
   getFavoriteApi, deleteFavoriteApi, addFavoriteApi 
@@ -50,12 +52,6 @@ export const useCommon = defineStore('common', () => {
     //
     demoOrigin: 'https://demo.uniqcarttest.com',
     webVersion: 'demo',
-  })
-
-  onMounted(() => {
-    if(document.querySelector('.header')) {
-      document.querySelector('body').style['padding-top'] = document.querySelector('.header').getBoundingClientRect().height + 'px';
-    }
   })
 
   // methods ==================================================

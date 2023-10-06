@@ -339,6 +339,10 @@
 
   // onMounted ==================================================
   onMounted(async() => {
+    if(document.querySelector('.header')) {
+      document.querySelector('body').style['padding-top'] = document.querySelector('.header').getBoundingClientRect().height + 'px';
+    }
+
     if(!site.value.site) {
       site.value = JSON.parse(localStorage.getItem('site')) || null ;
       user_account.value = localStorage.getItem('user_account')
