@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
-import { post_logoutApi, deleteAccount_testApi } from '@/api/index';
+import { post_logoutApi, deleteAccount_testApi } from '@/apis/info';
 
 
 export const useInfo = defineStore('info', () => {

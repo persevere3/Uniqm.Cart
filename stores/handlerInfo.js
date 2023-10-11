@@ -6,7 +6,7 @@ import { useUser }  from '@/stores/user'
 import { useOrder }  from '@/stores/order'
 import { useVerify }  from '@/stores/cross/verify'
 
-import { getUser_infoApi, edit_infoApi, edit_passApi, getBonusApi, unbindLine_testApi } from '@/api/index';
+import { getUser_infoApi, edit_infoApi, edit_passApi, getBonusApi, unbindLine_testApi } from '@/apis/info';
 
 export const useHandlerInfo = defineStore('handlerInfo', () => {
   // store ==================================================

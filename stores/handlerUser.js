@@ -6,7 +6,7 @@ import { useVerify }  from '@/stores/cross/verify'
 
 import { registerApi, user_loginApi, send_forget_verify_codeApi, 
   check_forget_verify_codeApi, edit_forget_passApi 
-} from '@/api/index';
+} from '@/apis/user';
 
 export const useHandlerUser = defineStore('handlerUser', () => {
   // store ==================================================

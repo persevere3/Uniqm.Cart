@@ -129,7 +129,7 @@
 
 <script setup>
   import { storeToRefs } from 'pinia'
-  import { getHomePageApi } from '@/api/index.js'
+  import { getHomePageApi } from '@/apis/page'
 
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import { Autoplay, Pagination } from 'swiper/modules';
@@ -141,7 +141,7 @@
 
   let { site, is_getSite, all, store, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion } = storeToRefs(useCommon())
-  let { toggleFavorite, pagePush, is_show_page, pushTo_cart, urlPush, numberThousands } = useCommon()
+  let { return_formUrlencoded, toggleFavorite, pagePush, is_show_page, pushTo_cart, urlPush, numberThousands } = useCommon()
 
   const state = reactive({
     homePage: {},
@@ -226,7 +226,7 @@
 
   // methods ==================================================
   async function getHomePage() {
-    let params = `WebPreview=${site.value.WebPreview}`;
+    let params = return_formUrlencoded('WebPreview')
 
     try {
       let res = await getHomePageApi(params)

@@ -1,7 +1,8 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
-import { getOrderApi, getMemberOrderApi, rePayApi, searchMartDeliveryApi } from '@/api/index';
+import { getOrderApi, getMemberOrderApi, searchMartDeliveryApi } from '@/apis/order';
+import { rePayApi } from '@/apis/pay';
 
 export const useOrder = defineStore('order', () => {
   // store ==================================================

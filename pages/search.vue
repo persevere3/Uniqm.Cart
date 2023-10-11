@@ -117,7 +117,7 @@
 
 <script setup>
   import { storeToRefs } from 'pinia'
-  import { getSearchApi } from '@/api/index.js'
+  import { getSearchApi } from '@/apis/pages'
 
   // store
   import { useCommon }  from '@/stores/common/common'

@@ -58,13 +58,13 @@
 
 <script setup>
   import { storeToRefs } from 'pinia'
-  import { getContactApi } from '@/api/index.js'
+  import { getContactApi } from '@/apis/pages'
 
   // store
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getSite } = storeToRefs(useCommon())
-  let { login, imgHandler, urlPush, unescapeHTML } = useCommon()
+  let { return_formUrlencoded, login, imgHandler, urlPush, unescapeHTML } = useCommon()
   
   const state = reactive({
     contact: {}
@@ -80,7 +80,7 @@
 
   // methods ==================================================
   async function getContact() {
-    let params = `WebPreview=${site.value.WebPreview}`;
+    let params = return_formUrlencoded('WebPreview')
 
     try {
       let res = await getContactApi(params)

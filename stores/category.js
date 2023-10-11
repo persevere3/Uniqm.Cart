@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { getCategoryApi } from '@/api/index';
+import { getCategoryApi } from '@/apis/pages';
 
 import { useCommon }  from '@/stores/common/common'
 

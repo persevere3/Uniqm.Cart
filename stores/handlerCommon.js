@@ -4,7 +4,7 @@ import { useCommon }  from '@/stores/common/common'
 import { useUser }  from '@/stores/user'
 import { useVerify }  from '@/stores/cross/verify'
 
-import { send_verify_codeApi } from '@/api/index';
+import { send_verify_codeApi } from '~/apis/user';
 
 export const useHandlerCommon = defineStore('handlerCommon', () => {
   // store ==================================================

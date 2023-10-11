@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
-import { getLineProfileApi, validateRecommenderCodeApi } from '@/api/index';
+import { getLineProfileApi, validateRecommenderCodeApi } from '@/apis/user';
 
 
 export const useUser = defineStore('user', () => {

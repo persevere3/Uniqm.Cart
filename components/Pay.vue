@@ -89,7 +89,7 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  import { checkPayApi } from '../api/index'
+  import { checkPayApi } from '@/apis/pay'
 
   // store
   import { useCommon }  from '@/stores/common/common'
