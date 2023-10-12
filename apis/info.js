@@ -1,24 +1,28 @@
 import { formRequest, formDataRequest } from '@/utils/https'
 
 /*
-  getUser_infoApi
-  let formData = new FormData();
-  formData.append("storeid", site.value.Name);
-  formData.append("phone", user_account.value);
+  getUserInfoApi
+
+  let obj = {
+    storeid: site.value.Name,
+    phone: user_account.value
+  }
+  let formData = return_formData(obj)
 */
-export const getUser_infoApi = formData => formDataRequest.post('/interface/WebMember/GetMemberInfo', formData);
+export const getUserInfoApi = formData => formDataRequest.post('/interface/WebMember/GetMemberInfo', formData);
 
 /*
   edit_infoApi
   let obj = {
     storeid: site.value.Name,
+    
     phone: user_account.value,
-
-    name: r_name.value.value,
-    email: r_mail.value.value,
     phone2: r_phone2.value.value,
-    gender: sex.value == 'male' ? 1 : 0 ,
+    email: r_mail.value.value,
+
     recommender: r_recommender.value.value,
+    name: r_name.value.value,
+    gender: sex.value == 'male' ? 1 : 0 ,
   }
 
   // obj r_birthday
@@ -29,7 +33,7 @@ export const getUser_infoApi = formData => formDataRequest.post('/interface/WebM
   //   obj["validate"] = r_phone_verify_code.value.value
   // }
 
-  // 
+  // address
   let address_str = '';
   for(let item of address_arr) {
     address_str += `${item.id}_ _${item.city}_ _${item.district}_ _${item.detail}_#_`
@@ -72,7 +76,7 @@ export const getBonusApi = formData => formDataRequest.post('/interface/Webmembe
 /*
   post_logoutApi
 */
-export const post_logoutApi = data => formRequest.post('/interface/WebMember/MemberLogout', data);
+export const post_logoutApi = params => formRequest.post('/interface/WebMember/MemberLogout', params);
 
 /*
   unbindLine_testApi

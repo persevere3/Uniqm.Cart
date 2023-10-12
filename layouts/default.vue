@@ -262,7 +262,7 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  import { connectHandlerApi } from '@/apis/index.js'
+  import { connectHandlerApi } from '@/apis/common'
 
   // store ==================================================
   import { useCommon }  from '@/stores/common/common'

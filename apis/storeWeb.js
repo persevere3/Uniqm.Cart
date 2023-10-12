@@ -14,7 +14,6 @@ export const loginApi = params => formRequest.post('/interface/web/UserLogin', p
 
 /*
   getSiteApi
-  let params = methods.return_formUrlencoded('WebPreview')
 */
 export const getSiteApi = () => formRequest.get('/interface/web/GetSite');
 
@@ -44,10 +43,12 @@ export const getCustomerServiceApi = params => formRequest.post('/interface/web/
 
 /*
   connectHandlerApi
-  let formData = new FormData();
-  formData.append("title", state.connect_mail.value);
-  formData.append("text", state.connect_text.value);
-  formData.append("WebPreview", site.value.WebPreview);
+  let obj = {
+    title: state.connect_mail.value,
+    text: state.connect_text.value,
+    WebPreview: site.value.WebPreview
+  }
+  let formData = methods.return_formData(obj)
 */
 export const connectHandlerApi = formData => formDataRequest.post('/interface/web/PostFeedback', formData);
 

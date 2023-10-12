@@ -8,18 +8,22 @@ export const getHomePageApi = params => formRequest.post('/interface/web/GetHome
 
 /*
   getCategoryApi
-  let formData = new FormData();
-  formData.append("id", id);
-  formData.append("WebPreview", site.value.WebPreview);
+  let obj = {
+    id,
+    WebPreview: site.value.WebPreview
+  }
+  let formData = return_formData(obj)
 */
 export const getCategoryApi = formData => formDataRequest.post('/interface/web/GetWebSubCategory', formData);
 
 /*
   getSearchApi
-  let formData = new FormData();
-  formData.append("input", state.search_title);
-  formData.append("type", state.sortBy_index);
-  formData.append("WebPreview", site.value.WebPreview);
+  let obj = {
+    input: state.search_title,
+    type: state.sortBy_index,
+    WebPreview: site.value.WebPreview
+  }
+  let formData = return_formData(obj)
 */
 export const getSearchApi = formData => formDataRequest.post('/interface/web/GetProductSearch', formData);
 

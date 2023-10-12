@@ -209,10 +209,10 @@ export const useOrder = defineStore('order', () => {
       })
     },
 
-    async rePay(FilNo, url) {
+    async rePay(flino, url) {
       let formData = new FormData();
       formData.append("StoreId", site.value.Name);
-      formData.append("flino", FilNo);
+      formData.append("flino", flino);
       formData.append("url", url);
 
       try {

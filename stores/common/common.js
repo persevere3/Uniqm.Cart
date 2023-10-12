@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 import { useRoute } from 'vue-router'
 
-import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi} from '@/apis/common';
+import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi} from '@/apis/storeWeb';
 import { getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/apis/favorite';
 
 import { useFilters }  from '../cross/filters'
@@ -58,7 +58,7 @@ export const useCommon = defineStore('common', () => {
   const methods = {
     ...useFilters(),
 
-    // obj => formData or 只post WebPreview
+    // obj => formData or 只post WebPreview Preview
     return_formUrlencoded(origin) {
       if(origin === 'WebPreview') return `WebPreview=${state.site.WebPreview}`
       else if(origin === 'Preview') return `Preview=${state.site.Preview}`
@@ -70,12 +70,19 @@ export const useCommon = defineStore('common', () => {
       }
       return formUrlencoded
     },
-    // obj => formData
-    return_formData(obj) {
+    // obj => formData or 只post WebPreview
+    return_formData(origin) {
       let formData = new FormData();
-      for(let key in obj) {
-        formData.append(key, obj[key]);
+
+      if(origin === 'WebPreview' || origin === 'Preview') {
+        formData.append(origin, state.site[origin]);
+      } 
+      else {
+        for(let key in origin) {
+          formData.append(key, origin[key]);
+        }
       }
+
       return formData
     },
 

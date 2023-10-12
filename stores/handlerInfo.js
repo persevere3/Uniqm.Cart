@@ -6,7 +6,7 @@ import { useUser }  from '@/stores/user'
 import { useOrder }  from '@/stores/order'
 import { useVerify }  from '@/stores/cross/verify'
 
-import { getUser_infoApi, edit_infoApi, edit_passApi, getBonusApi, unbindLine_testApi } from '@/apis/info';
+import { getUserInfoApi, edit_infoApi, edit_passApi, getBonusApi, unbindLine_testApi } from '@/apis/info';
 
 export const useHandlerInfo = defineStore('handlerInfo', () => {
   // store ==================================================
@@ -30,7 +30,7 @@ export const useHandlerInfo = defineStore('handlerInfo', () => {
         formData.append("phone", user_account.value);
   
         try {
-          let res = await getUser_infoApi(formData)
+          let res = await getUserInfoApi(formData)
           if(res.data.errormessage) {
             await login();
             methods.getUser_info();
