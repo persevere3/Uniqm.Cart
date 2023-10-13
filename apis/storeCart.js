@@ -1,4 +1,4 @@
-import { formRequest, formDataRequest } from '@/utils/https'
+import { formRequest } from '@/utils/https'
 
 /*
   loginApi
@@ -22,5 +22,3 @@ export const getSiteApi = () => formRequest.get('/interface/store/GetSite');
   let params = return_formUrlencoded('Preview')
 */
 export const getStoreApi = params => formRequest.post('/interface/store/getStore', params);
-
-//  getGAApi === getStoreApi(web)

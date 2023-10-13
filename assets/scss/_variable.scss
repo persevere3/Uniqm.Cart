@@ -1,7 +1,22 @@
 $font_m: 20px;
 $font_s: 16px;
-
-$primaryColor: #4db38e;
-$dangerColor: rgb(220, 53, 69);
-
 $modalBackground: rgba(0, 0, 0, 0.5);
+
+// cart =========== =========== =========== =========== ===========
+
+$primaryColor: rgb(63, 135, 166);
+$secondColor: rgb(85, 85, 85);
+$dangerColor: rgb(220, 53, 69);
+$white: rgb(255, 255, 255);
+$black: rgb(0, 0, 0);
+
+// 
+$primaryColor: #707038;
+$secondColor: rgb(127, 118, 118);
+
+$primaryGradientColor: lighten($primaryColor, 10%);
+$primaryGradient: linear-gradient(20deg, $primaryGradientColor, $white);
+
+$secondColor_3: darken($secondColor, 13%);
+$secondColor_a: lighten($secondColor, 33%);
+$secondColor_c: lighten($secondColor, 48%);

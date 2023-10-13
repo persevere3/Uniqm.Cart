@@ -5,9 +5,6 @@ let webVersion = 'demo'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // imports: {
-  //   "dirs": ['stores']
-  // },
   css: [
     webVersion.indexOf('uniqm') < 0 
       ? '@/assets/scss/_all.scss'
@@ -31,12 +28,6 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
-    // [
-    //   '@pinia/nuxt',
-    //   {
-    //     'autoImports': ['defineStore', 'acceptHMRUpdate'],
-    //   },
-    // ]
   ],
   nitro: {
     devProxy: {

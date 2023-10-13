@@ -19,13 +19,18 @@
     @content;
   }
 }
+@mixin ms {
+  @media(max-width:600px){
+    @content;
+  }
+}
 @mixin s {
   @media(max-width:480px) {
     @content;
   }
 }
 @mixin xs {
-  @media(max-width:320px) {
+  @media(max-width:400px) {
     @content;
   }
 }

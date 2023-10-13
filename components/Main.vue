@@ -1,3 +1,8 @@
+<style lang="scss" scoped>
+  @import "@/assets/scss/quill.css";
+  @import "@/assets/scss/cart.scss";
+</style>
+
 <template>
   <div class="main">
     <div class="logo_name">
@@ -131,15 +136,12 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  // component ==================================================
-  import ProductBuyQtyBox from '@/components/ProductBuyQtyBox.vue'
-
   // composables
   import { useNumberThousands } from '@/composables/numberThousands'
 
   // store
-  import { useCommon }  from '@/stores/common/common'
-  import { useProducts }  from '@/stores/products'
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useProducts }  from '@/stores/cart/products'
 
   let { site, store, arrangement, showPage, webVersion } = storeToRefs(useCommon())
   let { urlPush, getPathname } = useCommon()
