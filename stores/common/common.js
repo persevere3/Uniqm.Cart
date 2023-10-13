@@ -5,7 +5,8 @@ import { useRoute } from 'vue-router'
 import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi} from '@/apis/storeWeb';
 import { getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/apis/favorite';
 
-import { useFilters }  from '../cross/filters'
+// composables
+import { useNumberThousands } from '@/composables/numberThousands'
 
 import bank_json from '@/json/bank'
 import city_district_json from '@/json/city_district.json'
@@ -310,14 +311,14 @@ export const useCommon = defineStore('common', () => {
           // 所有規格都有填建議售價
           if(item.MinPrice > 0 && item.MaxPrice > 0) {        
             // 建議售價都一樣
-            if(item.MinPrice === item.MaxPrice) item.priceRange = methods.numberThousands(item.MinPrice)
-            else item.priceRange = `${methods.numberThousands(item.MinPrice)} - ${methods.numberThousands(item.MaxPrice)}`
+            if(item.MinPrice === item.MaxPrice) item.priceRange = useNumberThousands(item.MinPrice)
+            else item.priceRange = `${useNumberThousands(item.MinPrice)} - ${useNumberThousands(item.MaxPrice)}`
           }
 
           // 售價
           // 售價都一樣
-          if(item.NowMinPrice === item.NowMaxPrice) item.nowPriceRange = methods.numberThousands(item.NowMinPrice)
-          else item.nowPriceRange = `${methods.numberThousands(item.NowMinPrice)} - ${methods.numberThousands(item.NowMaxPrice)}`
+          if(item.NowMinPrice === item.NowMaxPrice) item.nowPriceRange = useNumberThousands(item.NowMinPrice)
+          else item.nowPriceRange = `${useNumberThousands(item.NowMinPrice)} - ${useNumberThousands(item.NowMaxPrice)}`
         }
       })
     },

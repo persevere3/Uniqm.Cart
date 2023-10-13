@@ -59,8 +59,8 @@
               <div class="name"> {{ item.Name }} </div>
               <!-- 多價格 products 主商品 單價 -->
               <template v-if="item.PriceType === 'onePrice'">
-                <div class="discount_price"> NT${{ numberThousands(item.NowPrice) }} </div>
-                <div class="origin_price" v-if="parseInt(item.Price) > -1"> NT${{numberThousands(item.Price)}} </div>
+                <div class="discount_price"> NT${{ useNumberThousands(item.NowPrice) }} </div>
+                <div class="origin_price" v-if="parseInt(item.Price) > -1"> NT${{useNumberThousands(item.Price)}} </div>
               </template>
               <template v-else>
                 <div class="discount_price"> NT${{ item.nowPriceRange }} </div>
@@ -119,13 +119,16 @@
   import { storeToRefs } from 'pinia'
   import { getSearchApi } from '@/apis/pages'
 
+  // composables
+  import { useNumberThousands } from '@/composables/numberThousands'
+
   // store
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getAll, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion 
   } = storeToRefs(useCommon())
-  let { login, toggleFavorite, multiPriceHandler, pushTo_cart, pagePush, is_show_page, numberThousands } = useCommon()
+  let { login, toggleFavorite, multiPriceHandler, pushTo_cart, pagePush, is_show_page } = useCommon()
   
   const state = reactive({
     sortBy_arr: [ '商品排序', '上架時間: 由新至舊', '上架時間: 由舊至新', '價格: 由高至低', '價格: 由低至高'],

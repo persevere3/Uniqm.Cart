@@ -91,19 +91,23 @@
 
   import { checkPayApi } from '@/apis/pay'
 
+  // composables
+  import { useVerify }  from '@/composables/verify'
+
   // store
   import { useCommon }  from '@/stores/common/common'
-  import { useVerify }  from '@/stores/cross/verify'
   import { useOrder }  from '@/stores/order'
   import { useInfo }  from '@/stores/info'
   import { useUser }  from '@/stores/user'
+
+  // composables
+  let { verify } = useVerify()  
 
   let { store, pathname, bank, is_payModal, payModal_message, is_logout } = storeToRefs(useCommon())
   let { login, copy } = useCommon()
   let { order_number, account_number, ECPay_form } = storeToRefs(useOrder())
   let { logout, edit_pass } = useInfo()
   let { o_password, o_password_type, r_password, r_password_type, r_confirm_password, r_confirm_password_type } = storeToRefs(useUser())
-  let { verify } = useVerify()
 
   // methods ==================================================
   function filter_account_number() {

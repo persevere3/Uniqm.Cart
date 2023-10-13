@@ -9,7 +9,7 @@
       {{ content_obj[rich_id].Name }}
     </div>
     <div class="rich_container">
-      <div class="ql-editor" v-html="unescapeHTML(content_obj[rich_id].Text)"></div>
+      <div class="ql-editor" v-html="useUnescapeHTML(content_obj[rich_id].Text)"></div>
     </div>
   </div>
 </template>
@@ -17,11 +17,14 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
+  // composables
+  import { useUnescapeHTML } from '@/composables/unescapeHTML'
+
   // store
   import { useCommon }  from '@/stores/common/common'
 
   let { all, is_getAll } = storeToRefs(useCommon())
-  let { imgHandler, unescapeHTML } = useCommon()
+  let { imgHandler } = useCommon()
   
   const state = reactive({
     rich_id: 0,

@@ -282,13 +282,18 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
+  // composables
+  import { useVerify }  from '@/composables/verify'
+
   // store
   import { useCommon }  from '@/stores/common/common'
-  import { useVerify }  from '@/stores/cross/verify'
   import { useInfo }  from '@/stores/info'
   import { useUser }  from '@/stores/user'
   import { useOrder }  from '@/stores/order'
   import { useHandlerInfo } from '@/stores/handlerInfo'
+
+  // composables
+  let { verify } = useVerify()
 
   let { user_account, city_district, is_payModal, payModal_message, webVersion } = storeToRefs(useCommon())
   let { getPathname } = useCommon()
@@ -300,7 +305,6 @@
   } = useInfo()
   let { r_name, r_mail, r_birthday, sex, r_recommender, r_phone2, r_phone_verify_code, second } = storeToRefs(useUser())
   let { order, order_page_index, order_page_number, select_active, order_page_size } = storeToRefs(useOrder())
-  let { verify } = useVerify()
   let { getUser_info } = useHandlerInfo()
   delete r_mail.value.rules['required']
   delete r_phone2.value.rules['required']

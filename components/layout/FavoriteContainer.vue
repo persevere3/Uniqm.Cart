@@ -13,7 +13,7 @@
           </div>
           <div class="price_and_delete">
             <!-- 多價格 favorite_container 主商品 單價 -->
-            <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ numberThousands(item.NowPrice) }} </div>
+            <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ useNumberThousands(item.NowPrice) }} </div>
             <div class="price" v-else> NT${{ item.nowPriceRange }} </div>
 
             <div class="delete" @click.stop="toggleFavorite(item.ID)">
@@ -29,10 +29,13 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
+  // composables
+  import { useNumberThousands } from '@/composables/numberThousands'
+
   // store ==================================================
   import { useCommon }  from '@/stores/common/common'
 
   let { favorite, is_favorite_active } = storeToRefs(useCommon())
-  let { toggleFavorite, pushTo_cart, numberThousands } = useCommon()
+  let { toggleFavorite, pushTo_cart } = useCommon()
 
 </script>

@@ -1,12 +1,16 @@
 import { defineStore, storeToRefs } from 'pinia'
 
+// composables
+import { useVerify }  from '@/composables/verify'
+
 import { useCommon }  from '@/stores/common/common'
 import { useUser }  from '@/stores/user'
-import { useVerify }  from '@/stores/cross/verify'
 
-import { send_verify_codeApi } from '~/apis/user';
+import { send_verify_codeApi } from '@/apis/user';
 
 export const useHandlerCommon = defineStore('handlerCommon', () => {
+  let { verify } = useVerify()
+
   // store ==================================================
   let { site, is_getSite, store, all, is_getAll, 
     totalpage_num, perpage_num, demoOrigin, webVersion 
@@ -15,7 +19,6 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
     getCart, getFavorite, appendScript, urlPush 
   } = useCommon()
   let { second, r_mail, r_account, user_message, is_userMessage } = storeToRefs(useUser())
-  let { verify  } = useVerify()
 
 
   // methods ==================================================

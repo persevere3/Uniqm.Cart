@@ -1,8 +1,13 @@
 import { defineStore, storeToRefs } from 'pinia'
 
+// composables
+import { useVerify }  from '@/composables/verify'
+
 import { useCommon }  from '@/stores/common/common'
 import { useUser }  from '@/stores/user'
-import { useVerify }  from '@/stores/cross/verify'
+
+// composables
+import { useFormatDate } from '@/composables/formatDate'
 
 import { registerApi, user_loginApi, send_forget_verify_codeApi, 
   check_forget_verify_codeApi, edit_forget_passApi 
@@ -11,12 +16,14 @@ import { registerApi, user_loginApi, send_forget_verify_codeApi,
 export const useHandlerUser = defineStore('handlerUser', () => {
   // store ==================================================
   let { site, store } = storeToRefs(useCommon())
-  let { return_formData, getPathname, urlPush, return_date } = useCommon()
+  let { return_formData, getPathname, urlPush } = useCommon()
   let { user_nav_active, r_name, r_mail, r_mail_verify_code, r_phone_verify_code, r_birthday, 
     r_account, r_password, r_confirm_password, r_is_agree, l_account, l_password, 
     forget_step, mailOrAccount, f_mail , f_account , f_verify_code, f_second,
     f_password, f_confirm_password, is_userMessage, user_message
   } = storeToRefs(useUser())
+
+  // composables
   let { verify } = useVerify()
 
   // methods ==================================================
@@ -43,7 +50,7 @@ export const useHandlerUser = defineStore('handlerUser', () => {
         name: r_name.value.value,
         email: r_mail.value.value,
         gender: sex.value == 'male' ? 1 : 0 ,
-        birthday: return_date(r_birthday.value),
+        birthday: useFormatDate(r_birthday.value),
         phone: r_account.value.value,
         password: r_password.value.value,
       }

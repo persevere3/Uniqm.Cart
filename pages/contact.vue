@@ -51,7 +51,7 @@
           </ul>
         </div>
       </div>
-      <div class="right" v-if="contact.Map" v-html="unescapeHTML(contact.Map)"></div>
+      <div class="right" v-if="contact.Map" v-html="useUnescapeHTML(contact.Map)"></div>
     </div>
   </div>
 </template>
@@ -60,11 +60,14 @@
   import { storeToRefs } from 'pinia'
   import { getContactApi } from '@/apis/pages'
 
+  // composables
+  import { useUnescapeHTML } from '@/composables/unescapeHTML'
+
   // store
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getSite } = storeToRefs(useCommon())
-  let { return_formUrlencoded, login, imgHandler, urlPush, unescapeHTML } = useCommon()
+  let { return_formUrlencoded, login, imgHandler, urlPush } = useCommon()
   
   const state = reactive({
     contact: {}

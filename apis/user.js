@@ -43,7 +43,7 @@ export const send_verify_codeApi = formData => formRequest.post('/interface/WebM
     phone: r_account.value.value,
     email: r_mail.value.value,
     gender: sex.value == 'male' ? 1 : 0 ,
-    birthday: return_date(r_birthday.value),
+    birthday: useFormatDate(r_birthday.value),
     password: r_password.value.value,
   }
 

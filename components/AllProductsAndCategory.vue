@@ -10,7 +10,7 @@
     </template>
     <div class="content">
       <div class="rich_container"  v-if="category_product && category_product.Data && category_product.Data[0].Text">
-        <div class="ql-editor" v-html="unescapeHTML(category_product.Data[0].Text)"></div>
+        <div class="ql-editor" v-html="useUnescapeHTML(category_product.Data[0].Text)"></div>
       </div>
       
       <div class="video_container" 
@@ -43,8 +43,8 @@
 
                 <!-- 多價格 products 主商品 單價 -->
                 <template v-if="item2.PriceType === 'onePrice'">
-                  <div class="discount_price"> NT${{ numberThousands(item2.NowPrice) }} </div>
-                  <div class="origin_price" :class="{ opacity0 : parseInt(item2.Price) < 0 }"> NT${{ numberThousands(item2.Price) }} </div>
+                  <div class="discount_price"> NT${{ useNumberThousands(item2.NowPrice) }} </div>
+                  <div class="origin_price" :class="{ opacity0 : parseInt(item2.Price) < 0 }"> NT${{ useNumberThousands(item2.Price) }} </div>
                 </template>
                 <template v-else>
                   <div class="discount_price"> NT${{ item2.nowPriceRange }} </div>
@@ -65,12 +65,16 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
+  // composables
+  import { useNumberThousands } from '@/composables/numberThousands'
+  import { useUnescapeHTML } from '@/composables/unescapeHTML'
+
   // store
   import { useCommon }  from '@/stores/common/common'
   import { useCategory}  from '@/stores/category'
 
   let { is_getSite, favorite } = storeToRefs(useCommon())
-  let { toggleFavorite, imgHandler, pushTo_cart, numberThousands, unescapeHTML } = useCommon()
+  let { toggleFavorite, imgHandler, pushTo_cart } = useCommon()
   let { category_product } = storeToRefs(useCategory())
   let { getCategory, videoHandler } = useCategory()
 

@@ -1,17 +1,20 @@
 import { defineStore, storeToRefs } from 'pinia'
 
+// composables
+import { useFormatDate } from '@/composables/formatDate'
+import { useVerify }  from '@/composables/verify'
+
 import { useCommon }  from '@/stores/common/common'
 import { useInfo}  from '@/stores/info'
 import { useUser }  from '@/stores/user'
 import { useOrder }  from '@/stores/order'
-import { useVerify }  from '@/stores/cross/verify'
 
 import { getUserInfoApi, edit_infoApi, edit_passApi, getBonusApi, unbindLine_testApi } from '@/apis/info';
 
 export const useHandlerInfo = defineStore('handlerInfo', () => {
   // store ==================================================
   let { site, user_account, store, payModal_message, is_payModal } = storeToRefs(useCommon())
-  let { login, check_logout, return_date } = useCommon()
+  let { login, check_logout } = useCommon()
   let { user_info, recommend_code, delivery_address, phone_barCode, natural_barCode,
     total_bonus, bonus
   } = storeToRefs(useInfo())
@@ -150,7 +153,7 @@ export const useHandlerInfo = defineStore('handlerInfo', () => {
       }
 
       // obj r_birthday
-      obj["birthday"] = return_date(r_birthday.value.value)
+      obj["birthday"] = useFormatDate(r_birthday.value.value)
 
       // obj 手機驗證
       // if(store.value.NotificationSystem == 1 || store.value.NotificationSystem == 2) {

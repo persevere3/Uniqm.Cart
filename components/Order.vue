@@ -80,7 +80,7 @@
               <ul>
                 <li v-for="(item2, index) in item.Items" :key="index" v-show="product_active == item.FilNo || index < 4">
                   {{item2.ProductType == 2 ? '加價購' : ''}} {{item2.Name}}{{item2.Spec ? `(${item2.Spec})` : ''}}
-                  NT${{ numberThousands(item2.Price) }} x {{ item2.Amount }}
+                  NT${{ useNumberThousands(item2.Price) }} x {{ item2.Amount }}
                 </li>
               </ul>
               <template v-if="item.expandable">
@@ -90,16 +90,16 @@
             </div>
             <div class="td amount">
               <div class="total">
-                應付金額: NT$ {{numberThousands(item.TotalAmount)}}
+                應付金額: NT$ {{useNumberThousands(item.TotalAmount)}}
               </div>
               <div class="additional">
-                <div v-if="item.Shipping * 1"> 運費: NT$ {{numberThousands(item.Shipping)}} </div>
-                <div v-if="item.Discount * 1"> 折扣: NT$ {{numberThousands(item.Discount)}} </div>
+                <div v-if="item.Shipping * 1"> 運費: NT$ {{useNumberThousands(item.Shipping)}} </div>
+                <div v-if="item.Discount * 1"> 折扣: NT$ {{useNumberThousands(item.Discount)}} </div>
                 <div v-if="item.DiscountCode && item.DiscountCode.split(' ')[0] * 1">
-                  <div> 折扣碼優惠: NT$ {{numberThousands(item.DiscountCode.split(' ')[0])}} {{item.DiscountCode.split(' ')[1]}} </div>
+                  <div> 折扣碼優惠: NT$ {{useNumberThousands(item.DiscountCode.split(' ')[0])}} {{item.DiscountCode.split(' ')[1]}} </div>
                 </div>
                 <div v-if="item.UsedWallet * 1">
-                  <div> 使用購物金: NT$ {{numberThousands(item.UsedWallet)}} </div>
+                  <div> 使用購物金: NT$ {{useNumberThousands(item.UsedWallet)}} </div>
                 </div>
               </div>
             </div>
@@ -217,13 +217,16 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
+  // composables
+  import { useNumberThousands } from '@/composables/numberThousands'
+
   // store
   import { useCommon }  from '@/stores/common/common'
   import { useOrder }  from '@/stores/order'
   import { useHandlerInfo } from '@/stores/handlerInfo'
 
   let { store, user_account, pathname, is_payModal, payModal_message } = storeToRefs(useCommon())
-  let { rePay, copy, getPathname, numberThousands } = useCommon()
+  let { rePay, copy, getPathname } = useCommon()
   let { order_phone, order_mail, filter_number, filter_pay, filter_delivery, payStatus_arr, delivery_arr,
     order, noOrder, product_active, payMethod_obj, pay_method, martObj, account_number, activeOrder,
     order_number, order_page_index, order_page_number, order_page_size, select_active

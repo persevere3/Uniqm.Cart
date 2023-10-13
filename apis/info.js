@@ -26,7 +26,7 @@ export const getUserInfoApi = formData => formDataRequest.post('/interface/WebMe
   }
 
   // obj r_birthday
-  obj["birthday"] = return_date(r_birthday.value.value)
+  obj["birthday"] = useFormatDate(r_birthday.value.value)
 
   // obj 手機驗證
   // if(store.value.NotificationSystem == 1 || store.value.NotificationSystem == 2) {

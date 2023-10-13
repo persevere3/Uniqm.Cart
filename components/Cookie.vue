@@ -6,67 +6,64 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
-export default {
-  methods: {
-    removeCookieDom() {
-      let node = document.querySelector('.cookie')
-      node.parentNode.removeChild(node)
-    },
-    agreeCookie() {
-      localStorage.setItem('isCookie', true)
-      this.removeCookieDom()
-    }
-  },
-  mounted(){
-    let vm = this
+  onMounted(() => {
     let isCookie = localStorage.getItem('isCookie')
-    if(isCookie) vm.removeCookieDom()
+    if(isCookie) removeCookieDom() 
     else {
-      document.querySelector('.cookie .close').addEventListener('click', vm.removeCookieDom)
-      document.querySelector('.cookie .agree').addEventListener('click', vm.agreeCookie)
+      document.querySelector('.cookie .close').addEventListener('click', removeCookieDom)
+      document.querySelector('.cookie .agree').addEventListener('click', agreeCookie)
     }
+  })
+
+  function removeCookieDom() {
+    let node = document.querySelector('.cookie')
+    node.parentNode.removeChild(node)
   }
-}
+  function agreeCookie() {
+    localStorage.setItem('isCookie', true)
+    removeCookieDom()
+  }
 </script>
 
-<style>
+<style lang="scss">
   .cookie {
-  width: 90%;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 10px;
-  position: fixed;
-  padding: 20px;
-  background-color: #f5f5f5;
-  color: #888;
-  font-weight: bold;
-  border-radius: 10px;
-  box-shadow: 0 0 3px 1px #888;
-  z-index: 1000;
-  }
-  .cookie .close{
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    color: #07081d;
-    cursor: pointer;
-  }
-  .cookie .agree{
-    width: 60px;
-    padding: 5px 0;
-    margin: 5px auto 0;
-    background-color: hsl(213, 39%, 12%);
-    color: #ddd;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+    position: fixed;
+    padding: 20px;
+    background-color: #f5f5f5;
+    color: #888;
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 1px #888;
+    z-index: 1000;
+
+    .close{
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      color: #07081d;
+      cursor: pointer;
+    }
+    .agree{
+      width: 60px;
+      padding: 5px 0;
+      margin: 5px auto 0;
+      background-color: hsl(213, 39%, 12%);
+      color: #ddd;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+    }
   }
 </style>

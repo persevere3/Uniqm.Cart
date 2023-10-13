@@ -262,18 +262,22 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  import { connectHandlerApi } from '@/apis/common'
+  import { connectHandlerApi } from '@/apis/storeWeb'
+
+  // composables
+  import { useVerify }  from '@/composables/verify'
 
   // store ==================================================
   import { useCommon }  from '@/stores/common/common'
-  import { useVerify } from '@/stores/cross/verify'
   import { useHandlerCommon }  from '@/stores/handlerCommon'
+
+  // composables
+  let { reset, verify } = useVerify()
 
   let { site, user_account, all, store, footer_community, copyRight, customerService, 
     pathname, cart, is_cart_active, is_favorite_active
   } = storeToRefs(useCommon())
   let { pushTo_cart, urlPush } = useCommon()
-  let { reset, verify } = useVerify()
   let { getSiteHandler } = useHandlerCommon()
 
   // state ==================================================

@@ -230,7 +230,7 @@
       <i class="fas fa-times"></i>
     </div>
     <div class="user_modal">
-      <div class="content" v-html="unescapeHTML(site.TermsNotices)"></div>
+      <div class="content" v-html="useUnescapeHTML(site.TermsNotices)"></div>
     </div>
   </div>
 
@@ -262,14 +262,20 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
+  // composables
+  import { useUnescapeHTML } from '@/composables/unescapeHTML'
+  import { useVerify }  from '@/composables/verify'
+
   // store
   import { useCommon }  from '@/stores/common/common'
   import { useUser }  from '@/stores/user'
-  import { useVerify }  from '@/stores/cross/verify'
   import { useHandlerCommon } from '@/stores/handlerCommon'
 
+  // composables
+  let { verify } = useVerify()
+
   let { store, site, is_getSite } = storeToRefs(useCommon())
-  let { imgHandler, getPathname, unescapeHTML } = useCommon()
+  let { imgHandler, getPathname } = useCommon()
   let { user_nav_active, r_name, r_account, r_mail, r_birthday, sex, r_recommender, 
     r_password, r_password_type, r_confirm_password, r_confirm_password_type,
     r_phone_verify_code, r_mail_verify_code, second, r_is_agree, is_userModal,
@@ -281,7 +287,6 @@
   let { register, user_login, LineLogin, getLineProfile, reset_input, validateRecommenderCode,
     send_forget_verify_code, check_forget_verify_code, edit_forget_pass,
   } = useUser()
-  let { verify } = useVerify()
   let { send_verify_code } = useHandlerCommon()
 
   const { term, code } = useRoute().query

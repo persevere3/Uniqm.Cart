@@ -23,7 +23,7 @@
           <div class="name">{{ item.Name }}</div>
           <div class="priceAndControl">
             <!-- 多價格 products 主商品 單價 -->
-            <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ numberThousands(item.NowPrice) }} </div>
+            <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ useNumberThousands(item.NowPrice) }} </div>
             <div class="price" v-else> NT${{ item.nowPriceRange }} </div>
 
             <div class="control">
@@ -39,6 +39,9 @@
 
 <script setup>
   import { storeToRefs } from 'pinia'
+
+  // composables
+  import { useNumberThousands } from '@/composables/numberThousands'
 
   // store
   import { useCommon }  from '@/stores/common/common'
