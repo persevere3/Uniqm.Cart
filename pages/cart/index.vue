@@ -4,12 +4,28 @@
 
 <template>
   <div class="productContainer" @click.stop="isShowFavorite = false">
+    <SelectProduct v-if="selectProduct.ID" :style="`height:${innerHeight}px`" />
+    <Cart v-if="showPage === 'cart'" :style="`height:${innerHeight}px`" />
+    <!-- 訂購須知 配送須知 隱私權聲明 -->
+    <Notice v-if="showPage === 'Content' || showPage === 'Description' || showPage === 'PrivacyPolicy'" :style="`height:${innerHeight}px`"/>
+    
     <Main v-if="showPage === 'main'" />
+  
+    <CartIcon v-if="showPage === 'main' && !selectProduct.ID" />
+    <FavoriteIcon v-if="showPage === 'main' && !selectProduct.ID && Object.keys(favorite).length"/>
+
+    <Confirm />
+    <Message />
+    <Cookie />
   </div>
 </template>
 
 <script setup>
   import { storeToRefs } from 'pinia'
+
+  // component ==================================================
+  import SelectProduct from '@/components/SelectProduct'
+  import Cart from '@/components/cart/Cart'
 
   // store ==================================================
   import { useCommon }  from '@/stores/cart/common/common'

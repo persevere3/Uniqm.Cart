@@ -17,7 +17,7 @@
   import CartContent from '@/components/cart/CartContent.vue'
 
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
+  import { useCommon }  from '@/stores/cart/common/common'
 
   let { showPage } = storeToRefs(useCommon())
 </script>

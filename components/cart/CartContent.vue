@@ -35,9 +35,9 @@
   import cartStepTwo from '@/components/cart/CartStepTwo.vue'
 
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
-  import { useInfo }  from '@/stores/info'
-  import { useCart }  from '@/stores/cart'
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useInfo }  from '@/stores/cart/info'
+  import { useCart }  from '@/stores/cart/cart'
 
   let { user_account, showPage } = storeToRefs(useCommon())
   let { getUserInfo } = useInfo()

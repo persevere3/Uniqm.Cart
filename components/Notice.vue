@@ -10,12 +10,12 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  // composables
-  import { useUnescapeHTML } from '@/composables/unescapeHTML'  
+  // composables ==================================================
+  import { useUnescapeHTML } from '@/composables/unescapeHTML'
 
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
-
+  import { useCommon }  from '@/stores/cart/common/common'
+  
   let { store, showPage } = storeToRefs(useCommon())
   
 </script>

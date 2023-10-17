@@ -419,19 +419,19 @@
   // component ==================================================
   import CartStepTotal from '@/components/cart/CartStepTotal.vue'
 
-  // json
+  // json ==================================================
   import city_district_json from '@/json/city_district.json'
 
-  // composables
+  // composables ==================================================
   import { useNumberThousands } from '@/composables/numberThousands'
   import { useVerify }  from '@/composables/verify'
 
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
-  import { useCart }  from '@/stores/cart'
-  import { useInfo }  from '@/stores/info'
-  import { useHandlerCommon }  from '@/stores/handlerCommon'
-  import { useHandlerCart }  from '@/stores/handlerCart'
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useCart }  from '@/stores/cart/cart'
+  import { useInfo }  from '@/stores/cart/info'
+  import { useHandlerCommon }  from '@/stores/cart/handlerCommon'
+  import { useHandlerCart }  from '@/stores/cart/handlerCart'
 
   // composables
   let { verify } = useVerify()

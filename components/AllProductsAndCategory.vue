@@ -4,7 +4,7 @@
 </style>
 
 <template>
-  <div>
+  <div class="allProductsAndCategory">
     <template v-if="category_product && category_product.Data && category_product.Data[0].Img.length" >
       <div class="img_container" v-for="(item, index) in category_product.Data[0].Img" :key="index" :style="{backgroundImage: `url(${item})`}"></div>
     </template>

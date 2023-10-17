@@ -22,6 +22,7 @@ export const useHandlerInfo = defineStore('handlerInfo', () => {
     o_password, r_password, r_confirm_password 
   } = storeToRefs(useUser())
   let { order_page_index, order_page_size, order_page_number, order_phone, order_mail } = storeToRefs(useOrder())
+  
   let { verify } = useVerify()
 
   // methods ==================================================

@@ -15,9 +15,8 @@
         <div class="specText" :class="{specTextShow:cartSpecCheckedId == spec.ID}"> {{spec.Name}} </div>
       </template>
     </div>
-    
     <!-- 多價格 cart table 單價 -->
-    <div class="td price" v-if="product.priceType === 'onePrice'"> NT$ {{ useNumberThousands(product[addPrice ? 'Price' : 'NowPrice']) }} </div>
+    <div class="td price" v-if="product.priceType === 'onePrice' || product.PriceType === 'onePrice'"> NT$ {{ useNumberThousands(product[addPrice ? 'Price' : 'NowPrice']) }} </div>
     <div class="td price" v-else> NT$ {{ useNumberThousands(productSpec.ItemNowPrice) }} </div>
 
     <div class="td qty">
@@ -47,7 +46,7 @@
       <div class="subtotalTitle">小計</div>
 
       <!-- 多價格 cart table 小計 -->
-      <div class="subtotalText" v-if="product.priceType === 'onePrice'"> 
+      <div class="subtotalText" v-if="product.priceType === 'onePrice' || product.PriceType === 'onePrice'"> 
         NT$ {{ useNumberThousands(product[addPrice ? 'Price' : 'NowPrice'] * (isNaN(buyQty) ? 0 : buyQty)) }} 
       </div>
       <div class="subtotalText" v-else> 
@@ -70,13 +69,13 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  // composables
+  // composables ==================================================
   import { useNumberThousands } from '@/composables/numberThousands'
   
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
-  import { useProducts }  from '@/stores/products'
-  import { useHandlerChangeQty }  from '@/stores/handlerChangeQty'
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useProducts }  from '@/stores/cart/products'
+  import { useHandlerChangeQty }  from '@/stores/cart/handlerChangeQty'
 
   let { store } = storeToRefs(useCommon())
   let { getMainTotalQty } = useProducts()

@@ -470,7 +470,7 @@
         flex-wrap: wrap;
 
         >li {
-          margin: 5px;
+          margin: 5px 10px;
           color: #333;
           word-break: break-all;
           position: relative;
@@ -506,6 +506,7 @@
           >ul {
             max-height: 60vh;
             overflow-y: auto;
+            overflow-x: hidden;
             position: absolute;
             top: 200%;
             left: 0;

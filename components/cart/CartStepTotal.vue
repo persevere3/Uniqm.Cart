@@ -47,8 +47,8 @@
   import { useNumberThousands } from '@/composables/numberThousands'
 
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
-  import { useCart }  from '@/stores/cart'
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useCart }  from '@/stores/cart/cart'
 
   let { user_account } = storeToRefs(useCommon())
   let { stepPage, total, is_use_bonus, use_bonus, member_bonus } = storeToRefs(useCart())

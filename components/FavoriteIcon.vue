@@ -34,12 +34,12 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  // composables
+  // composables ==================================================
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store
-  import { useCommon }  from '@/stores/common/common'
-  import { useProducts }  from '@/stores/products'
+  // store ==================================================
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useProducts }  from '@/stores/cart/products'
 
   let { isShowFavorite, showPage } = storeToRefs(useCommon())
   let { favorite } = storeToRefs(useProducts())

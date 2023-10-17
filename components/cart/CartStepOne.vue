@@ -68,8 +68,8 @@
   import CartStepTotal from '@/components/cart/CartStepTotal.vue'
 
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
-  import { useCart }  from '@/stores/cart'
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useCart }  from '@/stores/cart/cart'
 
   let { store } = storeToRefs(useCommon())
   let { cart, discountCode, discountErrorMessage, stepPage } = storeToRefs(useCart())

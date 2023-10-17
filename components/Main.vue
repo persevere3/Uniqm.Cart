@@ -1,8 +1,3 @@
-<style lang="scss" scoped>
-  @import "@/assets/scss/quill.css";
-  @import "@/assets/scss/cart.scss";
-</style>
-
 <template>
   <div class="main">
     <div class="logo_name">

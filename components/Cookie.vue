@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-
   onMounted(() => {
     let isCookie = localStorage.getItem('isCookie')
     if(isCookie) removeCookieDom() 

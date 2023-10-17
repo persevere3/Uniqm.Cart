@@ -119,15 +119,15 @@
 
   // swiper ==================================================
   import { Swiper, SwiperSlide } from 'swiper/vue'
-  import 'swiper/swiper.scss';
+  import 'swiper/css';
 
-  // composables
+  // composables ==================================================
   import { useNumberThousands } from '@/composables/numberThousands'
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
 
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
-  import { useProducts }  from '@/stores/products'
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useProducts }  from '@/stores/cart/products'
 
   let { showPage } = storeToRefs(useCommon())
   let { copy, showMessage } = useCommon()

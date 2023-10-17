@@ -72,16 +72,16 @@
   import RegisterInput from '@/components/register/RegisterInput.vue'
 
   // api ==================================================
-  import { send_verify_codeApi, registerApi } from '@/api/index'
+  import { send_verify_codeApi, registerApi } from '@/apis/user'
 
   // composables
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
   import { useVerify }  from '@/composables/verify'
 
   // store ==================================================
-  import { useCommon } from '@/stores/common/common'
-  import { useHandlerCart } from '@/stores/handlerCart'
-  import { useInfo } from '@/stores/info'
+  import { useCommon } from '@/stores/cart/common/common'
+  import { useHandlerCart } from '@/stores/cart/handlerCart'
+  import { useInfo } from '@/stores/cart/info'
 
   // composables
   let { verify } = useVerify()

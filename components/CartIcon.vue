@@ -16,10 +16,10 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  // store
-  import { useCommon }  from '@/stores/common/common'
-  import { useCart }  from '@/stores/cart'
-  import { useHandlerChangeQty }  from '@/stores/handlerChangeQty'
+  // store ==================================================
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useCart }  from '@/stores/cart/cart'
+  import { useHandlerChangeQty }  from '@/stores/cart/handlerChangeQty'
 
   let { showPage } = storeToRefs(useCommon())
   let { cartLength } = storeToRefs(useCart())

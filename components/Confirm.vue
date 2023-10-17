@@ -100,10 +100,10 @@
   import Register  from '@/components/register/Register.vue'
 
   // store ==================================================
-  import { useCommon }  from '@/stores/common/common'
-  import { useCart }  from '@/stores/cart'
-  import { useInfo }  from '@/stores/info'
-  import { useHandlerCart }  from '@/stores/handlerCart'
+  import { useCommon }  from '@/stores/cart/common/common'
+  import { useCart }  from '@/stores/cart/cart'
+  import { useInfo }  from '@/stores/cart/info'
+  import { useHandlerCart }  from '@/stores/cart/handlerCart'
 
   let { user_account, store } = storeToRefs(useCommon())
   let { copy, urlPush, getPathname } = useCommon()

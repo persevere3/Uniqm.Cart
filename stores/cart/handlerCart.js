@@ -1,10 +1,11 @@
 import { defineStore, storeToRefs } from 'pinia'
 
+import { useVerify } from '@/composables/verify'
+
 import { useCommon }  from './common/common'
 import { useCart } from './cart'
 import { useProducts } from './products'
 import { useInfo } from './info'
-import { useVerify } from './verify'
 import { useHandlerCommon }  from './handlerCommon'
 
 import city_district_json from '@/json/city_district.json'
@@ -26,8 +27,9 @@ export const useHandlerCart = defineStore('handlerCart', () => {
     has_address, is_save_address, userInfo, storeid, storename, storeaddress
   } = storeToRefs(useInfo())
   let { getUserInfo } = useInfo()
-  let { verify } = useVerify()
   let { getProductsHandler, setCartHandler } = useHandlerCommon()
+
+  let { verify } = useVerify()
 
   // state 
   const state = reactive({

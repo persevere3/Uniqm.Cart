@@ -11,8 +11,8 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  // store
-  import { useCommon }  from '@/stores/common/common'
+  // store ==================================================
+  import { useCommon }  from '@/stores/cart/common/common'
 
   let { messageArr } = storeToRefs(useCommon())
 </script>

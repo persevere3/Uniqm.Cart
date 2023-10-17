@@ -35,7 +35,6 @@
 
   // composables
   import { useVerify }  from '@/composables/verify'
-
   let { verify } = useVerify()
 
   // props
