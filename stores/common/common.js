@@ -57,8 +57,6 @@ export const useCommon = defineStore('common', () => {
 
   // methods ==================================================
   const methods = {
-    ...useFilters(),
-
     // obj => formData or 只post WebPreview Preview
     return_formUrlencoded(origin) {
       if(origin === 'WebPreview') return `WebPreview=${state.site.WebPreview}`

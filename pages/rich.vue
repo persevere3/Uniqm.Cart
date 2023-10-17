@@ -1,6 +1,5 @@
 <style lang="scss" scoped>
   @import "@/assets/scss/rich.scss";
-  @import "@/assets/scss/_quill.scss";
 </style>
 
 <template>
@@ -23,7 +22,7 @@
   // store
   import { useCommon }  from '@/stores/common/common'
 
-  let { all, is_getAll } = storeToRefs(useCommon())
+  let { all, is_getAll, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { imgHandler } = useCommon()
   
   const state = reactive({
@@ -49,6 +48,10 @@
     // customize
     else if(state.rich_cid === '3') {
       state.content_obj = toObj(all.value.webcategory)
+    }
+
+    if(webVersion.value === 'demo') {
+      state.content_obj[rich_id.value].Text = state.content_obj[rich_id.value].Text.replaceAll('img src="', 'img src="' + demoOrigin.value)
     }
 
     await nextTick()

@@ -15,14 +15,14 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: webVersion.indexOf('uniqm') < 0
-            ? ` @import "@/assets/scss/mixin/_common.scss";
-                @import "@/assets/scss/_variable.scss";
-            `
-            : ` @import "@/assets/scss/mixin/_common.scss";
-                @import "@/assets/scss/_uniqm_variable.scss"; 
-            `
-          },
+          additionalData: `
+            @import "@/assets/scss/mixin/_common.scss";
+            ${ webVersion.indexOf('uniqm') < 0 
+                ? '@import "@/assets/scss/_variable.scss";'
+                : '@import "@/assets/scss/_uniqm_variable.scss";'
+            }
+          `
+        },
       },
     },
   },

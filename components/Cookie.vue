@@ -27,7 +27,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .cookie {
     width: 90%;
     left: 50%;

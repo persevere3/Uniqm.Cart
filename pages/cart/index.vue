@@ -1,5 +1,4 @@
-<style lang="scss" scoped>
-  @import "@/assets/scss/quill.css";
+<style lang="scss">
   @import "@/assets/scss/cart.scss";
 </style>
 

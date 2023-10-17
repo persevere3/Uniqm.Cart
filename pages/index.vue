@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="scss" scoped>
   @import "@/assets/scss/index.scss";
 </style>
 
@@ -144,7 +144,7 @@
 
   let { site, is_getSite, all, store, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion } = storeToRefs(useCommon())
-  let { return_formUrlencoded, toggleFavorite, pagePush, is_show_page, pushTo_cart, urlPush } = useCommon()
+  let { return_formUrlencoded, login, toggleFavorite, pagePush, is_show_page, pushTo_cart, urlPush } = useCommon()
 
   const state = reactive({
     homePage: {},
