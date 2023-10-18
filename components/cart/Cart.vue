@@ -11,12 +11,11 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // component ==================================================
+  // components ========== ========== ========== ========== ==========
   import CartContent from '@/components/cart/CartContent.vue'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
 
   let { showPage } = storeToRefs(useCommon())

@@ -38,12 +38,11 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
   import { useShopping }  from '@/stores/shopping'
 
@@ -56,7 +55,7 @@
     layout: "uniqm",
   });
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   let filter_products = computed(() => {
     if(active_category_id.value == 0) {
       if(search_text.value) {
@@ -77,7 +76,7 @@
     localStorage.setItem('user_account', account)
   }
 
-  // watch ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(is_getSite, async() => {
     await getCategories()
     await getProducts()

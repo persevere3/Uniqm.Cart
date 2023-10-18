@@ -280,21 +280,24 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
+  // components ========== ========== ========== ========== ==========
+  import Order from '@/components/Order.vue'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useVerify }  from '@/composables/verify'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
   import { useInfo }  from '@/stores/info'
   import { useUser }  from '@/stores/user'
   import { useOrder }  from '@/stores/order'
   import { useHandlerInfo } from '@/stores/handlerInfo'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()
 
+  // stores ========== ========== ========== ========== ==========
   let { user_account, city_district, is_payModal, payModal_message, webVersion } = storeToRefs(useCommon())
   let { getPathname } = useCommon()
   let { user_info_nav_active, user_info, add_address, delivery_address, address_select_active, 
@@ -310,6 +313,7 @@
   delete r_phone2.value.rules['required']
 
   const { RtnMsg , page } = useRoute().query
+  
   await getUser_info();
   if(RtnMsg) {
     payModal_message.value = '已收到您的付款';

@@ -128,24 +128,27 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
+  // apis ========== ========== ========== ========== ==========
   import { getHomePageApi } from '@/apis/pages'
 
+  // swiper ========== ========== ========== ========== ==========
   import { Swiper, SwiperSlide } from 'swiper/vue';
   import { Autoplay, Pagination } from 'swiper/modules';
   import 'swiper/css';
   import 'swiper/css/pagination';
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getSite, all, store, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion } = storeToRefs(useCommon())
   let { return_formUrlencoded, login, toggleFavorite, pagePush, is_show_page, pushTo_cart, urlPush } = useCommon()
 
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     homePage: {},
   })
@@ -153,7 +156,7 @@
 
   const modules = reactive([Autoplay, Pagination])
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   // homePage 
   // Ex[i].Link 有可能是 websubcategory[j].ID 或 OutUrl
   // direct_link
@@ -222,12 +225,12 @@
     return arr;
   })
 
-  // watch ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(is_getSite, async() => {
     await getHomePage()
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   async function getHomePage() {
     let params = return_formUrlencoded('WebPreview')
 

@@ -94,12 +94,11 @@
 </template>
 
 <script setup>
+  // component ========== ========== ========== ========== ==========
+  import Register from '@/components/register/Register.vue'
+
+  // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-
-  // component ==================================================
-  import Register  from '@/components/register/Register.vue'
-
-  // store ==================================================
   import { useCommon }  from '@/stores/cart/common/common'
   import { useCart }  from '@/stores/cart/cart'
   import { useInfo }  from '@/stores/cart/info'

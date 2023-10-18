@@ -61,13 +61,12 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // component ==================================================
+  // components ========== ========== ========== ========== ==========
   import CartStepOneTr from '@/components/cart/CartStepOneTr.vue'
   import CartStepTotal from '@/components/cart/CartStepTotal.vue'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useCart }  from '@/stores/cart/cart'
 
@@ -75,7 +74,7 @@
   let { cart, discountCode, discountErrorMessage, stepPage } = storeToRefs(useCart())
   let { discount, unDiscount } = useCart()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     cartSpecCheckedId: -1,
   })

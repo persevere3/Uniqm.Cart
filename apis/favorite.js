@@ -1,4 +1,4 @@
-import { formRequest, formDataRequest } from '@/utils/https'
+import { formDataRequest } from '@/utils/https'
 
 /*
   getFavoriteApi

@@ -41,19 +41,18 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useCart }  from '@/stores/cart/cart'
 
   let { user_account } = storeToRefs(useCommon())
   let { stepPage, total, is_use_bonus, use_bonus, member_bonus } = storeToRefs(useCart())
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   let subtotal = computed(() => {
     return parseInt(total.value.Total) - parseInt(total.value.Discount) - parseInt(total.value.DiscountCode)
   })

@@ -1,15 +1,17 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
+// apis ========== ========== ========== ========== ==========
 import { getOrderApi, getMemberOrderApi, searchMartDeliveryApi } from '@/apis/order';
 import { rePayApi } from '@/apis/pay';
 
 export const useOrder = defineStore('order', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, user_account, payModal_message, is_payModal, webVersion } = storeToRefs(useCommon())
   let { return_formData, urlPush } = useCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     order_phone: '',
     order_mail: '',
@@ -66,7 +68,7 @@ export const useOrder = defineStore('order', () => {
     noOrder: false,
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async getOrder(type, is_filter) {
       if(!state.order_phone) {

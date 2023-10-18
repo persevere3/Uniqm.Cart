@@ -1,17 +1,19 @@
-import { useRoute } from 'vue-router'
-
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
+// router ========== ========== ========== ========== ==========
+import { useRoute } from 'vue-router'
+
+// apis ========== ========== ========== ========== ==========
 import { getLineProfileApi, validateRecommenderCodeApi } from '@/apis/user';
 
-
 export const useUser = defineStore('user', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, store } = storeToRefs(useCommon())
   let { return_formData, login, urlPush } = useCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     user_nav_active: 'login',
 
@@ -271,7 +273,7 @@ export const useUser = defineStore('user', () => {
     user_message: '',
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     getPhoneOrMail() {
       if(store.value.NotificationSystem == 0) return state.f_mail.value.trim()

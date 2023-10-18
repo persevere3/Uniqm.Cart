@@ -1,17 +1,19 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-
-// composables
-import { useVerify }  from '@/composables/verify'
-
 import { useCommon }  from '@/stores/common/common'
 import { useUser }  from '@/stores/user'
 
+// apis ========== ========== ========== ========== ==========
 import { send_verify_codeApi } from '@/apis/user';
 
+// composables ========== ========== ========== ========== ==========
+import { useVerify }  from '@/composables/verify'
+
 export const useHandlerCommon = defineStore('handlerCommon', () => {
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, is_getSite, store, all, is_getAll, 
     totalpage_num, perpage_num, demoOrigin, webVersion 
   } = storeToRefs(useCommon())
@@ -20,8 +22,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
   } = useCommon()
   let { second, r_mail, r_account, user_message, is_userMessage } = storeToRefs(useUser())
 
-
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async getSiteHandler() {
       await getSite()

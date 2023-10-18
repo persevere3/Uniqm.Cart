@@ -1,12 +1,12 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-
 import { useCommon }  from './common/common'
 import { useProducts } from './products'
 import { useCart } from './cart'
 import { useInfo } from './info'
 
 export const useHandlerCommon = defineStore('handlerCommon', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, user_account, showPage } = storeToRefs(useCommon())
   let { getSite, getGA, getStore, showMessage, urlPush } = useCommon()
   let { isSingleProduct, category, products, selectProduct } = storeToRefs(useProducts())
@@ -20,7 +20,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
   } = storeToRefs(useInfo())
   let { getUserInfo } = useInfo()
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async getSiteHandler() {
       await getSite()

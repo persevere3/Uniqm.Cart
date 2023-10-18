@@ -414,28 +414,28 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // component ==================================================
+  // components ========== ========== ========== ========== ==========
   import CartStepTotal from '@/components/cart/CartStepTotal.vue'
 
-  // json ==================================================
+  // json ========== ========== ========== ========== ==========
   import city_district_json from '@/json/city_district.json'
 
-  // composables ==================================================
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
   import { useVerify }  from '@/composables/verify'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useCart }  from '@/stores/cart/cart'
   import { useInfo }  from '@/stores/cart/info'
   import { useHandlerCommon }  from '@/stores/cart/handlerCommon'
   import { useHandlerCart }  from '@/stores/cart/handlerCart'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()
 
+  // stores ========== ========== ========== ========== ==========
   let { store, user_account } = storeToRefs(useCommon())
   let { urlPush, getPathname } = useCommon()
   let { stepPage, is_click_finish_order, isOrderIng,
@@ -450,17 +450,17 @@
   let { receiver_address } = storeToRefs(useHandlerCart())
   let { checkOrder } = useHandlerCart()
 
-  // props ==================================================
+  // props ========== ========== ========== ========== ==========
   let props = defineProps(['main', 'addPrice', 'event'])
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     isSame: false,
     city_district: city_district_json
   })
   let { isSame, city_district } = toRefs(state)
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   const transport_number = computed(() => {
     let number = 0;
     if(store.value.Shipping === '1') number += 2
@@ -499,7 +499,7 @@
   })
 
 
-  // watch ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(isSame, (v) => {
     if(v) {
       info.value.receiver_name.value = info.value.purchaser_name.value;
@@ -536,7 +536,7 @@
   //   filter_use_bonus()
   // })
   
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   // 同步 購買人 收件人 資訊 
   function input_purchaser() {
     if(state.isSame) {

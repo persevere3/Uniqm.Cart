@@ -1,15 +1,16 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-
-import { getUserInfoApi } from '@/apis/info'
-
 import { useCommon }  from './common/common'
 
+// apis ========== ========== ========== ========== ==========
+import { getUserInfoApi } from '@/apis/info'
+
 export const useInfo = defineStore('info', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, user_account } = storeToRefs(useCommon())
   let { login } = useCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     info: {
       purchaser_email: {
@@ -124,7 +125,7 @@ export const useInfo = defineStore('info', () => {
     userInfo: {}
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async getUserInfo() {
       let formData = new FormData();

@@ -1,18 +1,19 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-
-// composables
-import { useFormatDate } from '@/composables/formatDate'
-import { useVerify }  from '@/composables/verify'
-
 import { useCommon }  from '@/stores/common/common'
 import { useInfo}  from '@/stores/info'
 import { useUser }  from '@/stores/user'
 import { useOrder }  from '@/stores/order'
 
+// apis ========== ========== ========== ========== ==========
 import { getUserInfoApi, edit_infoApi, edit_passApi, getBonusApi, unbindLine_testApi } from '@/apis/info';
 
+// composables ========== ========== ========== ========== ==========
+import { useFormatDate } from '@/composables/formatDate'
+import { useVerify }  from '@/composables/verify'
+
 export const useHandlerInfo = defineStore('handlerInfo', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, user_account, store, payModal_message, is_payModal } = storeToRefs(useCommon())
   let { login, check_logout } = useCommon()
   let { user_info, recommend_code, delivery_address, phone_barCode, natural_barCode,
@@ -23,9 +24,10 @@ export const useHandlerInfo = defineStore('handlerInfo', () => {
   } = storeToRefs(useUser())
   let { order_page_index, order_page_size, order_page_number, order_phone, order_mail } = storeToRefs(useOrder())
   
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     getUser_info() {
       return new Promise(async(resolve, reject) => {

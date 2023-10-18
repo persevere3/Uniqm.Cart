@@ -1,15 +1,16 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
+// apis ========== ========== ========== ========== ==========
 import { post_logoutApi, deleteAccount_testApi } from '@/apis/info';
 
-
 export const useInfo = defineStore('info', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, user_account } = storeToRefs(useCommon())
   let { return_formData, login, getPathname, urlPush } = useCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     user_info: {},
     user_info_nav_active: 'info',
@@ -26,7 +27,7 @@ export const useInfo = defineStore('info', () => {
     bonus: [],
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     add_address() {
       let id = new Date().getTime();

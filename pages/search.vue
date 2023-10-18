@@ -116,13 +116,14 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
+  // apis ========== ========== ========== ========== ==========
   import { getSearchApi } from '@/apis/pages'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getAll, favorite, perpage_num, totalpage_num, page_active, 
@@ -130,6 +131,7 @@
   } = storeToRefs(useCommon())
   let { login, toggleFavorite, multiPriceHandler, pushTo_cart, pagePush, is_show_page } = useCommon()
   
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     sortBy_arr: [ '商品排序', '上架時間: 由新至舊', '上架時間: 由舊至新', '價格: 由高至低', '價格: 由低至高'],
     sortBy_index: 0,
@@ -143,11 +145,12 @@
 
   const { query, type } = useRoute().query
 
+  // watch ========== ========== ========== ========== ==========
   watch(is_getAll, () => {
     if(query) getSearch()
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   async function getSearch(index) {
     if(index) state.sortBy_index = index * 1;
     else {

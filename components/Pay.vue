@@ -87,29 +87,30 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
+  // apis ========== ========== ========== ========== ==========
   import { checkPayApi } from '@/apis/pay'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useVerify }  from '@/composables/verify'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
   import { useOrder }  from '@/stores/order'
   import { useInfo }  from '@/stores/info'
   import { useUser }  from '@/stores/user'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()  
 
+  // stores ========== ========== ========== ========== ==========
   let { store, pathname, bank, is_payModal, payModal_message, is_logout } = storeToRefs(useCommon())
   let { login, copy } = useCommon()
   let { order_number, account_number, ECPay_form } = storeToRefs(useOrder())
   let { logout, edit_pass } = useInfo()
   let { o_password, o_password_type, r_password, r_password_type, r_confirm_password, r_confirm_password_type } = storeToRefs(useUser())
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   function filter_account_number() {
     if(account_number.value.length > 6) {
       account_number.value = account_number.value.substring(0, 6)

@@ -262,16 +262,21 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
+  // components ========== ========== ========== ========== ==========
+  import LayoutFavoriteContainer from '@/components/layout/FavoriteContainer.vue'
+  import LayoutCartContainer from '@/components/layout/CartContainer.vue'
+
+  // apis ========== ========== ========== ========== ==========
   import { connectHandlerApi } from '@/apis/storeWeb'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useVerify }  from '@/composables/verify'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   import { useCommon }  from '@/stores/common/common'
   import { useHandlerCommon }  from '@/stores/handlerCommon'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   let { reset, verify } = useVerify()
 
   let { site, user_account, all, store, footer_community, copyRight, customerService, 
@@ -280,7 +285,6 @@
   let { pushTo_cart, urlPush } = useCommon()
   let { getSiteHandler } = useHandlerCommon()
 
-  // state ==================================================
   const state = reactive({
     //
     is_chat: false,
@@ -329,7 +333,7 @@
     is_chat, isTawkAddClick, isTawkOpen 
   } = toRefs(state)
 
-  // head ==================================================
+  // head ========== ========== ========== ========== ==========
   useHead({
     link: [
       { 
@@ -341,7 +345,7 @@
     ],
   })
 
-  // onMounted ==================================================
+  // onMounted ========== ========== ========== ========== ==========
   onMounted(async() => {
     if(document.querySelector('.header')) {
       document.querySelector('body').style['padding-top'] = document.querySelector('.header').getBoundingClientRect().height + 'px';
@@ -401,7 +405,7 @@
     });
   })
 
-  // watch ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(is_chat, (val) => {
     let arr = [];
 
@@ -522,7 +526,7 @@
     }
   })
 
-  // function ==================================================
+  // methods ========== ========== ========== ========== ==========
   // search
   function close_search() {
     state.is_search = false;

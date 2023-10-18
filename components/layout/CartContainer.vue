@@ -79,16 +79,16 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
 
   let { cart, is_cart_active } = storeToRefs(useCommon())
 
+  // methods ========== ========== ========== ========== ==========
   function delete_carts_item(id, specID) {
     cart.value.forEach((item, index)=> {
       if(item.ID === id) {

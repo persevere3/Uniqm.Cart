@@ -1,16 +1,18 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-
-import { useNumber } from '@/composables/number'
-
 import { useCommon } from './common/common'
 import { useProducts } from './products'
 import { useCart } from './cart'
 import { useHandlerCommon }  from './handlerCommon'
 
+// apis ========== ========== ========== ========== ==========
 import { getAmountApi } from '@/apis/products';
 
+// composables ========== ========== ========== ========== ==========
+import { useNumber } from '@/composables/number'
+
 export const useHandlerChangeQty = defineStore('handlerChangeQty', () => {  
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { login, showMessage } = useCommon()
   let { products } = storeToRefs(useProducts())
   let { getMainTotalQty } = useProducts()
@@ -18,7 +20,7 @@ export const useHandlerChangeQty = defineStore('handlerChangeQty', () => {
   let { getTotal, getOthersAddPriceBuyQty } = useCart()
   let { getProductsHandler, setCartHandler } = useHandlerCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     flyItem: null,
     flyImgTop: 100,
@@ -26,7 +28,7 @@ export const useHandlerChangeQty = defineStore('handlerChangeQty', () => {
     isShrink: 0,
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     // 改變 主商品數量 ==================================================
     async changeMainBuyQty(main, specIndex, qty, e) {

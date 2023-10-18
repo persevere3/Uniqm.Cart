@@ -14,17 +14,17 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
 
   let { all, is_getAll, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { imgHandler } = useCommon()
   
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     rich_id: 0,
     rich_cid: 0,
@@ -32,6 +32,7 @@
   })
   let { rich_id, rich_cid, content_obj } = toRefs(state)
 
+  // composables ========== ========== ========== ========== ==========
   watch(is_getAll, async() => {
     const { id, cid } = useRoute().query
     state.rich_id = id
@@ -58,7 +59,7 @@
     imgHandler()
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   function toObj(arr) {
     let obj = {};
     if(!arr || !arr.length) return

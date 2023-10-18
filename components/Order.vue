@@ -215,12 +215,11 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
   import { useOrder }  from '@/stores/order'
   import { useHandlerInfo } from '@/stores/handlerInfo'
@@ -235,6 +234,7 @@
   let { getUser_info } = useHandlerInfo()
 
   const { RtnMsg, account, result, phone, email } = useRoute().query
+  
   // 付款成功
   if(RtnMsg) {
     payModal_message.value = '已收到您的付款';
@@ -269,7 +269,7 @@
 
   useRouter().replace({ path: getPathname('order') })
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   let getOrderHandler = computed(() => {
     return user_account.value ? getMemberOrder : getOrder
   })

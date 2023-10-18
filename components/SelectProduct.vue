@@ -111,21 +111,20 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // component ==================================================
+  // components ========== ========== ========== ========== ==========
   import ProductBuyQtyBox from '@/components/ProductBuyQtyBox.vue'
-  import CartContent from '@/components/cart/CartContent.vue'  
+  import CartContent from '@/components/cart/CartContent.vue'
 
-  // swiper ==================================================
+  // swiper ========== ========== ========== ========== ==========
   import { Swiper, SwiperSlide } from 'swiper/vue'
   import 'swiper/css';
 
-  // composables ==================================================
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useProducts }  from '@/stores/cart/products'
 
@@ -134,7 +133,7 @@
   let { isSingleProduct, selectProduct, isAddPrice, isDetail, favorite } = storeToRefs(useProducts())
   let { getMainTotalQty, toggleFavorite } = useProducts()
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   const isShowGoToCart = computed(() => {
     if(selectProduct.value.specArr) {
       let specBuyQty = selectProduct.value.selectSpecItem.buyQty
@@ -145,7 +144,7 @@
     }
   })
   
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   let useSwiper
   function onSwiper(swiper) {
     useSwiper = swiper

@@ -66,33 +66,33 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // component ==================================================
+  // components ========== ========== ========== ========== ==========
   import RegisterInput from '@/components/register/RegisterInput.vue'
 
-  // api ==================================================
+  // apis ========== ========== ========== ========== ==========
   import { send_verify_codeApi, registerApi } from '@/apis/user'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
   import { useVerify }  from '@/composables/verify'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon } from '@/stores/cart/common/common'
   import { useHandlerCart } from '@/stores/cart/handlerCart'
   import { useInfo } from '@/stores/cart/info'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()
 
+  // stores ========== ========== ========== ========== ==========
   let { site, store } = storeToRefs(useCommon())
   let { login, showMessage } = useCommon()
   let { isConfirmRegister } = storeToRefs(useHandlerCart())
   let { toPay } = useHandlerCart()
   let { info, pay_method } = storeToRefs(useInfo())
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     r_name: {
       value: '',
@@ -238,14 +238,14 @@
   let { r_name, r_phone, r_verify_code, r_mail, r_verify_code2, second, r_birthday, sex, r_password, r_confirm_password, r_is_agree, is_userModal } = toRefs(state)
   r_confirm_password.value.rules.confirm.password = r_password.value
 
-  // onMounted ==================================================
+  // onMounted ========== ========== ========== ========== ==========
   onMounted(() => {
     state.r_phone.value = info.value.purchaser_number.value;
     state.r_name.value = info.value.purchaser_name.value;
     state.r_mail.value = info.value.purchaser_email.value;
   })
   
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   async function send_verify_code() {
     if(state.second > 0) return
 

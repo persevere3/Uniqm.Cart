@@ -8,12 +8,11 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables ==================================================
+  // composables ========== ========== ========== ========== ==========
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   
   let { store, showPage } = storeToRefs(useCommon())

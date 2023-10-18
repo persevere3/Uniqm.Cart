@@ -63,13 +63,12 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
   import { useCategory}  from '@/stores/category'
 
@@ -80,7 +79,7 @@
 
   const { id } = useRoute().query
 
-  // watch ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(is_getSite, async() => {
     await getCategory(id)
     await nextTick()

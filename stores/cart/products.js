@@ -1,18 +1,21 @@
-import { defineStore, storeToRefs } from 'pinia'
 
+// stores ========== ========== ========== ========== ==========
+import { defineStore, storeToRefs } from 'pinia'
+import { useCommon }  from './common/common'
+
+// apis ========== ========== ========== ========== ==========
 import { getCategoriesApi, getProductsApi, getAddPriceApi } from '@/apis/products'
 import { getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/apis/favorite'
 
+// composables ========== ========== ========== ========== ==========
 import { useNumberThousands } from '@/composables/numberThousands'
 
-import { useCommon }  from './common/common'
-
 export const useProducts = defineStore('products', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, user_account } = storeToRefs(useCommon())
   let { login } = useCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     categories: [],
     category: '',
@@ -30,7 +33,7 @@ export const useProducts = defineStore('products', () => {
     favorite: {},
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async getCategories() {
       let params = `Preview=${site.value.Preview}`;

@@ -1,18 +1,22 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore } from 'pinia'
 
+// router ========== ========== ========== ========== ==========
 import { useRoute } from 'vue-router'
 
+// apis ========== ========== ========== ========== ==========
 import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi} from '@/apis/storeWeb';
 import { getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/apis/favorite';
 
-// composables
-import { useNumberThousands } from '@/composables/numberThousands'
-
+// json ========== ========== ========== ========== ==========
 import bank_json from '@/json/bank'
 import city_district_json from '@/json/city_district.json'
 
+// composables ========== ========== ========== ========== ==========
+import { useNumberThousands } from '@/composables/numberThousands'
+
 export const useCommon = defineStore('common', () => {
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     site: {},
     user_account: '',
@@ -55,7 +59,7 @@ export const useCommon = defineStore('common', () => {
     webVersion: 'demo',
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     // obj => formData or 只post WebPreview Preview
     return_formUrlencoded(origin) {

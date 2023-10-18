@@ -1,8 +1,8 @@
+// stores
 import { storeToRefs } from 'pinia'
-
-// store
 import { useCommon }  from '@/stores/common/common'
 
+// router
 import { useRoute } from 'vue-router'
 
 export function useAuth () { 

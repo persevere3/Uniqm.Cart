@@ -32,17 +32,15 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables ==================================================
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useProducts }  from '@/stores/cart/products'
 
   let { isShowFavorite, showPage } = storeToRefs(useCommon())
   let { favorite } = storeToRefs(useProducts())
   let { showSelect, toggleFavorite } = useProducts()
-
 </script>

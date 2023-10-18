@@ -1,20 +1,19 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-
-// composables
-import { useVerify }  from '@/composables/verify'
-
 import { useCommon }  from '@/stores/common/common'
 import { useUser }  from '@/stores/user'
 
-// composables
-import { useFormatDate } from '@/composables/formatDate'
-
+// apis ========== ========== ========== ========== ==========
 import { registerApi, user_loginApi, send_forget_verify_codeApi, 
   check_forget_verify_codeApi, edit_forget_passApi 
 } from '@/apis/user';
 
+// composables ========== ========== ========== ========== ==========
+import { useVerify }  from '@/composables/verify'
+import { useFormatDate } from '@/composables/formatDate'
+
 export const useHandlerUser = defineStore('handlerUser', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, store } = storeToRefs(useCommon())
   let { return_formData, getPathname, urlPush } = useCommon()
   let { user_nav_active, r_name, r_mail, r_mail_verify_code, r_phone_verify_code, r_birthday, 
@@ -23,10 +22,10 @@ export const useHandlerUser = defineStore('handlerUser', () => {
     f_password, f_confirm_password, is_userMessage, user_message
   } = storeToRefs(useUser())
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async register() {
       if(site.value.TermsNotices && !r_is_agree.value) return

@@ -1,10 +1,12 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore } from 'pinia'
 
+// apis ========== ========== ========== ========== ==========
 import { loginApi, getSiteApi, getStoreApi } from '@/apis/storeCart';
 import { getStoreApi as getGAApi } from '@/apis/storeWeb';
 
 export const useCommon = defineStore('common', () => {
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     site: {},
     user_account: '',
@@ -22,7 +24,7 @@ export const useCommon = defineStore('common', () => {
     webVersion: 'common'
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     login() {
       state.site = JSON.parse(localStorage.getItem('site')) || {} ;

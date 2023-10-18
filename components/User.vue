@@ -260,20 +260,20 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
   import { useVerify }  from '@/composables/verify'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
   import { useUser }  from '@/stores/user'
   import { useHandlerCommon } from '@/stores/handlerCommon'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()
 
+  // stores ========== ========== ========== ========== ==========
   let { store, site, is_getSite } = storeToRefs(useCommon())
   let { imgHandler, getPathname } = useCommon()
   let { user_nav_active, r_name, r_account, r_mail, r_birthday, sex, r_recommender, 
@@ -290,17 +290,19 @@
   let { send_verify_code } = useHandlerCommon()
 
   const { term, code } = useRoute().query
+
   if(site.value.TermsNotices && term) {
     user_nav_active.value = 'register';
     is_userModal.value = true;
   }
+  
   // Line token
   if(code) {
     useRouter().replace({ path: getPathname('user') })
     getLineProfile();
   }
 
-  //
+  // watch ========== ========== ========== ========== ==========
   watch(is_getSite, async() => {
     await nextTick()
     imgHandler()

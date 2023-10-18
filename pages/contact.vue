@@ -57,31 +57,33 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
+  // apis ========== ========== ========== ========== ==========
   import { getContactApi } from '@/apis/pages'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useUnescapeHTML } from '@/composables/unescapeHTML'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/common/common'
 
   let { site, is_getSite } = storeToRefs(useCommon())
   let { return_formUrlencoded, login, imgHandler, urlPush } = useCommon()
   
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     contact: {}
   })
   let { contact } = toRefs(state)
 
-  // watch ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(is_getSite, async() => {
     await getContact()
     await nextTick()
     imgHandler()
   },)
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   async function getContact() {
     let params = return_formUrlencoded('WebPreview')
 

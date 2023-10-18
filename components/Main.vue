@@ -129,12 +129,14 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
+  // components ========== ========== ========== ========== ==========
+  import ProductBuyQtyBox from '@/components/ProductBuyQtyBox.vue'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
 
-  // store
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useProducts }  from '@/stores/cart/products'
 
@@ -143,7 +145,7 @@
   let { categories, category, products, productsRerndered, favorite } = storeToRefs(useProducts())
   let { showSelect, toggleFavorite } = useProducts()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     pageNum: 12,
     totalPage: 0,
@@ -151,7 +153,7 @@
   })
   let { pageNum, totalPage, currentPage } = toRefs(state)
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   const filterProducts = computed(() => {
     let arr = [];
     if(category.value == 0) arr = products.value 
@@ -167,13 +169,13 @@
     })
   })
 
-  // watch ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(products, () => {
     console.log('watch: products')
     state.currentPage = 1;
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   function is_show_page(item, totalpage_num) {
     let showpage_num = 5
 

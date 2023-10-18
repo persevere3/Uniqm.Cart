@@ -48,9 +48,8 @@
 </template>
 
 <script setup>
+  // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-
-  // store ==================================================
   import { useCommon }  from '@/stores/cart/common/common'
   import { useProducts }  from '@/stores/cart/products'
   import { useHandlerChangeQty }  from '@/stores/cart/handlerChangeQty'
@@ -59,10 +58,10 @@
   let { getMainTotalQty } = useProducts()
   let { changeMainBuyQty, changeAddpriceBuyQty } = useHandlerChangeQty()
 
-  // props ==================================================
+  // props ========== ========== ========== ========== ==========
   let props = defineProps(['main', 'addPrice', 'event'])
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   const product = computed(() => {
     return props.addPrice ? props.addPrice : props.main
   })
@@ -117,7 +116,7 @@
     return 1
   })
   
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   function selectSpec(item, spec) {
     item.isShowOption = false; 
     item.selectSpecItem = spec;

@@ -1,18 +1,22 @@
-import { defineStore, storeToRefs } from 'pinia'
-import { getCategoryApi } from '@/apis/pages';
 
+// stores ========== ========== ========== ========== ==========
+import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
+// apis ========== ========== ========== ========== ==========
+import { getCategoryApi } from '@/apis/pages';
+
 export const useCategory = defineStore('category', () => {
+  // stores ========== ========== ========== ========== ==========
   let { site, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { login, multiPriceHandler } = useCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     category_product: {}
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async getCategory(id) {
       let formData = new FormData();

@@ -72,7 +72,11 @@
 <script setup>
   import { storeToRefs } from 'pinia'
 
-  // store ==================================================
+  // components ========== ========== ========== ========== ==========
+  import LayoutFavoriteContainer from '@/components/layout/FavoriteContainer.vue'
+  import LayoutCartContainer from '@/components/layout/CartContainer.vue'
+
+  // stores ========== ========== ========== ========== ==========
   import { useCommon }  from '@/stores/common/common'
   import { useHandlerCommon }  from '@/stores/handlerCommon'
 
@@ -80,7 +84,7 @@
   let { pushTo_cart, getPathname, urlPush } = useCommon()
   let { getSiteHandler } = useHandlerCommon()
 
-  // head ==================================================
+  // head ========== ========== ========== ========== ==========
   useHead({
     link: [
       { 
@@ -92,7 +96,7 @@
     ],
   })
 
-  // onMounted ==================================================
+  // onMounted ========== ========== ========== ========== ==========
   onMounted(async() => {
     if(!site.value.site) {
       site.value = JSON.parse(localStorage.getItem('site')) || null ;

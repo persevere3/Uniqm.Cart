@@ -1,20 +1,23 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-
-import { useVerify } from '@/composables/verify'
-
 import { useCommon }  from './common/common'
 import { useCart } from './cart'
 import { useProducts } from './products'
 import { useInfo } from './info'
 import { useHandlerCommon }  from './handlerCommon'
 
-import city_district_json from '@/json/city_district.json'
-
+// apis ========== ========== ========== ========== ==========
 import { createOrderApi } from '@/apis/order'
 import { registerApi } from '@/apis/user'
 
+// json ========== ========== ========== ========== ==========
+import city_district_json from '@/json/city_district.json'
+
+// composables ========== ========== ========== ========== ==========
+import { useVerify } from '@/composables/verify'
+
 export const useHandlerCart = defineStore('handlerCart', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, store, user_account, showPage } = storeToRefs(useCommon())
   let { login, showMessage, urlPush } = useCommon()
   let { cart, stepPage, successUsedDiscountCode, total, transport, pay_method, 
@@ -29,9 +32,10 @@ export const useHandlerCart = defineStore('handlerCart', () => {
   let { getUserInfo } = useInfo()
   let { getProductsHandler, setCartHandler } = useHandlerCommon()
 
+  // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()
 
-  // state 
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     isConfirmToPay: false,
     isConfirmDiscountCodeUsed: false,
@@ -42,7 +46,7 @@ export const useHandlerCart = defineStore('handlerCart', () => {
     city_district: city_district_json
   })
 
-  // computed ==================================================  
+  // computed ========== ========== ========== ========== ========== 
   const receiver_address = computed(() => {
     let address = `${info.value.address.city_active} ${info.value.address.district_active} ${info.value.address.detail_address}`
     if(userInfo.value.address_obj) {
@@ -57,7 +61,7 @@ export const useHandlerCart = defineStore('handlerCart', () => {
     return address;
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async checkOrder() {
       if(site.value.Preview == 2) {

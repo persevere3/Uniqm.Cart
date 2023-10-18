@@ -67,12 +67,11 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // composables ==================================================
+  // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'
   
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useProducts }  from '@/stores/cart/products'
   import { useHandlerChangeQty }  from '@/stores/cart/handlerChangeQty'
@@ -81,10 +80,10 @@
   let { getMainTotalQty } = useProducts()
   let { changeMainBuyQty, changeAddpriceBuyQty } = useHandlerChangeQty()
 
-  // props ==================================================
+  // props ========== ========== ========== ========== ==========
   const props = defineProps(['main', 'addPrice', 'spec', 'cartSpecCheckedId'])
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   const product = computed(() => {
     return props.addPrice ? props.addPrice : props.main
   })

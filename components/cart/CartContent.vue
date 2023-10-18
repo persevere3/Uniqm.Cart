@@ -28,13 +28,12 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // component ==================================================
+  // components ========== ========== ========== ========== ==========
   import cartStepOne from '@/components/cart/CartStepOne.vue'
   import cartStepTwo from '@/components/cart/CartStepTwo.vue'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useInfo }  from '@/stores/cart/info'
   import { useCart }  from '@/stores/cart/cart'
@@ -44,7 +43,7 @@
   let { cartLength, successUsedDiscountCode, stepPage } = storeToRefs(useCart())
   let { getTotal } = useCart()
 
-  // watch ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(stepPage, (newV, oldV) => {
     getTotal(newV - 1)
     if(newV == 2 && user_account.value) getUserInfo()

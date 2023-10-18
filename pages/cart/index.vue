@@ -21,13 +21,12 @@
 </template>
 
 <script setup>
-  import { storeToRefs } from 'pinia'
-
-  // component ==================================================
+  // components ========== ========== ========== ========== ==========
   import SelectProduct from '@/components/SelectProduct'
   import Cart from '@/components/cart/Cart'
 
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
+  import { storeToRefs } from 'pinia'
   import { useCommon }  from '@/stores/cart/common/common'
   import { useProducts }  from '@/stores/cart/products'
   import { useCart }  from '@/stores/cart/cart'
@@ -44,7 +43,7 @@
     layout: false,
   });
 
-  // head ==================================================
+  // head ========== ========== ========== ========== ==========
   useHead({
     link: [
       { 
@@ -56,13 +55,13 @@
     ],
   })
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     innerHeight: 0,
   })
   let { innerHeight } = toRefs(state)
 
-  // onMounted ==================================================
+  // onMounted ========== ========== ========== ========== ==========
   onMounted(() => {
     getSiteHandler();
 
@@ -73,7 +72,7 @@
     }
   })
 
-  // watched ==================================================
+  // watch ========== ========== ========== ========== ==========
   watch(showPage, (newV, oldV) => {
     if(newV == 'cart') stepPage.value = 1
 
@@ -118,6 +117,7 @@
     total_bonus.value = newV.Wallet * 1
   }, {deep: true})
 
+  // methods ========== ========== ========== ========== ==========
   function computeVideoSize() {
     let content = document.querySelector('.content.ql-editor')
     if(!content) return

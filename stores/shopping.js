@@ -1,15 +1,16 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
 import { useCommon }  from '@/stores/common/common'
 
+// apis ========== ========== ========== ========== ==========
 import { getCategoriesApi, getProductsApi } from '@/apis/products';
 
-
 export const useShopping = defineStore('shopping', () => {
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, webVersion } = storeToRefs(useCommon())
   let { multiPriceHandler } = useCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     categories: [],
     products: [],
@@ -19,7 +20,7 @@ export const useShopping = defineStore('shopping', () => {
     search_text: '',
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     async getCategories() {
       let params = `Preview=${site.value.Preview}`;

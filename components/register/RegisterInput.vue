@@ -30,13 +30,14 @@
 </template>
 
 <script setup>
+  // VueDatePicker ========== ========== ========== ========== ==========
   import VueDatePicker from '@vuepic/vue-datepicker';
   import '@vuepic/vue-datepicker/dist/main.css'
 
-  // composables
+  // composables ========== ========== ========== ========== ==========
   import { useVerify }  from '@/composables/verify'
   let { verify } = useVerify()
 
-  // props
+  // props ========== ========== ========== ========== ==========
   let { input } = defineProps(['input']) 
 </script>

@@ -1,21 +1,22 @@
+// stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-
-import { getTotalApi, discountApi } from '@/apis/order'
-
-import bank_json from '@/json/bank'
-
-import { useNumberThousands } from '@/composables/numberThousands'
-
 import { useCommon }  from './common/common'
 
+// apis ========== ========== ========== ========== ==========
+import { getTotalApi, discountApi } from '@/apis/order'
+
+// json ========== ========== ========== ========== ==========
+import bank_json from '@/json/bank'
+
+// composables ========== ========== ========== ========== ==========
+import { useNumberThousands } from '@/composables/numberThousands'
+
 export const useCart = defineStore('cart', () => {
-
-
-  // store ==================================================
+  // stores ========== ========== ========== ========== ==========
   let { site, user_account } = storeToRefs(useCommon())
   let { login, showMessage } = useCommon()
 
-  // state ==================================================
+  // state ========== ========== ========== ========== ==========
   const state = reactive({
     cart: [],
     cartLength: 0,
@@ -83,7 +84,7 @@ export const useCart = defineStore('cart', () => {
     ECPay_store_form_value: ''
   })
 
-  // computed ==================================================
+  // computed ========== ========== ========== ========== ==========
   // 回饋%數
   const bonus_percent = computed(() => {
     let bonus_percent = 0
@@ -99,7 +100,7 @@ export const useCart = defineStore('cart', () => {
     return Math.floor((state.total.Sum - state.total.Shipping) * (bonus_percent.value / 100))
   })
 
-  // methods ==================================================
+  // methods ========== ========== ========== ========== ==========
   const methods = {
     getCart(selectProductID) {
       if(selectProductID) {

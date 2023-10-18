@@ -9,9 +9,8 @@
 </template>
 
 <script setup>
+  // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-
-  // store ==================================================
   import { useCommon }  from '@/stores/cart/common/common'
 
   let { messageArr } = storeToRefs(useCommon())
