@@ -1,7 +1,7 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from '@/stores/common/common'
-import { useUser }  from '@/stores/user'
+import { useCommon }  from './common/common'
+import { useUser }  from './user'
 
 // apis ========== ========== ========== ========== ==========
 import { send_verify_codeApi } from '@/apis/user';

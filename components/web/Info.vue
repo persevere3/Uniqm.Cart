@@ -281,18 +281,18 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import Order from '@/components/Order.vue'
+  import Order from '@/components/web/Order.vue'
 
   // composables ========== ========== ========== ========== ==========
   import { useVerify }  from '@/composables/verify'
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
-  import { useInfo }  from '@/stores/info'
-  import { useUser }  from '@/stores/user'
-  import { useOrder }  from '@/stores/order'
-  import { useHandlerInfo } from '@/stores/handlerInfo'
+  import { useCommon }  from '@/stores/web/common/common'
+  import { useInfo }  from '@/stores/web/info'
+  import { useUser }  from '@/stores/web/user'
+  import { useOrder }  from '@/stores/web/order'
+  import { useHandlerInfo } from '@/stores/web/handlerInfo'
 
   // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()

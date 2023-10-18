@@ -1,7 +1,7 @@
 
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from '@/stores/common/common'
+import { useCommon }  from './common/common'
 
 // apis ========== ========== ========== ========== ==========
 import { getCategoryApi } from '@/apis/pages';
@@ -53,6 +53,7 @@ export const useCategory = defineStore('category', () => {
           if(webVersion.value === 'demo') {
             product[i].Img1 = demoOrigin.value + product[i].Img1
           }
+          
           // Category1~5
           for(let j = 1; j < 6; j++) {
             let category_item = product[i][`Category${j}`];

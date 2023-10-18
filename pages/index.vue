@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  @import "@/assets/scss/index.scss";
+  @import "@/assets/scss/pages/index.scss";
 </style>
 
 <template>
@@ -142,7 +142,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
+  import { useCommon }  from '@/stores/web/common/common'
 
   let { site, is_getSite, all, store, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion } = storeToRefs(useCommon())

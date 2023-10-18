@@ -220,9 +220,9 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
-  import { useOrder }  from '@/stores/order'
-  import { useHandlerInfo } from '@/stores/handlerInfo'
+  import { useCommon }  from '@/stores/web/common/common'
+  import { useOrder }  from '@/stores/web/order'
+  import { useHandlerInfo } from '@/stores/web/handlerInfo'
 
   let { store, user_account, pathname, is_payModal, payModal_message } = storeToRefs(useCommon())
   let { rePay, copy, getPathname } = useCommon()

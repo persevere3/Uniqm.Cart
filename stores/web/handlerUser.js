@@ -1,7 +1,7 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from '@/stores/common/common'
-import { useUser }  from '@/stores/user'
+import { useCommon }  from './common/common'
+import { useUser }  from './user'
 
 // apis ========== ========== ========== ========== ==========
 import { registerApi, user_loginApi, send_forget_verify_codeApi, 

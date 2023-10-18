@@ -12,7 +12,7 @@ import { useNumberThousands } from '@/composables/numberThousands'
 
 export const useProducts = defineStore('products', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, user_account } = storeToRefs(useCommon())
+  let { site, user_account, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { login } = useCommon()
 
   // state ========== ========== ========== ========== ==========
@@ -80,8 +80,11 @@ export const useProducts = defineStore('products', () => {
 
           // imgArr, mainImgIndex, categoryArr, allPicLength
           let imgArr = [product.Img1, product.Img2, product.Img3, product.Img4, product.Img5];
-          if(process.env.NODE_ENV === 'development') imgArr = imgArr.filter(img => img).map(img => 'https://demo.uniqcarttest.com' + img)
-          product.imgArr = imgArr.filter(img => img)
+          if(webVersion.value === 'demo') {
+            imgArr = imgArr.filter(img => img).map(img => demoOrigin.value + img)
+            product.Img1 = demoOrigin.value + product.Img1
+          } 
+          product.imgArr = imgArr
           product.mainImgIndex = 0;
           let categoryArr = [product.Category1, product.Category2, product.Category3, product.Category4, product.Category5]
           product.categoryArr = categoryArr.filter(category => category)
@@ -156,7 +159,7 @@ export const useProducts = defineStore('products', () => {
             addPriceItem.isShowOption = false;
           }
           else addPriceItem.buyQty = 0
-          addPriceItem.Img = 'https://demo.uniqcarttest.com' + addPriceItem.Img
+          if(webVersion.value === 'demo') addPriceItem.Img = demoOrigin.value + addPriceItem.Img
         })
 
         // 多價格

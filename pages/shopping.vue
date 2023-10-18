@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  @import "@/assets/scss/shopping.scss";
+  @import "@/assets/scss/pages/shopping.scss";
 </style>
 
 <template>
@@ -43,8 +43,8 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
-  import { useShopping }  from '@/stores/shopping'
+  import { useCommon }  from '@/stores/web/common/common'
+  import { useShopping }  from '@/stores/web/shopping'
 
   let { is_getSite, user_account, favorite } = storeToRefs(useCommon())
   let { toggleFavorite, pushTo_cart } = useCommon()

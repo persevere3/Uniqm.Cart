@@ -10,14 +10,14 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import Info from '@/components/Info.vue'
-  import Pay from '@/components/Pay.vue'
+  import Info from '@/components/web/Info.vue'
+  import Pay from '@/components/web/Pay.vue'
 
   // composables ========== ========== ========== ========== ==========
   import { useAuth } from '@/composables/auth'
 
   // stores ========== ========== ========== ========== ==========
-  import { useCommon } from '@/stores/common/common'
+  import { useCommon } from '@/stores/web/common/common'
 
   let { getPathname, urlPush } = useCommon()
 

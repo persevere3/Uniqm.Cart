@@ -415,7 +415,7 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import CartStepTotal from '@/components/cart/CartStepTotal.vue'
+  import CartStepTotal from './CartStepTotal.vue'
 
   // json ========== ========== ========== ========== ==========
   import city_district_json from '@/json/city_district.json'

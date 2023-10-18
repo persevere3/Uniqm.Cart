@@ -4,7 +4,7 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import Order from '@/components/Order.vue'
+  import Order from '@/components/web/Order.vue'
 
   definePageMeta({
     layout: 'uniqm'

@@ -95,7 +95,7 @@
 
 <script setup>
   // component ========== ========== ========== ========== ==========
-  import Register from '@/components/register/Register.vue'
+  import Register from './register/Register.vue'
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'

@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  @import "@/assets/scss/search.scss";
+  @import "@/assets/scss/pages/search.scss";
 </style>
 
 <template>
@@ -124,7 +124,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
+  import { useCommon }  from '@/stores/web/common/common'
 
   let { site, is_getAll, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion 

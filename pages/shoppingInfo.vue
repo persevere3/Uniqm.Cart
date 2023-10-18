@@ -5,8 +5,8 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import Info from '@/components/Info.vue'
-  import Pay from '@/components/Pay.vue'
+  import Info from '@/components/web/Info.vue'
+  import Pay from '@/components/web/Pay.vue'
 
   definePageMeta({
     layout: 'uniqm',

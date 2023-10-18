@@ -130,7 +130,7 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import ProductBuyQtyBox from '@/components/ProductBuyQtyBox.vue'
+  import ProductBuyQtyBox from './ProductBuyQtyBox.vue'
 
   // composables ========== ========== ========== ========== ==========
   import { useNumberThousands } from '@/composables/numberThousands'

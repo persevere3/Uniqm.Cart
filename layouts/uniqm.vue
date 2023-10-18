@@ -77,8 +77,8 @@
   import LayoutCartContainer from '@/components/layout/CartContainer.vue'
 
   // stores ========== ========== ========== ========== ==========
-  import { useCommon }  from '@/stores/common/common'
-  import { useHandlerCommon }  from '@/stores/handlerCommon'
+  import { useCommon }  from '@/stores/web/common/common'
+  import { useHandlerCommon }  from '@/stores/web/handlerCommon'
 
   let { site, user_account, store, cart, is_cart_active, is_favorite_active } = storeToRefs(useCommon())
   let { pushTo_cart, getPathname, urlPush } = useCommon()

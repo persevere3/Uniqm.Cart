@@ -67,7 +67,7 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import RegisterInput from '@/components/register/RegisterInput.vue'
+  import RegisterInput from './RegisterInput.vue'
 
   // apis ========== ========== ========== ========== ==========
   import { send_verify_codeApi, registerApi } from '@/apis/user'

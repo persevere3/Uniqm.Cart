@@ -4,5 +4,5 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import AllProductsAndCategory from '@/components/AllProductsAndCategory.vue'
+  import AllProductsAndCategory from '@/components/web/AllProductsAndCategory.vue'
 </script>

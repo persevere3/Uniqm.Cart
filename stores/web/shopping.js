@@ -1,13 +1,13 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from '@/stores/common/common'
+import { useCommon }  from './common/common'
 
 // apis ========== ========== ========== ========== ==========
 import { getCategoriesApi, getProductsApi } from '@/apis/products';
 
 export const useShopping = defineStore('shopping', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, webVersion } = storeToRefs(useCommon())
+  let { site, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { multiPriceHandler } = useCommon()
 
   // state ========== ========== ========== ========== ==========
@@ -53,7 +53,7 @@ export const useShopping = defineStore('shopping', () => {
         multiPriceHandler(products)
         if(webVersion.value === 'demo') {
           products.forEach(product => {
-            product.Img1 = 'https://www.uniqm.com' + product.Img1
+            product.Img1 = demoOrigin.value + product.Img1
           })
         }
         state.products = products;

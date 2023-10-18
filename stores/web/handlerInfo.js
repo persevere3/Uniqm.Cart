@@ -1,9 +1,9 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from '@/stores/common/common'
-import { useInfo}  from '@/stores/info'
-import { useUser }  from '@/stores/user'
-import { useOrder }  from '@/stores/order'
+import { useCommon }  from './common/common'
+import { useInfo}  from './info'
+import { useUser }  from './user'
+import { useOrder }  from './order'
 
 // apis ========== ========== ========== ========== ==========
 import { getUserInfoApi, edit_infoApi, edit_passApi, getBonusApi, unbindLine_testApi } from '@/apis/info';

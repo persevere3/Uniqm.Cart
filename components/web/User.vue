@@ -266,9 +266,9 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
-  import { useUser }  from '@/stores/user'
-  import { useHandlerCommon } from '@/stores/handlerCommon'
+  import { useCommon }  from '@/stores/web/common/common'
+  import { useUser }  from '@/stores/web/user'
+  import { useHandlerCommon } from '@/stores/web/handlerCommon'
 
   // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()

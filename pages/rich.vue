@@ -1,5 +1,5 @@
 <style lang="scss" scoped>
-  @import "@/assets/scss/rich.scss";
+  @import "@/assets/scss/pages/rich.scss";
 </style>
 
 <template>
@@ -19,7 +19,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
+  import { useCommon }  from '@/stores/web/common/common'
 
   let { all, is_getAll, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { imgHandler } = useCommon()

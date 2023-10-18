@@ -4,7 +4,7 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import User from '@/components/User.vue'
+  import User from '@/components/web/User.vue'
 
   definePageMeta({
     layout: 'uniqm',

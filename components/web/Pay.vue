@@ -95,10 +95,10 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
-  import { useOrder }  from '@/stores/order'
-  import { useInfo }  from '@/stores/info'
-  import { useUser }  from '@/stores/user'
+  import { useCommon }  from '@/stores/web/common/common'
+  import { useOrder }  from '@/stores/web/order'
+  import { useInfo }  from '@/stores/web/info'
+  import { useUser }  from '@/stores/web/user'
 
   // composables ========== ========== ========== ========== ==========
   let { verify } = useVerify()  

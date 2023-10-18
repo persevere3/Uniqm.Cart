@@ -112,8 +112,8 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import ProductBuyQtyBox from '@/components/ProductBuyQtyBox.vue'
-  import CartContent from '@/components/cart/CartContent.vue'
+  import ProductBuyQtyBox from './ProductBuyQtyBox.vue'
+  import CartContent from './cart/CartContent.vue'
 
   // swiper ========== ========== ========== ========== ==========
   import { Swiper, SwiperSlide } from 'swiper/vue'

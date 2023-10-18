@@ -84,9 +84,10 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/common/common'
+  import { useCommon }  from '@/stores/web/common/common'
 
   let { cart, is_cart_active } = storeToRefs(useCommon())
+  let { pushTo_cart } = useCommon()
 
   // methods ========== ========== ========== ========== ==========
   function delete_carts_item(id, specID) {

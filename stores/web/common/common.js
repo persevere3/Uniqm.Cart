@@ -200,16 +200,6 @@ export const useCommon = defineStore('common', () => {
       else {
         state.cart = JSON.parse(localStorage.getItem(`${state.site.Name}@cart`)) || [];
       }
-      if(state.webVersion === 'demo') {
-        state.cart.forEach(item => {
-          item.Img1 = state.demoOrigin + item.Img1
-          if(item.addPrice) {
-            item.addPrice.forEach(addPriceItem => {
-              addPriceItem.Img = state.demoOrigin + addPriceItem.Img
-            })
-          }
-        })
-      }
     },
 
     //

@@ -21,7 +21,8 @@ export const useCommon = defineStore('common', () => {
     messageArr: [],
 
     //
-    webVersion: 'common'
+    demoOrigin: 'https://demo.uniqcarttest.com',
+    webVersion: 'demo',
   })
 
   // methods ========== ========== ========== ========== ==========
@@ -158,7 +159,7 @@ export const useCommon = defineStore('common', () => {
         state.store = store;
         state.arrangement = state.store.Sort || "0";
         document.title = state.store.Name;
-        if(process.env.NODE_ENV === 'development') state.store.Logo = 'https://demo.uniqcarttest.com' + state.store.Logo
+        if(process.env.NODE_ENV === 'development') state.store.Logo = state.demoOrigin + state.store.Logo
       } catch (error) {
         throw new Error(error)
       }

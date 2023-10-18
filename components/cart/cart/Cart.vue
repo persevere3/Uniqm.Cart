@@ -12,7 +12,7 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import CartContent from '@/components/cart/CartContent.vue'
+  import CartContent from './CartContent.vue'
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'

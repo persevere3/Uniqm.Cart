@@ -62,8 +62,8 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import CartStepOneTr from '@/components/cart/CartStepOneTr.vue'
-  import CartStepTotal from '@/components/cart/CartStepTotal.vue'
+  import CartStepOneTr from './CartStepOneTr.vue'
+  import CartStepTotal from './CartStepTotal.vue'
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'

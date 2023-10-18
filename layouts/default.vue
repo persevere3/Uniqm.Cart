@@ -273,8 +273,8 @@
   import { useVerify }  from '@/composables/verify'
 
   // stores ========== ========== ========== ========== ==========
-  import { useCommon }  from '@/stores/common/common'
-  import { useHandlerCommon }  from '@/stores/handlerCommon'
+  import { useCommon }  from '@/stores/web/common/common'
+  import { useHandlerCommon }  from '@/stores/web/handlerCommon'
 
   // composables ========== ========== ========== ========== ==========
   let { reset, verify } = useVerify()

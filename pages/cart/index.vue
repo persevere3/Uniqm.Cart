@@ -1,5 +1,5 @@
 <style lang="scss">
-  @import "@/assets/scss/cart.scss";
+  @import "@/assets/scss/pages/cart.scss";
 </style>
 
 <template>
@@ -22,8 +22,18 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import SelectProduct from '@/components/SelectProduct'
-  import Cart from '@/components/cart/Cart'
+  import SelectProduct from '@/components/cart/SelectProduct'
+  import Cart from '@/components/cart/cart/Cart'
+
+  import Notice from '@/components/cart/Notice.vue'
+  import Main from '@/components/cart/Main.vue'
+
+  import CartIcon from '@/components/cart/CartIcon.vue'
+  import FavoriteIcon from '@/components/cart/FavoriteIcon.vue'
+
+  import Confirm from '@/components/cart/Confirm.vue'
+  import Message from '@/components/cart/Message.vue'
+  import Cookie from '@/components/Cookie.vue'
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'

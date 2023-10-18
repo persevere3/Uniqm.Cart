@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from '@/stores/common/common'
+import { useCommon }  from './common/common'
 
 // router ========== ========== ========== ========== ==========
 import { useRoute } from 'vue-router'

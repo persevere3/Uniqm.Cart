@@ -6,13 +6,13 @@
 
 <script setup>
   // components ========== ========== ========== ========== ==========
-  import User from '@/components/User.vue'
+  import User from '@/components/web/User.vue'
 
   // composables ========== ========== ========== ========== ==========
   import { useAuth } from '@/composables/auth'
 
   // stores ========== ========== ========== ========== ==========
-  import { useCommon } from '@/stores/common/common'
+  import { useCommon } from '@/stores/web/common/common'
   
   let { getPathname, urlPush } = useCommon()
 
