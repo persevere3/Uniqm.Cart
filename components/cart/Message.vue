@@ -11,7 +11,7 @@
 <script setup>
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common/common'
+  import { useCommon }  from '@/stores/cart/common'
 
   let { messageArr } = storeToRefs(useCommon())
 </script>

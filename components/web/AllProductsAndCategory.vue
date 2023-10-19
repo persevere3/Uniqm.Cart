@@ -69,7 +69,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common/common'
+  import { useCommon }  from '@/stores/web/common'
   import { useCategory}  from '@/stores/web/category'
 
   let { is_getSite, favorite } = storeToRefs(useCommon())

@@ -19,7 +19,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common/common'
+  import { useCommon }  from '@/stores/web/common'
 
   let { all, is_getAll, demoOrigin, webVersion } = storeToRefs(useCommon())
   let { imgHandler } = useCommon()

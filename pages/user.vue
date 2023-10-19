@@ -12,7 +12,7 @@
   import { useAuth } from '@/composables/auth'
 
   // stores ========== ========== ========== ========== ==========
-  import { useCommon } from '@/stores/web/common/common'
+  import { useCommon } from '@/stores/web/common'
   
   let { getPathname, urlPush } = useCommon()
 

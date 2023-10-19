@@ -110,7 +110,7 @@ export const useCommon = defineStore('common', () => {
         let res = await getSiteApi()
         if(res.data.errormessage) {
           await methods.login();
-          methods.getSite();
+          await methods.getSite();
           return
         }
 
@@ -150,6 +150,7 @@ export const useCommon = defineStore('common', () => {
         }
 
         state.store = res.data.data[0] || {};
+        console.log(state.store)
         if(state.webVersion === 'demo') state.store.Logo = state.demoOrigin + state.store.Logo
 
         state.footer_community = res.data.footer[0] || {};

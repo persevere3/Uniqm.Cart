@@ -37,7 +37,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common/common'
+  import { useCommon }  from '@/stores/cart/common'
   import { useProducts }  from '@/stores/cart/products'
   import { useCart }  from '@/stores/cart/cart'
   import { useInfo }  from '@/stores/cart/info'

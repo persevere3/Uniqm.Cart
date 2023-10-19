@@ -124,7 +124,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common/common'
+  import { useCommon }  from '@/stores/web/common'
 
   let { site, is_getAll, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion 

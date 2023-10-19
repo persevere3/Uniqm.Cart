@@ -32,7 +32,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common/common'
+  import { useCommon }  from '@/stores/web/common'
 
   let { favorite, is_favorite_active } = storeToRefs(useCommon())
   let { toggleFavorite, pushTo_cart } = useCommon()

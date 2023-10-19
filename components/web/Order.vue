@@ -220,7 +220,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common/common'
+  import { useCommon }  from '@/stores/web/common'
   import { useOrder }  from '@/stores/web/order'
   import { useHandlerInfo } from '@/stores/web/handlerInfo'
 

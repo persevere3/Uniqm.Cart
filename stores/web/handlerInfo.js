@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common/common'
+import { useCommon }  from './common'
 import { useInfo}  from './info'
 import { useUser }  from './user'
 import { useOrder }  from './order'

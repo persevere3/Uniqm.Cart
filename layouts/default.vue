@@ -273,7 +273,7 @@
   import { useVerify }  from '@/composables/verify'
 
   // stores ========== ========== ========== ========== ==========
-  import { useCommon }  from '@/stores/web/common/common'
+  import { useCommon }  from '@/stores/web/common'
   import { useHandlerCommon }  from '@/stores/web/handlerCommon'
 
   // composables ========== ========== ========== ========== ==========

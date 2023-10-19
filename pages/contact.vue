@@ -65,7 +65,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common/common'
+  import { useCommon }  from '@/stores/web/common'
 
   let { site, is_getSite } = storeToRefs(useCommon())
   let { return_formUrlencoded, login, imgHandler, urlPush } = useCommon()
