@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useWebCommon }  from './common'
 import { useUser }  from './user'
 
 // apis ========== ========== ========== ========== ==========
@@ -16,10 +16,10 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
   // stores ========== ========== ========== ========== ==========
   let { site, is_getSite, store, all, is_getAll, 
     totalpage_num, perpage_num, demoOrigin, webVersion 
-  } = storeToRefs(useCommon())
+  } = storeToRefs(useWebCommon())
   let { return_formData, getSite, getAll, getStore, getCopyRight, getCustomerService, 
     getCart, getFavorite, appendScript, urlPush 
-  } = useCommon()
+  } = useWebCommon()
   let { second, r_mail, r_account, user_message, is_userMessage } = storeToRefs(useUser())
 
   // methods ========== ========== ========== ========== ==========
@@ -102,7 +102,7 @@ export const useHandlerCommon = defineStore('handlerCommon', () => {
       await getStore()
 
       // title
-      document.title = store.value.Name
+      document.title ? '' : document.title = store.value.Name
       if(site.value.WebPreview == 2)  document.title += ' (預覽模式)'
 
       // GA

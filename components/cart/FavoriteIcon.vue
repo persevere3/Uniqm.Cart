@@ -37,10 +37,10 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useProducts }  from '@/stores/cart/products'
 
-  let { isShowFavorite, showPage } = storeToRefs(useCommon())
+  let { isShowFavorite, showPage } = storeToRefs(useCartCommon())
   let { favorite } = storeToRefs(useProducts())
   let { showSelect, toggleFavorite } = useProducts()
 </script>

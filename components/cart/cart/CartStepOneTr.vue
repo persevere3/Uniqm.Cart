@@ -16,7 +16,7 @@
       </template>
     </div>
     <!-- 多價格 cart table 單價 -->
-    <div class="td price" v-if="product.priceType === 'onePrice' || product.PriceType === 'onePrice'"> NT$ {{ useNumberThousands(product[addPrice ? 'Price' : 'NowPrice']) }} </div>
+    <div class="td price" v-if="product.priceType === 'onePrice' || product.priceType === 'onePrice'"> NT$ {{ useNumberThousands(product[addPrice ? 'Price' : 'NowPrice']) }} </div>
     <div class="td price" v-else> NT$ {{ useNumberThousands(productSpec.ItemNowPrice) }} </div>
 
     <div class="td qty">
@@ -46,7 +46,7 @@
       <div class="subtotalTitle">小計</div>
 
       <!-- 多價格 cart table 小計 -->
-      <div class="subtotalText" v-if="product.priceType === 'onePrice' || product.PriceType === 'onePrice'"> 
+      <div class="subtotalText" v-if="product.priceType === 'onePrice' || product.priceType === 'onePrice'"> 
         NT$ {{ useNumberThousands(product[addPrice ? 'Price' : 'NowPrice'] * (isNaN(buyQty) ? 0 : buyQty)) }} 
       </div>
       <div class="subtotalText" v-else> 
@@ -72,11 +72,11 @@
   
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useProducts }  from '@/stores/cart/products'
   import { useHandlerChangeQty }  from '@/stores/cart/handlerChangeQty'
 
-  let { store } = storeToRefs(useCommon())
+  let { store } = storeToRefs(useCartCommon())
   let { getMainTotalQty } = useProducts()
   let { changeMainBuyQty, changeAddpriceBuyQty } = useHandlerChangeQty()
 

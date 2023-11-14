@@ -65,10 +65,10 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
 
-  let { site, is_getSite } = storeToRefs(useCommon())
-  let { return_formUrlencoded, login, imgHandler, urlPush } = useCommon()
+  let { site, is_getSite } = storeToRefs(useWebCommon())
+  let { return_formUrlencoded, login, imgHandler, urlPush } = useWebCommon()
   
   // state ========== ========== ========== ========== ==========
   const state = reactive({

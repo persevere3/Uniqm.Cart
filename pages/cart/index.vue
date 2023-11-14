@@ -37,13 +37,13 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useProducts }  from '@/stores/cart/products'
   import { useCart }  from '@/stores/cart/cart'
   import { useInfo }  from '@/stores/cart/info'
   import { useHandlerCommon }  from '@/stores/cart/handlerCommon'
 
-  let { user_account, isShowFavorite, showPage } = storeToRefs(useCommon())
+  let { user_account, isShowFavorite, showPage } = storeToRefs(useCartCommon())
   let { selectProduct, isSingleProduct, favorite } = storeToRefs(useProducts())
   let { stepPage, total_bonus } = storeToRefs(useCart())
   let { info, userInfo } = storeToRefs(useInfo())

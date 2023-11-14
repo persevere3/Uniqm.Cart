@@ -288,7 +288,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
   import { useInfo }  from '@/stores/web/info'
   import { useUser }  from '@/stores/web/user'
   import { useOrder }  from '@/stores/web/order'
@@ -298,8 +298,8 @@
   let { verify } = useVerify()
 
   // stores ========== ========== ========== ========== ==========
-  let { user_account, city_district, is_payModal, payModal_message, webVersion } = storeToRefs(useCommon())
-  let { getPathname } = useCommon()
+  let { user_account, city_district, is_payModal, payModal_message, webVersion } = storeToRefs(useWebCommon())
+  let { getPathname } = useWebCommon()
   let { user_info_nav_active, user_info, add_address, delivery_address, address_select_active, 
     phone_barCode, natural_barCode, recommend_code, total_bonus, bonus
   } = storeToRefs(useInfo())

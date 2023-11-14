@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useCartCommon }  from './common'
 import { useCart } from './cart'
 import { useProducts } from './products'
 import { useInfo } from './info'
@@ -18,8 +18,8 @@ import { useVerify } from '@/composables/verify'
 
 export const useHandlerCart = defineStore('handlerCart', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, store, user_account, showPage } = storeToRefs(useCommon())
-  let { login, showMessage, urlPush } = useCommon()
+  let { site, store, user_account, showPage } = storeToRefs(useCartCommon())
+  let { login, showMessage, urlPush } = useCartCommon()
   let { cart, stepPage, successUsedDiscountCode, total, transport, pay_method, 
     is_use_bonus, use_bonus, member_bonus, is_click_finish_order, isOrderIng , payResult, ECPay_form_value
   } = storeToRefs(useCart())

@@ -1,12 +1,12 @@
 // stores
 import { storeToRefs } from 'pinia'
-import { useCommon }  from '~/stores/web/common'
+import { useWebCommon }  from '@/stores/web/common'
 
 // router
 import { useRoute } from 'vue-router'
 
 export function useAuth () { 
-  let { user_account } = storeToRefs(useCommon())
+  let { user_account } = storeToRefs(useWebCommon())
 
   const { account, result } = useRoute().query
 

@@ -1,11 +1,15 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore } from 'pinia'
+import { useWebCommon }  from '../web/common'
 
 // apis ========== ========== ========== ========== ==========
 import { loginApi, getSiteApi, getStoreApi } from '@/apis/storeCart';
 import { getStoreApi as getGAApi } from '@/apis/storeWeb';
 
-export const useCommon = defineStore('common', () => {
+export const useCartCommon = defineStore('cartCommon', () => {
+  // stores ========== ========== ========== ========== ==========
+  let { getSeo } = useWebCommon()
+
   // state ========== ========== ========== ========== ==========
   const state = reactive({
     site: {},
@@ -122,6 +126,8 @@ export const useCommon = defineStore('common', () => {
     },
 
     async getStore() {
+      await getSeo();
+
       let params = `Preview=${state.site.Preview}`;
       try {
         let res = await getStoreApi(params)
@@ -158,7 +164,7 @@ export const useCommon = defineStore('common', () => {
 
         state.store = store;
         state.arrangement = state.store.Sort || "0";
-        document.title = state.store.Name;
+        document.title ? '' : document.title = state.store.Name
         if(process.env.NODE_ENV === 'development') state.store.Logo = state.demoOrigin + state.store.Logo
       } catch (error) {
         throw new Error(error)

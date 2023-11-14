@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useCartCommon }  from './common'
 
 // apis ========== ========== ========== ========== ==========
 import { getTotalApi, discountApi } from '@/apis/order'
@@ -13,8 +13,8 @@ import { useNumberThousands } from '@/composables/numberThousands'
 
 export const useCart = defineStore('cart', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, user_account } = storeToRefs(useCommon())
-  let { login, showMessage } = useCommon()
+  let { site, user_account } = storeToRefs(useCartCommon())
+  let { login, showMessage } = useCartCommon()
 
   // state ========== ========== ========== ========== ==========
   const state = reactive({

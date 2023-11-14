@@ -67,10 +67,10 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useCart }  from '@/stores/cart/cart'
 
-  let { store } = storeToRefs(useCommon())
+  let { store } = storeToRefs(useCartCommon())
   let { cart, discountCode, discountErrorMessage, stepPage } = storeToRefs(useCart())
   let { discount, unDiscount } = useCart()
 

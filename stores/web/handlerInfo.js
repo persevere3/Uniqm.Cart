@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useWebCommon }  from './common'
 import { useInfo}  from './info'
 import { useUser }  from './user'
 import { useOrder }  from './order'
@@ -14,8 +14,8 @@ import { useVerify }  from '@/composables/verify'
 
 export const useHandlerInfo = defineStore('handlerInfo', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, user_account, store, payModal_message, is_payModal } = storeToRefs(useCommon())
-  let { login, check_logout } = useCommon()
+  let { site, user_account, store, payModal_message, is_payModal } = storeToRefs(useWebCommon())
+  let { login, check_logout } = useWebCommon()
   let { user_info, recommend_code, delivery_address, phone_barCode, natural_barCode,
     total_bonus, bonus
   } = storeToRefs(useInfo())

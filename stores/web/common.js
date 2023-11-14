@@ -5,7 +5,7 @@ import { defineStore } from 'pinia'
 import { useRoute } from 'vue-router'
 
 // apis ========== ========== ========== ========== ==========
-import { loginApi, getSiteApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi} from '@/apis/storeWeb';
+import { loginApi, getSiteApi, getSeoApi, getAllApi, getStoreApi, getCopyRightApi, getCustomerServiceApi} from '@/apis/storeWeb';
 import { getFavoriteApi, deleteFavoriteApi, addFavoriteApi } from '@/apis/favorite';
 
 // json ========== ========== ========== ========== ==========
@@ -15,7 +15,7 @@ import city_district_json from '@/json/city_district.json'
 // composables ========== ========== ========== ========== ==========
 import { useNumberThousands } from '@/composables/numberThousands'
 
-export const useCommon = defineStore('common', () => {
+export const useWebCommon = defineStore('webCommon', () => {
   // state ========== ========== ========== ========== ==========
   const state = reactive({
     site: {},
@@ -120,6 +120,46 @@ export const useCommon = defineStore('common', () => {
         throw new Error(error)
       }
     },
+    async getSeo() {
+      return new Promise(async(resolve) => {
+        // search
+        const { id, cid, store } = useRoute().query
+
+        // pagetype 
+        let pagetype = 1
+        if(location.pathname.indexOf('cart') > -1) pagetype = 0
+        else if (location.pathname === '/' || location.pathname.indexOf('index') > -1)  pagetype = 1
+        else if (location.pathname.indexOf('allProducts') > -1 || location.pathname.indexOf('category') > -1)  pagetype = 3
+        else if (location.pathname.indexOf('contact') > -1 )  pagetype = 5
+        else if (location.pathname.indexOf('rich') > -1 ) {
+          if(cid == 0) pagetype = 3
+          else if(cid == 1 || cid == 2) pagetype = 4
+          else if(cid == 3) pagetype = 2
+        }
+
+        let obj = {
+          id,
+          pagetype,
+          webid: store,
+          WebPreview: state.site.WebPreview
+        }
+        let params = methods.return_formUrlencoded(obj)
+
+        try {
+          let res = await getSeoApi(params)
+          if(res.data.errormessage) {
+            await methods.login();
+            methods.getSeo();
+            return
+          }
+
+          res.data.data[0] ? document.title = res.data.data[0].title : ''
+          resolve()
+        } catch (error) {
+          throw new Error(error)
+        }
+      })
+    },
     async getAll() {
       let params = methods.return_formUrlencoded('WebPreview')
 
@@ -139,6 +179,8 @@ export const useCommon = defineStore('common', () => {
       }
     },
     async getStore() {
+      await methods.getSeo();
+
       let params = methods.return_formUrlencoded('WebPreview')
 
       try {
@@ -299,7 +341,11 @@ export const useCommon = defineStore('common', () => {
     //
     multiPriceHandler(data) {
       data.forEach(item => {
-        if(item.PriceType === 'multiPrice') {
+        item.PriceType ? item.priceType = item.PriceType : ''
+      })
+
+      data.forEach(item => {
+        if(item.priceType === 'multiPrice') {
           // 建議售價
           // 所有規格都有填建議售價
           if(item.MinPrice > 0 && item.MaxPrice > 0) {        

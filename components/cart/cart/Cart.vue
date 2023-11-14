@@ -16,7 +16,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
 
-  let { showPage } = storeToRefs(useCommon())
+  let { showPage } = storeToRefs(useCartCommon())
 </script>

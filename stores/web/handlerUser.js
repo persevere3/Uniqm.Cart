@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useWebCommon }  from './common'
 import { useUser }  from './user'
 
 // apis ========== ========== ========== ========== ==========
@@ -14,8 +14,8 @@ import { useFormatDate } from '@/composables/formatDate'
 
 export const useHandlerUser = defineStore('handlerUser', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, store } = storeToRefs(useCommon())
-  let { return_formData, getPathname, urlPush } = useCommon()
+  let { site, store } = storeToRefs(useWebCommon())
+  let { return_formData, getPathname, urlPush } = useWebCommon()
   let { user_nav_active, r_name, r_mail, r_mail_verify_code, r_phone_verify_code, r_birthday, 
     r_account, r_password, r_confirm_password, r_is_agree, l_account, l_password, 
     forget_step, mailOrAccount, f_mail , f_account , f_verify_code, f_second,

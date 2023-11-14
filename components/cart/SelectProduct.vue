@@ -74,7 +74,7 @@
               <div class="name">{{item.Name}}</div>
 
               <!-- 多價格 selectProduct 加價購 info -->
-              <template v-if="item.PriceType === 'onePrice'">
+              <template v-if="item.priceType === 'onePrice'">
                 <div class="price">NT$ {{ useNumberThousands(item.Price) }}</div>
               </template>
               <template v-else>
@@ -125,11 +125,11 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useProducts }  from '@/stores/cart/products'
 
-  let { showPage } = storeToRefs(useCommon())
-  let { copy, showMessage } = useCommon()
+  let { showPage } = storeToRefs(useCartCommon())
+  let { copy, showMessage } = useCartCommon()
   let { isSingleProduct, selectProduct, isAddPrice, isDetail, favorite } = storeToRefs(useProducts())
   let { getMainTotalQty, toggleFavorite } = useProducts()
 

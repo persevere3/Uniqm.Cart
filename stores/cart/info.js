@@ -1,14 +1,14 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useCartCommon }  from './common'
 
 // apis ========== ========== ========== ========== ==========
 import { getUserInfoApi } from '@/apis/info'
 
 export const useInfo = defineStore('info', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, user_account } = storeToRefs(useCommon())
-  let { login } = useCommon()
+  let { site, user_account } = storeToRefs(useCartCommon())
+  let { login } = useCartCommon()
 
   // state ========== ========== ========== ========== ==========
   const state = reactive({

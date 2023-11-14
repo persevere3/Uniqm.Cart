@@ -42,7 +42,7 @@
                 <div class="name"> {{item2.Name}} </div>
 
                 <!-- 多價格 products 主商品 單價 -->
-                <template v-if="item2.PriceType === 'onePrice'">
+                <template v-if="item2.priceType === 'onePrice'">
                   <div class="discount_price"> NT${{ useNumberThousands(item2.NowPrice) }} </div>
                   <div class="origin_price" :class="{ opacity0 : parseInt(item2.Price) < 0 }"> NT${{ useNumberThousands(item2.Price) }} </div>
                 </template>
@@ -69,11 +69,11 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
   import { useCategory}  from '@/stores/web/category'
 
-  let { is_getSite, favorite } = storeToRefs(useCommon())
-  let { toggleFavorite, imgHandler, pushTo_cart } = useCommon()
+  let { is_getSite, favorite } = storeToRefs(useWebCommon())
+  let { toggleFavorite, imgHandler, pushTo_cart } = useWebCommon()
   let { category_product } = storeToRefs(useCategory())
   let { getCategory, videoHandler } = useCategory()
 

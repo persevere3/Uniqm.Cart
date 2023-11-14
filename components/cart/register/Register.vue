@@ -78,7 +78,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon } from '@/stores/cart/common'
+  import { useCartCommon } from '@/stores/cart/common'
   import { useHandlerCart } from '@/stores/cart/handlerCart'
   import { useInfo } from '@/stores/cart/info'
 
@@ -86,8 +86,8 @@
   let { verify } = useVerify()
 
   // stores ========== ========== ========== ========== ==========
-  let { site, store } = storeToRefs(useCommon())
-  let { login, showMessage } = useCommon()
+  let { site, store } = storeToRefs(useCartCommon())
+  let { login, showMessage } = useCartCommon()
   let { isConfirmRegister } = storeToRefs(useHandlerCart())
   let { toPay } = useHandlerCart()
   let { info, pay_method } = storeToRefs(useInfo())

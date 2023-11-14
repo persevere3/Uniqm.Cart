@@ -426,7 +426,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useCart }  from '@/stores/cart/cart'
   import { useInfo }  from '@/stores/cart/info'
   import { useHandlerCommon }  from '@/stores/cart/handlerCommon'
@@ -436,8 +436,8 @@
   let { verify } = useVerify()
 
   // stores ========== ========== ========== ========== ==========
-  let { store, user_account } = storeToRefs(useCommon())
-  let { urlPush, getPathname } = useCommon()
+  let { store, user_account } = storeToRefs(useCartCommon())
+  let { urlPush, getPathname } = useCartCommon()
   let { stepPage, is_click_finish_order, isOrderIng,
     total_bonus, is_use_bonus, use_bonus, bonus_array,
     transport, transport_obj, is_show_transport_options, pay_method

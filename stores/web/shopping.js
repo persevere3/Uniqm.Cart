@@ -1,14 +1,14 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useWebCommon }  from './common'
 
 // apis ========== ========== ========== ========== ==========
 import { getCategoriesApi, getProductsApi } from '@/apis/products';
 
 export const useShopping = defineStore('shopping', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, demoOrigin, webVersion } = storeToRefs(useCommon())
-  let { multiPriceHandler } = useCommon()
+  let { site, demoOrigin, webVersion } = storeToRefs(useWebCommon())
+  let { multiPriceHandler } = useWebCommon()
 
   // state ========== ========== ========== ========== ==========
   const state = reactive({

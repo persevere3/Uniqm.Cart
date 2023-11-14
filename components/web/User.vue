@@ -266,7 +266,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
   import { useUser }  from '@/stores/web/user'
   import { useHandlerCommon } from '@/stores/web/handlerCommon'
 
@@ -274,8 +274,8 @@
   let { verify } = useVerify()
 
   // stores ========== ========== ========== ========== ==========
-  let { store, site, is_getSite } = storeToRefs(useCommon())
-  let { imgHandler, getPathname } = useCommon()
+  let { store, site, is_getSite } = storeToRefs(useWebCommon())
+  let { imgHandler, getPathname } = useWebCommon()
   let { user_nav_active, r_name, r_account, r_mail, r_birthday, sex, r_recommender, 
     r_password, r_password_type, r_confirm_password, r_confirm_password_type,
     r_phone_verify_code, r_mail_verify_code, second, r_is_agree, is_userModal,

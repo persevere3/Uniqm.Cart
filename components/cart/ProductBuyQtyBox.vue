@@ -50,11 +50,11 @@
 <script setup>
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useProducts }  from '@/stores/cart/products'
   import { useHandlerChangeQty }  from '@/stores/cart/handlerChangeQty'
 
-  let { store } = storeToRefs(useCommon())
+  let { store } = storeToRefs(useCartCommon())
   let { getMainTotalQty } = useProducts()
   let { changeMainBuyQty, changeAddpriceBuyQty } = useHandlerChangeQty()
 

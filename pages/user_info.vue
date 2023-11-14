@@ -17,9 +17,9 @@
   import { useAuth } from '@/composables/auth'
 
   // stores ========== ========== ========== ========== ==========
-  import { useCommon } from '@/stores/web/common'
+  import { useWebCommon } from '@/stores/web/common'
 
-  let { getPathname, urlPush } = useCommon()
+  let { getPathname, urlPush } = useWebCommon()
 
   let isAuth = ref(false)
 

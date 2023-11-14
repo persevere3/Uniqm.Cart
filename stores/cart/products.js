@@ -1,7 +1,7 @@
 
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useCartCommon }  from './common'
 
 // apis ========== ========== ========== ========== ==========
 import { getCategoriesApi, getProductsApi, getAddPriceApi } from '@/apis/products'
@@ -12,8 +12,8 @@ import { useNumberThousands } from '@/composables/numberThousands'
 
 export const useProducts = defineStore('products', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, user_account, demoOrigin, webVersion } = storeToRefs(useCommon())
-  let { login } = useCommon()
+  let { site, user_account, demoOrigin, webVersion } = storeToRefs(useCartCommon())
+  let { login } = useCartCommon()
 
   // state ========== ========== ========== ========== ==========
   const state = reactive({
@@ -93,6 +93,10 @@ export const useProducts = defineStore('products', () => {
           product.addPrice = null
         });
 
+        products.forEach(item => {
+          item.PriceType ? item.priceType = item.PriceType : ''
+        })
+
         // 多價格
         products.forEach(product => {
           if(product.priceType === 'multiPrice') {
@@ -162,9 +166,13 @@ export const useProducts = defineStore('products', () => {
           if(webVersion.value === 'demo') addPriceItem.Img = demoOrigin.value + addPriceItem.Img
         })
 
+        addPrice.forEach(item => {
+          item.PriceType ? item.priceType = item.PriceType : ''
+        })
+
         // 多價格
         addPrice.forEach(addPriceItem => {
-          if(addPriceItem.PriceType === 'multiPrice') {
+          if(addPriceItem.priceType === 'multiPrice') {
             let itemNowPriceArr = addPriceItem.specArr.map(spec => spec.ItemNowPrice * 1)
             let lowestNowPrice = Math.min(...itemNowPriceArr)
             let highestNowPrice = Math.max(...itemNowPriceArr)

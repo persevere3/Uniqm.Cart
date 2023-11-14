@@ -1,14 +1,14 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useWebCommon }  from './common'
 
 // apis ========== ========== ========== ========== ==========
 import { post_logoutApi, deleteAccount_testApi } from '@/apis/info';
 
 export const useInfo = defineStore('info', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, user_account } = storeToRefs(useCommon())
-  let { return_formData, login, getPathname, urlPush } = useCommon()
+  let { site, user_account } = storeToRefs(useWebCommon())
+  let { return_formData, login, getPathname, urlPush } = useWebCommon()
 
   // state ========== ========== ========== ========== ==========
   const state = reactive({

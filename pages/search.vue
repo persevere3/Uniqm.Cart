@@ -58,7 +58,7 @@
             <div class="info">
               <div class="name"> {{ item.Name }} </div>
               <!-- 多價格 products 主商品 單價 -->
-              <template v-if="item.PriceType === 'onePrice'">
+              <template v-if="item.priceType === 'onePrice'">
                 <div class="discount_price"> NT${{ useNumberThousands(item.NowPrice) }} </div>
                 <div class="origin_price" v-if="parseInt(item.Price) > -1"> NT${{useNumberThousands(item.Price)}} </div>
               </template>
@@ -124,12 +124,12 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
 
   let { site, is_getAll, favorite, perpage_num, totalpage_num, page_active, 
     demoOrigin, webVersion 
-  } = storeToRefs(useCommon())
-  let { login, toggleFavorite, multiPriceHandler, pushTo_cart, pagePush, is_show_page } = useCommon()
+  } = storeToRefs(useWebCommon())
+  let { login, toggleFavorite, multiPriceHandler, pushTo_cart, pagePush, is_show_page } = useWebCommon()
   
   // state ========== ========== ========== ========== ==========
   const state = reactive({

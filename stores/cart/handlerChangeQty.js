@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon } from './common'
+import { useCartCommon } from './common'
 import { useProducts } from './products'
 import { useCart } from './cart'
 import { useHandlerCommon }  from './handlerCommon'
@@ -13,7 +13,7 @@ import { useNumber } from '@/composables/number'
 
 export const useHandlerChangeQty = defineStore('handlerChangeQty', () => {  
   // stores ========== ========== ========== ========== ==========
-  let { login, showMessage } = useCommon()
+  let { login, showMessage } = useCartCommon()
   let { products } = storeToRefs(useProducts())
   let { getMainTotalQty } = useProducts()
   let { cart } = storeToRefs(useCart())

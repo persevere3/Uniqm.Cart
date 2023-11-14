@@ -99,13 +99,13 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useCart }  from '@/stores/cart/cart'
   import { useInfo }  from '@/stores/cart/info'
   import { useHandlerCart }  from '@/stores/cart/handlerCart'
 
-  let { user_account, store } = storeToRefs(useCommon())
-  let { copy, urlPush, getPathname } = useCommon()
+  let { user_account, store } = storeToRefs(useCartCommon())
+  let { copy, urlPush, getPathname } = useCartCommon()
   let { bank, ECPay_form_value, ECPay_store_form_value } = storeToRefs(useCart())
   let { info, pay_method } = storeToRefs(useInfo())
   let { isConfirmToPay, isConfirmDiscountCodeUsed, isConfirmATM, isConfirmIsRegister, isConfirmRegister } = storeToRefs(useHandlerCart())

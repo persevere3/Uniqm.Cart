@@ -95,7 +95,7 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
   import { useOrder }  from '@/stores/web/order'
   import { useInfo }  from '@/stores/web/info'
   import { useUser }  from '@/stores/web/user'
@@ -104,8 +104,8 @@
   let { verify } = useVerify()  
 
   // stores ========== ========== ========== ========== ==========
-  let { store, pathname, bank, is_payModal, payModal_message, is_logout } = storeToRefs(useCommon())
-  let { login, copy } = useCommon()
+  let { store, pathname, bank, is_payModal, payModal_message, is_logout } = storeToRefs(useWebCommon())
+  let { login, copy } = useWebCommon()
   let { order_number, account_number, ECPay_form } = storeToRefs(useOrder())
   let { logout, edit_pass } = useInfo()
   let { o_password, o_password_type, r_password, r_password_type, r_confirm_password, r_confirm_password_type } = storeToRefs(useUser())

@@ -13,7 +13,7 @@
           </div>
           <div class="price_and_delete">
             <!-- 多價格 favorite_container 主商品 單價 -->
-            <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ useNumberThousands(item.NowPrice) }} </div>
+            <div class="price" v-if="item.priceType === 'onePrice'"> NT${{ useNumberThousands(item.NowPrice) }} </div>
             <div class="price" v-else> NT${{ item.nowPriceRange }} </div>
 
             <div class="delete" @click.stop="toggleFavorite(item.ID)">
@@ -32,8 +32,8 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
 
-  let { favorite, is_favorite_active } = storeToRefs(useCommon())
-  let { toggleFavorite, pushTo_cart } = useCommon()
+  let { favorite, is_favorite_active } = storeToRefs(useWebCommon())
+  let { toggleFavorite, pushTo_cart } = useWebCommon()
 </script>

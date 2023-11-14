@@ -23,7 +23,7 @@
           <div class="name">{{ item.Name }}</div>
           <div class="priceAndControl">
             <!-- 多價格 products 主商品 單價 -->
-            <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ useNumberThousands(item.NowPrice) }} </div>
+            <div class="price" v-if="item.priceType === 'onePrice'"> NT${{ useNumberThousands(item.NowPrice) }} </div>
             <div class="price" v-else> NT${{ item.nowPriceRange }} </div>
 
             <div class="control">
@@ -43,11 +43,11 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
   import { useShopping }  from '@/stores/web/shopping'
 
-  let { is_getSite, user_account, favorite } = storeToRefs(useCommon())
-  let { toggleFavorite, pushTo_cart } = useCommon()
+  let { is_getSite, user_account, favorite } = storeToRefs(useWebCommon())
+  let { toggleFavorite, pushTo_cart } = useWebCommon()
   let { categories, products, active_category_id, search_text } = storeToRefs(useShopping())
   let { getCategories, getProducts } = useShopping()
 

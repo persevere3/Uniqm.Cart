@@ -46,10 +46,10 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useCart }  from '@/stores/cart/cart'
 
-  let { user_account } = storeToRefs(useCommon())
+  let { user_account } = storeToRefs(useCartCommon())
   let { stepPage, total, is_use_bonus, use_bonus, member_bonus } = storeToRefs(useCart())
 
   // computed ========== ========== ========== ========== ==========

@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useWebCommon }  from './common'
 
 // apis ========== ========== ========== ========== ==========
 import { getOrderApi, getMemberOrderApi, searchMartDeliveryApi } from '@/apis/order';
@@ -8,8 +8,8 @@ import { rePayApi } from '@/apis/pay';
 
 export const useOrder = defineStore('order', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, user_account, payModal_message, is_payModal, webVersion } = storeToRefs(useCommon())
-  let { return_formData, urlPush } = useCommon()
+  let { site, user_account, payModal_message, is_payModal, webVersion } = storeToRefs(useWebCommon())
+  let { return_formData, urlPush } = useWebCommon()
 
   // state ========== ========== ========== ========== ==========
   const state = reactive({

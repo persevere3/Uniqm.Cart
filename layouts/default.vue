@@ -273,7 +273,7 @@
   import { useVerify }  from '@/composables/verify'
 
   // stores ========== ========== ========== ========== ==========
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
   import { useHandlerCommon }  from '@/stores/web/handlerCommon'
 
   // composables ========== ========== ========== ========== ==========
@@ -281,8 +281,8 @@
 
   let { site, user_account, all, store, footer_community, copyRight, customerService, 
     pathname, cart, is_cart_active, is_favorite_active
-  } = storeToRefs(useCommon())
-  let { pushTo_cart, urlPush } = useCommon()
+  } = storeToRefs(useWebCommon())
+  let { pushTo_cart, urlPush } = useWebCommon()
   let { getSiteHandler } = useHandlerCommon()
 
   const state = reactive({

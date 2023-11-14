@@ -19,10 +19,10 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
 
-  let { all, is_getAll, demoOrigin, webVersion } = storeToRefs(useCommon())
-  let { imgHandler } = useCommon()
+  let { all, is_getAll, demoOrigin, webVersion } = storeToRefs(useWebCommon())
+  let { imgHandler } = useWebCommon()
   
   // state ========== ========== ========== ========== ==========
   const state = reactive({
@@ -38,15 +38,15 @@
     state.rich_id = id
     state.rich_cid = cid
 
-    // navbar
+    // 第二層選單
     if(state.rich_cid === '0') {
       state.content_obj = toObj(all.value.websubcategory)
     }
-    // footer
+    // 頁尾連結
     else if(state.rich_cid === '1' || state.rich_cid === '2') {
       state.content_obj = toObj(all.value.footer)
     }
-    // customize
+    // 第一層選單
     else if(state.rich_cid === '3') {
       state.content_obj = toObj(all.value.webcategory)
     }

@@ -1,6 +1,6 @@
 // stores ========== ========== ========== ========== ==========
 import { defineStore, storeToRefs } from 'pinia'
-import { useCommon }  from './common'
+import { useWebCommon }  from './common'
 
 // router ========== ========== ========== ========== ==========
 import { useRoute } from 'vue-router'
@@ -10,8 +10,8 @@ import { getLineProfileApi, validateRecommenderCodeApi } from '@/apis/user';
 
 export const useUser = defineStore('user', () => {
   // stores ========== ========== ========== ========== ==========
-  let { site, store } = storeToRefs(useCommon())
-  let { return_formData, login, urlPush } = useCommon()
+  let { site, store } = storeToRefs(useWebCommon())
+  let { return_formData, login, urlPush } = useWebCommon()
 
   // state ========== ========== ========== ========== ==========
   const state = reactive({

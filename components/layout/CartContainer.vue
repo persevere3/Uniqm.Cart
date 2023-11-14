@@ -15,7 +15,7 @@
             </div>
             <div class="price_and_delete">
               <!-- 多價格 cart_container 主商品 小計 -->
-              <div class="price" v-if="item.PriceType === 'onePrice'"> NT${{ useNumberThousands(item.NowPrice) }} x {{ spec.buyQty }}  </div>
+              <div class="price" v-if="item.priceType === 'onePrice'"> NT${{ useNumberThousands(item.NowPrice) }} x {{ spec.buyQty }}  </div>
               <div class="price" v-else> NT${{ useNumberThousands(spec.ItemNowPrice) }} x {{ spec.buyQty }}  </div>
 
               <div class="delete" @click.stop="delete_carts_item(item.ID, spec.ID)">
@@ -50,7 +50,7 @@
                 </div>
                 <div class="price_and_delete">
                   <!-- 多價格 carts_container 加價購 小計 -->
-                  <div class="price" v-if="item2.PriceType === 'onePrice'"> NT${{ useNumberThousands(item2.Price) }} x {{ spec2.buyQty }} </div>
+                  <div class="price" v-if="item2.priceType === 'onePrice'"> NT${{ useNumberThousands(item2.Price) }} x {{ spec2.buyQty }} </div>
                   <div class="price" v-else> NT${{ useNumberThousands(spec2.ItemNowPrice) }} x {{ spec2.buyQty }} </div>
                 </div>
               </li>
@@ -84,10 +84,10 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/web/common'
+  import { useWebCommon }  from '@/stores/web/common'
 
-  let { cart, is_cart_active } = storeToRefs(useCommon())
-  let { pushTo_cart } = useCommon()
+  let { cart, is_cart_active } = storeToRefs(useWebCommon())
+  let { pushTo_cart } = useWebCommon()
 
   // methods ========== ========== ========== ========== ==========
   function delete_carts_item(id, specID) {

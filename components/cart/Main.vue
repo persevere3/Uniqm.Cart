@@ -137,11 +137,11 @@
 
   // stores ========== ========== ========== ========== ==========
   import { storeToRefs } from 'pinia'
-  import { useCommon }  from '@/stores/cart/common'
+  import { useCartCommon }  from '@/stores/cart/common'
   import { useProducts }  from '@/stores/cart/products'
 
-  let { site, store, arrangement, showPage, webVersion } = storeToRefs(useCommon())
-  let { urlPush, getPathname } = useCommon()
+  let { site, store, arrangement, showPage, webVersion } = storeToRefs(useCartCommon())
+  let { urlPush, getPathname } = useCartCommon()
   let { categories, category, products, productsRerndered, favorite } = storeToRefs(useProducts())
   let { showSelect, toggleFavorite } = useProducts()
 
